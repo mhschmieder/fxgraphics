@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the FxGuiToolkit Library
+ * This file is part of the FxGraphicsToolkit Library
  *
  * You should have received a copy of the MIT License along with the
  * GuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/fxguitoolkit
+ * Project: https://github.com/mhschmieder/fxgraphicstoolkit
  */
 package com.mhschmieder.fxgraphicstoolkit.geometry;
 
@@ -34,9 +34,8 @@ import java.util.Locale;
 
 /**
  * The <code>Orientation</code> enum is an enumeration for conventional
- * orientation values for graphical objects. For purposes of 2D predictions,
- * this means horizontal or vertical, in reference to the acoustical plane
- * cutting through a loudspeaker's CRDM.
+ * orientation values for graphical objects. For example, it may be relative to
+ * a plane cutting through an object's geometric center or COG.
  *
  * NOTE: Other than for Presentation String, this is now redundant with JavaFX.
  */

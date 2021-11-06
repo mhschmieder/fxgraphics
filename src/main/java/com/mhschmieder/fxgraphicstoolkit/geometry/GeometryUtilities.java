@@ -31,11 +31,11 @@
 package com.mhschmieder.fxgraphicstoolkit.geometry;
 
 import com.mhschmieder.commonstoolkit.math.Axis;
+import com.mhschmieder.commonstoolkit.math.Extents2D;
 import com.mhschmieder.commonstoolkit.math.MathExt;
 import com.mhschmieder.commonstoolkit.math.OrthogonalAxes;
 import com.mhschmieder.commonstoolkit.physics.DistanceUnit;
 import com.mhschmieder.commonstoolkit.physics.UnitConversion;
-import com.mhschmieder.fxgraphicstoolkit.graphics.Extents2D;
 
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
@@ -65,7 +65,9 @@ import javafx.util.Pair;
  */
 public final class GeometryUtilities {
 
-    // NOTE: The constructor is disabled, as this is a static utilities class.
+    /**
+     * The default constructor is disabled, as this is a static utilities class.
+     */
     private GeometryUtilities() {}
 
     /**
@@ -151,138 +153,6 @@ public final class GeometryUtilities {
         final Point2D p2 = new Point2D( line.getEndX(), line.getEndY() );
 
         return area.contains( p1 ) || area.contains( p2 );
-    }
-
-    public static Point2D copyPoint2D( final Point2D point2D ) {
-        final Point2D copiedPoint2D = new Point2D( point2D.getX(), point2D.getY() );
-        return copiedPoint2D;
-    }
-
-    public static Point3D copyPoint3D( final Point3D point3D ) {
-        final Point3D copiedPoint3D = new Point3D( point3D.getX(), point3D.getY(), point3D.getZ() );
-        return copiedPoint3D;
-    }
-
-    /**
-     * Returns the distance between two points.
-     *
-     * @param x1
-     *            the X coordinate of the first specified point
-     * @param y1
-     *            the Y coordinate of the first specified point
-     * @param x2
-     *            the X coordinate of the second specified point
-     * @param y2
-     *            the Y coordinate of the second specified point
-     * @return the distance between the two sets of specified coordinates.
-     * @since 1.2
-     */
-    public static double distance( final double x1,
-                                   final double y1,
-                                   final double x2,
-                                   final double y2 ) {
-        final double x1Adjusted = x1 - x2;
-        final double y1Adjusted = y1 - y2;
-        return Math.hypot( x1Adjusted, y1Adjusted );
-    }
-
-    /**
-     * Returns the distance from this <code>Point2D</code> to a specified point.
-     *
-     * @param pt
-     *            The point from which to measure distance
-     * @param px
-     *            the X coordinate of the specified point to be measured against
-     *            this <code>Point2D</code>
-     * @param py
-     *            the Y coordinate of the specified point to be measured against
-     *            this <code>Point2D</code>
-     * @return the distance between this <code>Point2D</code> and a specified
-     *         point.
-     * @since 1.2
-     */
-    public static double distance( final Point2D pt, final double px, final double py ) {
-        final double pxAdjusted = px - pt.getX();
-        final double pyAdjusted = py - pt.getY();
-        return Math.hypot( pxAdjusted, pyAdjusted );
-    }
-
-    /**
-     * Returns the square of the distance between two points.
-     *
-     * @param x1
-     *            the X coordinate of the first specified point
-     * @param y1
-     *            the Y coordinate of the first specified point
-     * @param x2
-     *            the X coordinate of the second specified point
-     * @param y2
-     *            the Y coordinate of the second specified point
-     * @return the square of the distance between the two sets of specified
-     *         coordinates.
-     * @since 1.2
-     */
-    public static double distanceSq( final double x1,
-                                     final double y1,
-                                     final double x2,
-                                     final double y2 ) {
-        final double x1Adjusted = x1 - x2;
-        final double y1Adjusted = y1 - y2;
-        return ( ( x1Adjusted * x1Adjusted ) + ( y1Adjusted * y1Adjusted ) );
-    }
-
-    /**
-     * Returns the square of the distance from this <code>Point2D</code> to a
-     * specified point.
-     *
-     * @param point
-     *            The point from which to measure distance
-     * @param px
-     *            the X coordinate of the specified point to be measured against
-     *            this <code>Point2D</code>
-     * @param py
-     *            the Y coordinate of the specified point to be measured against
-     *            this <code>Point2D</code>
-     * @return the square of the distance between this <code>Point2D</code> and
-     *         the specified point.
-     * @since 1.2
-     */
-    public static double distanceSq( final Point2D point, final double px, final double py ) {
-        final double pxAdjusted = px - point.getX();
-        final double pyAdjusted = py - point.getY();
-        return ( ( pxAdjusted * pxAdjusted ) + ( pyAdjusted * pyAdjusted ) );
-    }
-
-    /**
-     * Returns the square of the distance from one <code>Point2D</code> to
-     * another specified <code>Point2D</code>.
-     *
-     * @param pt1
-     *            The reference point to use for measuring another point
-     * @param pt2
-     *            The specified point to be measured against the reference point
-     * @return the square of the distance between this <code>Point2D</code> to a
-     *         specified <code>Point2D</code>.
-     * @since 1.2
-     */
-    public static double distanceSq( final Point2D pt1, final Point2D pt2 ) {
-        final double px = pt2.getX() - pt1.getX();
-        final double py = pt2.getY() - pt1.getY();
-        return ( ( px * px ) + ( py * py ) );
-    }
-
-    public static Point3D exchangeCoordinates( final Point3D point3D,
-                                               final OrthogonalAxes orthogonalAxes ) {
-        switch ( orthogonalAxes ) {
-        case XY:
-            return new Point3D( point3D.getY(), point3D.getX(), point3D.getZ() );
-        case XZ:
-            return new Point3D( point3D.getZ(), point3D.getY(), point3D.getX() );
-        case YZ:
-            return new Point3D( point3D.getX(), point3D.getZ(), point3D.getY() );
-        default:
-            return Point3D.ZERO;
-        }
     }
 
     /**
@@ -1869,62 +1739,6 @@ public final class GeometryUtilities {
                                 extents.getY(),
                                 extents.getWidth(),
                                 extents.getHeight() );
-    }
-
-    // Get an AWT rectangle, converted from generic Extents.
-    public static java.awt.geom.Rectangle2D rectangleAwtFromExtents( final Extents2D extents ) {
-        final double x = extents.getX();
-        final double y = extents.getY();
-        final double width = extents.getWidth();
-        final double height = extents.getHeight();
-        final java.awt.geom.Rectangle2D awtRectangle =
-                                                     new java.awt.geom.Rectangle2D.Double( x,
-                                                                                           y,
-                                                                                           width,
-                                                                                           height );
-        return awtRectangle;
-    }
-
-    // Get an AWT rectangle, converted from JavaFX.
-    public static java.awt.geom.Rectangle2D rectangleAwtFromRectangle( final Rectangle fxRectangle ) {
-        final double x = fxRectangle.getX();
-        final double y = fxRectangle.getY();
-        final double width = fxRectangle.getWidth();
-        final double height = fxRectangle.getHeight();
-        final java.awt.geom.Rectangle2D awtRectangle =
-                                                     new java.awt.geom.Rectangle2D.Double( x,
-                                                                                           y,
-                                                                                           width,
-                                                                                           height );
-        return awtRectangle;
-    }
-
-    // Get an AWT rectangle, converted from JavaFX.
-    public static java.awt.geom.Rectangle2D rectangleAwtFromRectangle2D( final Bounds fxBounds ) {
-        final double x = fxBounds.getMinX();
-        final double y = fxBounds.getMinY();
-        final double width = fxBounds.getWidth();
-        final double height = fxBounds.getHeight();
-        final java.awt.geom.Rectangle2D awtRectangle =
-                                                     new java.awt.geom.Rectangle2D.Double( x,
-                                                                                           y,
-                                                                                           width,
-                                                                                           height );
-        return awtRectangle;
-    }
-
-    // Get an AWT rectangle, converted from JavaFX.
-    public static java.awt.geom.Rectangle2D rectangleAwtFromRectangle2D( final Rectangle2D fxRectangle ) {
-        final double x = fxRectangle.getMinX();
-        final double y = fxRectangle.getMinY();
-        final double width = fxRectangle.getWidth();
-        final double height = fxRectangle.getHeight();
-        final java.awt.geom.Rectangle2D awtRectangle =
-                                                     new java.awt.geom.Rectangle2D.Double( x,
-                                                                                           y,
-                                                                                           width,
-                                                                                           height );
-        return awtRectangle;
     }
 
     public static Rectangle rectangleFromBounds( final Bounds bounds ) {
