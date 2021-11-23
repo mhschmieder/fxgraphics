@@ -33,24 +33,17 @@ package com.mhschmieder.fxgraphicstoolkit.image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 
 import javax.imageio.ImageIO;
 
 import javafx.embed.swing.SwingFXUtils;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.scene.Node;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.TransferMode;
 
 /**
  * This is a utility class for generic common image functionality.
@@ -375,9 +368,9 @@ public final class ImageUtilities {
     public static Image loadImage( final InputStream inputStream,
                                    final double fitWidth,
                                    final double fitHeight ) {
-        // :NOTE: We set smoothing to on, as otherwise the small resulting
+        // NOTE: We set smoothing to on, as otherwise the small resulting
         // image can have poor quality and perpetuate that when re-scaled.
-        // :NOTE: We no longer apply smoothing, as things can get much blurrier
+        // NOTE: We no longer apply smoothing, as things can get much blurrier
         // if the source image is mostly vector graphics vs. a raster bitmap.
         return loadImageFromStream( inputStream, true, -1d, fitWidth, fitHeight, false );
     }
@@ -628,53 +621,6 @@ public final class ImageUtilities {
 
         // Update the Image View container with the pre-loaded Image.
         updateImageView( imageView, image, backgroundLoading );
-    }
-
-    /**
-     * Placeholder for drag/drop of images; needs File Handler class written.
-     *
-     * @return An Event Handler for image drag events
-     */
-    // public static EventHandler< DragEvent > getImageDragHandler( final
-    // FileHandler fileHandler ) {
-    public static EventHandler< DragEvent > getImageDragHandler() {
-        return dragEvent -> {
-            final Dragboard dragboard = dragEvent.getDragboard();
-
-            final EventType< DragEvent > eventType = dragEvent.getEventType();
-
-            final boolean dropCompleted = false;
-            if ( dragboard.hasFiles() ) {
-                // Block unless there is just one file and it has the proper
-                // file
-                // extension for the supported image formats (PNG, GIF, JPEG).
-                final List< File > files = dragboard.getFiles();
-                if ( files.size() == 1 ) {
-                    final File file = files.get( 0 );
-                    if ( isSupportedImageFile( file ) ) {
-                        if ( DragEvent.DRAG_OVER.equals( eventType ) ) {
-                            dragEvent.acceptTransferModes( TransferMode.ANY );
-                        }
-                        else if ( DragEvent.DRAG_DROPPED.equals( eventType ) ) {
-                            // dropCompleted = fileHandler.fileOpen( file );
-                        }
-                    }
-                }
-            }
-
-            // Let the drag source know whether the image was successfully
-            // transferred and/or whether the source was a supported format.
-            if ( DragEvent.DRAG_DROPPED.equals( eventType ) ) {
-                dragEvent.setDropCompleted( dropCompleted );
-            }
-
-            dragEvent.consume();
-        };
-    }
-
-    private static boolean isSupportedImageFile( final File file ) {
-        // TODO: Implement the logic here for acceptance or rejection.
-        return true;
     }
 
 }

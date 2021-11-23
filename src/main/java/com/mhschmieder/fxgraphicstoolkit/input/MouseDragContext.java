@@ -65,7 +65,7 @@ public class MouseDragContext {
     }
 
     // This is the initializer when interacting with Move events.
-    // :NOTE: It is most likely the source will be set to the destination in
+    // NOTE: It is most likely the source will be set to the destination in
     // such cases, as the first Move Event is not thrown out as with Drag Events
     // and otherwise would result in an overly large initial delta computation.
     public void initializeMove( final double firstX,
