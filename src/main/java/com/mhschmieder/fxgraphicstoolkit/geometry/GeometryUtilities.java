@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,17 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the FxGuiToolkit Library
+ * This file is part of the FxGraphicsToolkit Library
  *
  * You should have received a copy of the MIT License along with the
- * GuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
+ * FxGraphicsToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/fxguitoolkit
+ * Project: https://github.com/mhschmieder/fxgraphicstoolkit
  */
 package com.mhschmieder.fxgraphicstoolkit.geometry;
 
+import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
+
 import com.mhschmieder.commonstoolkit.math.Axis;
-import com.mhschmieder.commonstoolkit.math.Extents2D;
 import com.mhschmieder.commonstoolkit.math.MathExt;
 import com.mhschmieder.commonstoolkit.math.OrthogonalAxes;
 import com.mhschmieder.commonstoolkit.physics.DistanceUnit;
@@ -40,7 +41,6 @@ import com.mhschmieder.commonstoolkit.physics.UnitConversion;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
-import javafx.geometry.Point3D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.shape.ArcTo;
 import javafx.scene.shape.CubicCurveTo;
@@ -756,7 +756,7 @@ public final class GeometryUtilities {
      *            supplied 3D point
      * @return The octant number for a supplied 3D point
      */
-    public static int getOctant( final Point3D point, final Point3D origin ) {
+    public static int getOctant( final Vector3D point, final Vector3D origin ) {
         if ( point.getZ() < origin.getZ() ) {
             if ( point.getX() < origin.getX() ) {
                 if ( point.getY() >= origin.getY() ) {
@@ -1254,23 +1254,23 @@ public final class GeometryUtilities {
         }
     }
 
-    public static Point3D negatePoint3D( final Point3D point3D ) {
-        final Point3D negatedPoint3D = new Point3D( -point3D.getX(),
+    public static Vector3D negatePoint3D( final Vector3D point3D ) {
+        final Vector3D negatedPoint3D = new Vector3D( -point3D.getX(),
                                                     -point3D.getY(),
                                                     -point3D.getZ() );
         return negatedPoint3D;
     }
 
-    public static Point3D negatePoint3D( final Point3D point3D, final Axis axis ) {
+    public static Vector3D negatePoint3D( final Vector3D point3D, final Axis axis ) {
         switch ( axis ) {
         case X:
-            return new Point3D( -point3D.getX(), point3D.getY(), point3D.getZ() );
+            return new Vector3D( -point3D.getX(), point3D.getY(), point3D.getZ() );
         case Y:
-            return new Point3D( point3D.getX(), -point3D.getY(), point3D.getZ() );
+            return new Vector3D( point3D.getX(), -point3D.getY(), point3D.getZ() );
         case Z:
-            return new Point3D( point3D.getX(), point3D.getY(), -point3D.getZ() );
+            return new Vector3D( point3D.getX(), point3D.getY(), -point3D.getZ() );
         default:
-            return Point3D.ZERO;
+            return Vector3D.ZERO;
         }
     }
 
@@ -1300,7 +1300,7 @@ public final class GeometryUtilities {
         return out;
     }
 
-    public static Point2D projectToPlane( final Point3D point3D,
+    public static Point2D projectToPlane( final Vector3D point3D,
                                           final OrthogonalAxes orthogonalAxes ) {
         // Project a 3D point to a plane defined by an orthogonal axis pair.
         switch ( orthogonalAxes ) {
@@ -1755,7 +1755,7 @@ public final class GeometryUtilities {
                               rectangle.getHeight() );
     }
 
-    public static Point3D rotateInPlane( final Point3D point3D,
+    public static Vector3D rotateInPlane( final Vector3D point3D,
                                          final OrthogonalAxes orthogonalAxes,
                                          final double angleInRadians ) {
         double axis1Value = 0d;
@@ -1786,13 +1786,13 @@ public final class GeometryUtilities {
 
         switch ( orthogonalAxes ) {
         case XY:
-            return new Point3D( axis1ValueRotated, axis2ValueRotated, 0d );
+            return new Vector3D( axis1ValueRotated, axis2ValueRotated, 0d );
         case XZ:
-            return new Point3D( axis1ValueRotated, 0d, axis2ValueRotated );
+            return new Vector3D( axis1ValueRotated, 0d, axis2ValueRotated );
         case YZ:
-            return new Point3D( 0d, axis1ValueRotated, axis2ValueRotated );
+            return new Vector3D( 0d, axis1ValueRotated, axis2ValueRotated );
         default:
-            return Point3D.ZERO;
+            return Vector3D.ZERO;
         }
     }
 
@@ -2185,6 +2185,62 @@ public final class GeometryUtilities {
         }
 
         return new BoundingBox( minX, minY, width, height );
+    }
+    
+    // Get an AWT rectangle, converted from generic Extents.
+    public static java.awt.geom.Rectangle2D rectangleAwtFromExtents( final Extents2D extents ) {
+        final double x = extents.getX();
+        final double y = extents.getY();
+        final double width = extents.getWidth();
+        final double height = extents.getHeight();
+        final java.awt.geom.Rectangle2D awtRectangle =
+                                                     new java.awt.geom.Rectangle2D.Double( x,
+                                                                                           y,
+                                                                                           width,
+                                                                                           height );
+        return awtRectangle;
+    }
+
+    // Get an AWT rectangle, converted from JavaFX.
+    public static java.awt.geom.Rectangle2D rectangleAwtFromRectangle( final Rectangle fxRectangle ) {
+        final double x = fxRectangle.getX();
+        final double y = fxRectangle.getY();
+        final double width = fxRectangle.getWidth();
+        final double height = fxRectangle.getHeight();
+        final java.awt.geom.Rectangle2D awtRectangle =
+                                                     new java.awt.geom.Rectangle2D.Double( x,
+                                                                                           y,
+                                                                                           width,
+                                                                                           height );
+        return awtRectangle;
+    }
+
+    // Get an AWT rectangle, converted from JavaFX.
+    public static java.awt.geom.Rectangle2D rectangleAwtFromRectangle2D( final Bounds fxBounds ) {
+        final double x = fxBounds.getMinX();
+        final double y = fxBounds.getMinY();
+        final double width = fxBounds.getWidth();
+        final double height = fxBounds.getHeight();
+        final java.awt.geom.Rectangle2D awtRectangle =
+                                                     new java.awt.geom.Rectangle2D.Double( x,
+                                                                                           y,
+                                                                                           width,
+                                                                                           height );
+        return awtRectangle;
+    }
+
+    // Get an AWT rectangle, converted from JavaFX.
+    public static java.awt.geom.Rectangle2D rectangleAwtFromRectangle2D( final Rectangle2D fxRectangle ) {
+        final double x = fxRectangle.getMinX();
+        final double y = fxRectangle.getMinY();
+        final double width = fxRectangle.getWidth();
+        final double height = fxRectangle.getHeight();
+        final java.awt.geom.Rectangle2D awtRectangle =
+                                                     new java.awt.geom.Rectangle2D.Double( x,
+                                                                                           y,
+                                                                                           width,
+                                                                                           height );
+        return awtRectangle;
     }
 
 }
