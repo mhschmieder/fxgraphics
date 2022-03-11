@@ -44,10 +44,10 @@ import javafx.scene.shape.Rectangle;
  */
 public class Extents2D {
 
-    public static final double     X_METERS_DEFAULT      = 0d;
-    public static final double     Y_METERS_DEFAULT      = 0d;
+    public static final double     X_METERS_DEFAULT      = 0.0d;
+    public static final double     Y_METERS_DEFAULT      = 0.0d;
     public static final double     WIDTH_METERS_DEFAULT  = 40d;
-    public static final double     HEIGHT_METERS_DEFAULT = 20d;
+    public static final double     HEIGHT_METERS_DEFAULT = 20.0d;
 
     // NOTE: These fields must follow JavaFX Property Bean naming conventions.
     protected final DoubleProperty x;
@@ -59,7 +59,7 @@ public class Extents2D {
      * Default constructor, which zeroes everything.
      */
     public Extents2D() {
-        this( 0d, 0d, 0d, 0d );
+        this( 0.0d, 0.0d, 0.0d, 0.0d );
     }
 
     /**

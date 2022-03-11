@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -208,7 +208,7 @@ public final class ImageUtilities {
 
         // Convert to an AWT-based BufferedImage until something equivalent
         // exists in JavaFX.
-        // :TODO: Use a PixelReader and PixelWriter to write to file? Or is this
+        // TODO: Use a PixelReader and PixelWriter to write to file? Or is this
         // utility method doing that anyway?
         final BufferedImage bufferedImage = SwingFXUtils.fromFXImage( snapshot, null );
 
@@ -226,7 +226,7 @@ public final class ImageUtilities {
      * @return The Image View container for the supplied Image
      */
     public static ImageView getImageView( final Image image, final boolean backgroundLoading ) {
-        // :NOTE: We no longer use the dimensions; we know the size as we
+        // NOTE: We no longer use the dimensions; we know the size as we
         // chose the JAR resources to match layout constraints of Tool Bars
         // etc. Might need to re-enable "preserve aspect ratio" though, but
         // overall we see no ill effect from this change and are hoping it
@@ -341,9 +341,9 @@ public final class ImageUtilities {
      */
     public static WritableImage getWritableImageSnapshot( final Node node ) {
         // Render the snapshot source with no compression.
-        // :NOTE: This version of the snapshot method is a blocking function,
+        // NOTE: This version of the snapshot method is a blocking function,
         // but there is another version that allows a callback to be passed in.
-        // :TODO: If we pre-construct a WritableImage, we can give it a size
+        // TODO: If we pre-construct a WritableImage, we can give it a size
         // different from the screen size, such as the one entered in the Image
         // Export Options Dialog.
         final WritableImage snapshot = node.snapshot( new SnapshotParameters(), null );
@@ -378,7 +378,7 @@ public final class ImageUtilities {
     /**
      * Load an Image as an Application JAR-resident resource.
      * <p>
-     * :TODO: Algorithmically tag the Image size to a partially specified name?
+     * TODO: Algorithmically tag the Image size to a partially specified name?
      *
      * @param jarRelativeImageFilename
      *            The file name of an image file contained in this JAR
@@ -443,21 +443,21 @@ public final class ImageUtilities {
         // Determine whether the source image Aspect Ratio should be preserved.
         // If not, use the supplied fit dimensions (if valid) and apply the
         // supplied Aspect Ratio to whichever fit dimension wasn't provided.
-        // :NOTE: Provide -1.0 (e.g.) to invalidate any of the numeric
+        // NOTE: Provide -1.0 (e.g.) to invalidate any of the numeric
         // arguments.
         final double fitWidthAdjusted = preserveSourceImageRatio
-            ? ( fitWidth > 0d ) ? fitWidth : -1d
-            : ( derivedImageAspectRatio > 0d )
-                ? ( fitWidth > 0d )
+            ? ( fitWidth > 0.0d ) ? fitWidth : -1d
+            : ( derivedImageAspectRatio > 0.0d )
+                ? ( fitWidth > 0.0d )
                     ? fitWidth
-                    : ( fitHeight > 0d ) ? fitHeight * derivedImageAspectRatio : -1d
+                    : ( fitHeight > 0.0d ) ? fitHeight * derivedImageAspectRatio : -1d
                 : -1d;
         final double fitHeightAdjusted = preserveSourceImageRatio
-            ? ( fitHeight > 0d ) ? fitHeight : -1d
-            : ( derivedImageAspectRatio > 0d )
-                ? ( fitHeight > 0d )
+            ? ( fitHeight > 0.0d ) ? fitHeight : -1d
+            : ( derivedImageAspectRatio > 0.0d )
+                ? ( fitHeight > 0.0d )
                     ? fitHeight
-                    : ( fitWidth > 0d ) ? fitWidth / derivedImageAspectRatio : -1d
+                    : ( fitWidth > 0.0d ) ? fitWidth / derivedImageAspectRatio : -1d
                 : -1d;
 
         final Image image = new Image( inputStream,
@@ -495,23 +495,23 @@ public final class ImageUtilities {
         // Determine whether the source image Aspect Ratio should be preserved.
         // If not, use the supplied fit dimensions (if valid) and apply the
         // supplied Aspect Ration to whichever fit dimension wasn't provided.
-        // :NOTE: Provide -1.0 (e.g.) to invalidate any of the numeric
+        // NOTE: Provide -1.0 (e.g.) to invalidate any of the numeric
         // arguments.
         final double fitWidthAdjusted = preserveSourceImageRatio
-            ? ( fitWidth > 0d ) ? fitWidth : -1d
-            : ( derivedImageAspectRatio > 0d )
-                ? ( fitWidth > 0d )
+            ? ( fitWidth > 0.0d ) ? fitWidth : -1d
+            : ( derivedImageAspectRatio > 0.0d )
+                ? ( fitWidth > 0.0d )
                     ? fitWidth
-                    : ( fitHeight > 0d )
+                    : ( fitHeight > 0.0d )
                         ? fitHeight * derivedImageAspectRatio
                         : imageHeight * derivedImageAspectRatio
                 : imageWidth;
         final double fitHeightAdjusted = preserveSourceImageRatio
-            ? ( fitHeight > 0d ) ? fitHeight : -1d
-            : ( derivedImageAspectRatio > 0d )
-                ? ( fitHeight > 0d )
+            ? ( fitHeight > 0.0d ) ? fitHeight : -1d
+            : ( derivedImageAspectRatio > 0.0d )
+                ? ( fitHeight > 0.0d )
                     ? fitHeight
-                    : ( fitWidth > 0d )
+                    : ( fitWidth > 0.0d )
                         ? fitWidth / derivedImageAspectRatio
                         : imageWidth / derivedImageAspectRatio
                 : imageHeight;
@@ -539,7 +539,7 @@ public final class ImageUtilities {
                                         final Image image,
                                         final boolean backgroundLoading ) {
         // Update the Image View container with the pre-loaded Image.
-        // :NOTE: We no longer use the dimensions; we know the size as we
+        // NOTE: We no longer use the dimensions; we know the size as we
         // chose the JAR resources to match layout constraints of Tool Bars
         // etc. Might need to re-enable "preserve aspect ratio" though, but
         // overall we see no ill effect from this change and are hoping it

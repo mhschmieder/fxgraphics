@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -58,8 +58,8 @@ public class HighlightUtilities {
     public static final List< Double > getHighlightDashPattern( final double scaleFactor ) {
         // Define and return the dash pattern to use for highlighting.
         final List< Double > highlightDashPattern = new ArrayList<>();
-        highlightDashPattern.add( Double.valueOf( 2d * scaleFactor ) );
-        highlightDashPattern.add( Double.valueOf( 4d * scaleFactor ) );
+        highlightDashPattern.add( Double.valueOf( 2.0d * scaleFactor ) );
+        highlightDashPattern.add( Double.valueOf( 4.0d * scaleFactor ) );
 
         return highlightDashPattern;
     }

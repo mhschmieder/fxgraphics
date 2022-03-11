@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -63,7 +63,7 @@ public class ShapeGroup extends Group implements ShapeContainer {
         // Always call the super-constructor first!
         super();
 
-        strokeWidth = new SimpleDoubleProperty( 1d );
+        strokeWidth = new SimpleDoubleProperty( 1.0d );
     }
 
     public final void addShape( final double strokeScale, final Shape newChild ) {
@@ -161,7 +161,7 @@ public class ShapeGroup extends Group implements ShapeContainer {
         // don't, then we get no results if converting old to new and get
         // cumulative scaling if using Meters as the Distance Unit basis.
         final double distanceScaleFactor = UnitConversion
-                .convertDistance( 1d, distanceUnitOld, distanceUnitNew );
+                .convertDistance( 1.0d, distanceUnitOld, distanceUnitNew );
         final ObservableList< Transform > transforms = getShapeTransforms();
         final Scale scaleTransform = Transform.scale( distanceScaleFactor, distanceScaleFactor );
         transforms.setAll( scaleTransform );
@@ -181,7 +181,7 @@ public class ShapeGroup extends Group implements ShapeContainer {
     public final void scaleShapes( final DistanceUnit distanceUnitOld,
                                    final DistanceUnit distanceUnitNew ) {
         final double distanceScaleFactor = UnitConversion
-                .convertDistance( 1d, distanceUnitOld, distanceUnitNew );
+                .convertDistance( 1.0d, distanceUnitOld, distanceUnitNew );
         scaleShapes( distanceScaleFactor );
     }
 

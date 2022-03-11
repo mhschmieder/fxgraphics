@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -269,18 +269,18 @@ public final class ShapeUtilities {
         final double beginAngleRadians = Math.toRadians( arcStartDegrees );
         final double cosBegin = Math.cos( beginAngleRadians );
         final double sinBegin = -Math.sin( beginAngleRadians );
-        final double startX = left + ( arcRadiusX * ( 1d + cosBegin ) );
-        final double startY = top + ( arcRadiusY * ( 1d + sinBegin ) );
+        final double startX = left + ( arcRadiusX * ( 1.0d + cosBegin ) );
+        final double startY = top + ( arcRadiusY * ( 1.0d + sinBegin ) );
         pathElements.add( new MoveTo( startX, startY ) );
 
         final double endAngleRadians = Math.toRadians( arcExtentDegrees ) + beginAngleRadians;
         final double cosEnd = Math.cos( endAngleRadians );
         final double sinEnd = -Math.sin( endAngleRadians );
-        final double endX = left + ( arcRadiusX * ( 1d + cosEnd ) );
-        final double endY = top + ( arcRadiusY * ( 1d + sinEnd ) );
+        final double endX = left + ( arcRadiusX * ( 1.0d + cosEnd ) );
+        final double endY = top + ( arcRadiusY * ( 1.0d + sinEnd ) );
         pathElements.add( new ArcTo( arcRadiusX,
                                      arcRadiusY,
-                                     0d,
+                                     0.0d,
                                      endX,
                                      endY,
                                      largeArcFlag,
@@ -360,7 +360,7 @@ public final class ShapeUtilities {
                                    final double diameter,
                                    final boolean fill ) {
         // Make a Circle at the origin, to be translated and rotated later.
-        drawCircle( circleGraphics, 0d, 0d, diameter, fill );
+        drawCircle( circleGraphics, 0.0d, 0.0d, diameter, fill );
     }
 
     /**
@@ -475,8 +475,8 @@ public final class ShapeUtilities {
                                       final double crosshairDimension ) {
         // Draw the crosshair as two separate orthogonal lines, like a cross.
         final double radialLength = 0.5d * crosshairDimension;
-        drawLine( crosshairGraphics, -radialLength, 0d, radialLength, 0d );
-        drawLine( crosshairGraphics, 0d, -radialLength, 0d, radialLength );
+        drawLine( crosshairGraphics, -radialLength, 0.0d, radialLength, 0.0d );
+        drawLine( crosshairGraphics, 0.0d, -radialLength, 0.0d, radialLength );
     }
 
     /**
@@ -500,8 +500,8 @@ public final class ShapeUtilities {
                                       final double crosshairDimension ) {
         // Draw the crosshair as two separate orthogonal lines, like a cross.
         final double radialLength = 0.5d * crosshairDimension;
-        drawLine( pathElements, affine, -radialLength, 0d, radialLength, 0d );
-        drawLine( pathElements, affine, 0d, -radialLength, 0d, radialLength );
+        drawLine( pathElements, affine, -radialLength, 0.0d, radialLength, 0.0d );
+        drawLine( pathElements, affine, 0.0d, -radialLength, 0.0d, radialLength );
     }
 
     /**
@@ -520,10 +520,10 @@ public final class ShapeUtilities {
                                       final double crosshairDimension ) {
         // Draw the crosshair as two separate orthogonal lines, like a cross.
         final double radialLength = 0.5d * crosshairDimension;
-        pathElements.add( new MoveTo( -radialLength, 0d ) );
-        pathElements.add( new LineTo( radialLength, 0d ) );
-        pathElements.add( new MoveTo( 0d, -radialLength ) );
-        pathElements.add( new LineTo( 0d, radialLength ) );
+        pathElements.add( new MoveTo( -radialLength, 0.0d ) );
+        pathElements.add( new LineTo( radialLength, 0.0d ) );
+        pathElements.add( new MoveTo( 0.0d, -radialLength ) );
+        pathElements.add( new LineTo( 0.0d, radialLength ) );
     }
 
     /**
@@ -736,14 +736,14 @@ public final class ShapeUtilities {
         pathElements.add( new MoveTo( firstArcBeginX, firstArcBeginY ) );
         pathElements.add( new ArcTo( arcRadiusX,
                                      arcRadiusY,
-                                     0d,
+                                     0.0d,
                                      firstArcEndX,
                                      firstArcEndY,
                                      true,
                                      true ) );
         pathElements.add( new ArcTo( arcRadiusX,
                                      arcRadiusY,
-                                     0d,
+                                     0.0d,
                                      firstArcBeginX,
                                      firstArcBeginY,
                                      true,
@@ -1090,14 +1090,14 @@ public final class ShapeUtilities {
         circle.getTransforms().add( affineTransform );
 
         final double targetDimension = diameter * 1.5;
-        final Line targetX = new Line( -0.5d * targetDimension, 0d, 0.5d * targetDimension, 0d );
+        final Line targetX = new Line( -0.5d * targetDimension, 0.0d, 0.5d * targetDimension, 0.0d );
         targetX.getTransforms().add( affineTransform );
 
         // NOTE: At this time (20151020) it is unknown whether union will
         // produce the correct graphics.
         Shape result = Shape.union( circle, targetX );
 
-        final Line targetY = new Line( 0d, -0.5d * targetDimension, 0d, 0.5d * targetDimension );
+        final Line targetY = new Line( 0.0d, -0.5d * targetDimension, 0.0d, 0.5d * targetDimension );
         targetY.getTransforms().add( affineTransform );
         result = Shape.union( result, targetY );
 

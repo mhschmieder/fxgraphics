@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -46,10 +46,10 @@ public class MouseDragContext {
     public boolean _valid;
 
     public MouseDragContext() {
-        _dragDestinationX = 0d;
-        _dragDestinationY = 0d;
-        _dragOriginX = 0d;
-        _dragOriginY = 0d;
+        _dragDestinationX = 0.0d;
+        _dragDestinationY = 0.0d;
+        _dragOriginX = 0.0d;
+        _dragOriginY = 0.0d;
         _valid = false;
     }
 
@@ -57,8 +57,8 @@ public class MouseDragContext {
     // NOTE: The first Drag Event is thrown out, so we zero the destination.
     // This ensures that the deltas stay scaled properly on each succession.
     public void initializeDrag( final double firstX, final double firstY ) {
-        _dragDestinationX = 0d;
-        _dragDestinationY = 0d;
+        _dragDestinationX = 0.0d;
+        _dragDestinationY = 0.0d;
         _dragOriginX = firstX;
         _dragOriginY = firstY;
         _valid = true;

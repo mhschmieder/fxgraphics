@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2021 Mark Schmieder
+ * Copyright (c) 2020, 2022 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -69,7 +69,7 @@ public class InputEventUtilities {
         node.setScaleX( scale );
         node.setScaleY( scale );
 
-        final double scaleRatio = ( scale / oldScale ) - 1d;
+        final double scaleRatio = ( scale / oldScale ) - 1.0d;
         final Bounds bounds = node.localToScene( node.getBoundsInLocal() );
         final double dx = ( x - ( ( 0.5d * bounds.getWidth() ) + bounds.getMinX() ) );
         final double dy = ( y - ( ( 0.5d * bounds.getHeight() ) + bounds.getMinY() ) );

@@ -181,8 +181,8 @@ public final class GeometryUtilities {
         final double offsetY = referencePoint.getY();
         double lowestX = offsetX;
         double lowestY = offsetY;
-        double currentX = 0d;
-        double currentY = 0d;
+        double currentX = 0.0d;
+        double currentY = 0.0d;
 
         for ( final PathElement pathElement : path.getElements() ) {
             if ( pathElement instanceof MoveTo ) {
@@ -437,7 +437,7 @@ public final class GeometryUtilities {
 
         // Check that the two ellipse radii are large enough, via ratios.
         final double radiiCheck = ( Px1 / Prx ) + ( Py1 / Pry );
-        if ( radiiCheck > 1d ) {
+        if ( radiiCheck > 1.0d ) {
             final double radialRoot = Math.sqrt( radiiCheck );
             rx *= radialRoot;
             ry *= radialRoot;
@@ -454,10 +454,10 @@ public final class GeometryUtilities {
         // Step 2: Compute (cx1, cy1).
         final boolean localSweepFlag = arcTo.isSweepFlag();
         final boolean localLargeArcFlag = arcTo.isLargeArcFlag();
-        double sign = ( ( localLargeArcFlag == localSweepFlag ) ? -1d : 1d );
+        double sign = ( ( localLargeArcFlag == localSweepFlag ) ? -1d : 1.0d );
         double sq = ( ( Prx * Pry ) - ( Prx * Py1 ) - ( Pry * Px1 ) )
                 / ( ( Prx * Py1 ) + ( Pry * Px1 ) );
-        sq = Math.max( 0d, sq );
+        sq = Math.max( 0.0d, sq );
         final double coef = ( sign * Math.sqrt( sq ) );
         final double cx1 = coef * ( ( rx * y1 ) / ry );
         final double cy1 = coef * ( -( ry * x1 ) / rx );
@@ -471,19 +471,19 @@ public final class GeometryUtilities {
         // Compute the angle start.
         double n = Math.hypot( ux, uy );
         double p = ux; // (1d * ux) + (0d * uy)
-        sign = ( ( uy < 0d ) ? -1d : 1d );
+        sign = ( ( uy < 0.0d ) ? -1d : 1.0d );
         double angleStartDegrees = Math.toDegrees( sign * Math.acos( p / n ) );
 
         // Compute the angle extent.
         n = Math.sqrt( ( MathExt.sqr( ux ) + MathExt.sqr( uy ) )
                 * ( MathExt.sqr( vx ) + MathExt.sqr( vy ) ) );
         p = ( ux * vx ) + ( uy * vy );
-        sign = ( ( ( ux * vy ) - ( uy * vx ) ) < 0d ) ? -1d : 1d;
+        sign = ( ( ( ux * vy ) - ( uy * vx ) ) < 0.0d ) ? -1d : 1.0d;
         double angleExtentDegrees = Math.toDegrees( sign * Math.acos( p / n ) );
-        if ( !localSweepFlag && ( angleExtentDegrees > 0d ) ) {
+        if ( !localSweepFlag && ( angleExtentDegrees > 0.0d ) ) {
             angleExtentDegrees -= 360d;
         }
-        else if ( localSweepFlag && ( angleExtentDegrees < 0d ) ) {
+        else if ( localSweepFlag && ( angleExtentDegrees < 0.0d ) ) {
             angleExtentDegrees += 360d;
         }
         angleExtentDegrees = angleExtentDegrees % 360d;
@@ -626,12 +626,12 @@ public final class GeometryUtilities {
                                               final double control1,
                                               final double control2,
                                               final double end ) {
-        final double inversePosition = 1d - position;
+        final double inversePosition = 1.0d - position;
 
-        final double b1 = Math.pow( position, 3d );
-        final double b2 = 3d * MathExt.sqr( position ) * inversePosition;
-        final double b3 = 3d * MathExt.sqr( inversePosition ) * position;
-        final double b4 = Math.pow( inversePosition, 3d );
+        final double b1 = Math.pow( position, 3.0d );
+        final double b2 = 3.0d * MathExt.sqr( position ) * inversePosition;
+        final double b3 = 3.0d * MathExt.sqr( inversePosition ) * position;
+        final double b4 = Math.pow( inversePosition, 3.0d );
 
         final double cubicBezierValue = ( b1 * start ) + ( b2 * control1 ) + ( b3 * control2 )
                 + ( b4 * end );
@@ -866,10 +866,10 @@ public final class GeometryUtilities {
                                                    final double start,
                                                    final double control,
                                                    final double end ) {
-        final double inversePosition = 1d - position;
+        final double inversePosition = 1.0d - position;
 
         final double b1 = MathExt.sqr( inversePosition );
-        final double b2 = 2d * inversePosition * position;
+        final double b2 = 2.0d * inversePosition * position;
         final double b3 = MathExt.sqr( position );
 
         final double quadraticBezierValue = ( b1 * start ) + ( b2 * control ) + ( b3 * end );
@@ -1635,11 +1635,11 @@ public final class GeometryUtilities {
         double dotprod = ( pxAdjusted * x2Adjusted ) + ( pyAdjusted * y2Adjusted );
 
         double projlenSq;
-        if ( dotprod <= 0d ) {
+        if ( dotprod <= 0.0d ) {
             // px,py is on the side of x1,y1 away from x2,y2
             // distance to segment is length of px,py vector
             // "length of its (clipped) projection" is now 0.0
-            projlenSq = 0d;
+            projlenSq = 0.0d;
         }
         else {
             // switch to backwards vectors relative to x2,y2
@@ -1650,11 +1650,11 @@ public final class GeometryUtilities {
             pxAdjusted = x2Adjusted - pxAdjusted;
             pyAdjusted = y2Adjusted - pyAdjusted;
             dotprod = ( pxAdjusted * x2Adjusted ) + ( pyAdjusted * y2Adjusted );
-            if ( dotprod <= 0d ) {
+            if ( dotprod <= 0.0d ) {
                 // px,py is on the side of x2,y2 away from x1,y1
                 // distance to segment is length of (backwards) px,py vector
                 // "length of its (clipped) projection" is now 0.0
-                projlenSq = 0d;
+                projlenSq = 0.0d;
             }
             else {
                 // px,py is between x1,y1 and x2,y2
@@ -1671,8 +1671,8 @@ public final class GeometryUtilities {
         // (which is zero if the projection falls outside the range
         // of the line segment).
         double lenSq = ( MathExt.sqr( pxAdjusted ) + MathExt.sqr( pyAdjusted ) ) - projlenSq;
-        if ( lenSq < 0d ) {
-            lenSq = 0d;
+        if ( lenSq < 0.0d ) {
+            lenSq = 0.0d;
         }
 
         return lenSq;
@@ -1758,8 +1758,8 @@ public final class GeometryUtilities {
     public static Vector3D rotateInPlane( final Vector3D point3D,
                                          final OrthogonalAxes orthogonalAxes,
                                          final double angleInRadians ) {
-        double axis1Value = 0d;
-        double axis2Value = 0d;
+        double axis1Value = 0.0d;
+        double axis2Value = 0.0d;
 
         switch ( orthogonalAxes ) {
         case XY:
@@ -1786,11 +1786,11 @@ public final class GeometryUtilities {
 
         switch ( orthogonalAxes ) {
         case XY:
-            return new Vector3D( axis1ValueRotated, axis2ValueRotated, 0d );
+            return new Vector3D( axis1ValueRotated, axis2ValueRotated, 0.0d );
         case XZ:
-            return new Vector3D( axis1ValueRotated, 0d, axis2ValueRotated );
+            return new Vector3D( axis1ValueRotated, 0.0d, axis2ValueRotated );
         case YZ:
-            return new Vector3D( 0d, axis1ValueRotated, axis2ValueRotated );
+            return new Vector3D( 0.0d, axis1ValueRotated, axis2ValueRotated );
         default:
             return Vector3D.ZERO;
         }
@@ -1872,7 +1872,7 @@ public final class GeometryUtilities {
     public static Bounds union( final Bounds r1, final Bounds r2 ) {
         double tx2 = r1.getWidth();
         double ty2 = r1.getHeight();
-        if ( ( tx2 < 0d ) || ( ty2 < 0d ) ) {
+        if ( ( tx2 < 0.0d ) || ( ty2 < 0.0d ) ) {
             // The first rectangle has negative dimensions...
             // If r1 has non-negative dimensions then it is the answer.
             // If r1 is non-existent (has a negative dimension), then both
@@ -1884,7 +1884,7 @@ public final class GeometryUtilities {
 
         double rx2 = r2.getWidth();
         double ry2 = r2.getHeight();
-        if ( ( rx2 < 0d ) || ( ry2 < 0d ) ) {
+        if ( ( rx2 < 0.0d ) || ( ry2 < 0.0d ) ) {
             // The second rectangle has negative dimensions...
             // If r2 has non-negative dimensions then it is the answer.
             // If r2 is non-existent (has a negative dimension), then both
@@ -2141,12 +2141,12 @@ public final class GeometryUtilities {
     public static Bounds updateBounds( final Bounds bbox, final Point2D point ) {
         double width = bbox.getWidth();
         double height = bbox.getHeight();
-        if ( ( width < 0d ) || ( height < 0d ) ) {
+        if ( ( width < 0.0d ) || ( height < 0.0d ) ) {
             // The original Bounding Box has negative dimensions...
             // If bbox is non-existent (has a negative dimension), then it has
             // not been initialized yet, so we use the supplied Point to do
             // that, with zero dimensions.
-            return new BoundingBox( point.getX(), point.getY(), 0d, 0d );
+            return new BoundingBox( point.getX(), point.getY(), 0.0d, 0.0d );
         }
 
         double minX = bbox.getMinX();
