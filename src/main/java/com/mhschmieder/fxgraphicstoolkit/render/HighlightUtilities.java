@@ -28,7 +28,7 @@
  *
  * Project: https://github.com/mhschmieder/fxguitoolkit
  */
-package com.mhschmieder.fxgraphicstoolkit.graphics;
+package com.mhschmieder.fxgraphicstoolkit.render;
 
 import java.util.ArrayList;
 import java.util.List;

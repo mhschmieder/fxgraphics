@@ -21,19 +21,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the FxuiToolkit Library
+ * This file is part of the FxGraphicsToolkit Library
  *
  * You should have received a copy of the MIT License along with the
- * GuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
+ * FxGraphicsToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/fxguitoolkit
+ * Project: https://github.com/mhschmieder/fxgraphicstoolkit
  */
 /**
  * This package contains the FxGraphicsToolkit Library's utilities for core
- * graphics. Temporarily in FxGuiToolkit until FxGraphicsToolkit launches.
+ * graphics.
  *
  * @version 0.1
  *
  * @author Mark Schmieder
  */
-package com.mhschmieder.fxgraphicstoolkit.graphics;
+package com.mhschmieder.fxgraphicstoolkit;
