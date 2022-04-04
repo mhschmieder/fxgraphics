@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxgraphicstoolkit.geometry;
 
-import com.mhschmieder.commonstoolkit.physics.DistanceUnit;
+import com.mhschmieder.physicstoolkit.DistanceUnit;
 
 import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;

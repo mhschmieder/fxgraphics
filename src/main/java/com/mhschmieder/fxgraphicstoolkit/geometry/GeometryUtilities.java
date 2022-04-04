@@ -35,8 +35,8 @@ import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 import com.mhschmieder.commonstoolkit.math.Axis;
 import com.mhschmieder.commonstoolkit.math.MathExt;
 import com.mhschmieder.commonstoolkit.math.OrthogonalAxes;
-import com.mhschmieder.commonstoolkit.physics.DistanceUnit;
-import com.mhschmieder.commonstoolkit.physics.UnitConversion;
+import com.mhschmieder.physicstoolkit.DistanceUnit;
+import com.mhschmieder.physicstoolkit.UnitConversion;
 
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;

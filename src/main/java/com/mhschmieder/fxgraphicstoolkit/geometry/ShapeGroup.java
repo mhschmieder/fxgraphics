@@ -32,11 +32,11 @@ package com.mhschmieder.fxgraphicstoolkit.geometry;
 
 import java.util.List;
 
-import com.mhschmieder.commonstoolkit.physics.DistanceUnit;
-import com.mhschmieder.commonstoolkit.physics.UnitConversion;
 import com.mhschmieder.fxgraphicstoolkit.paint.ColorConstants;
 import com.mhschmieder.fxgraphicstoolkit.paint.ColorUtilities;
 import com.mhschmieder.fxgraphicstoolkit.render.HighlightUtilities;
+import com.mhschmieder.physicstoolkit.DistanceUnit;
+import com.mhschmieder.physicstoolkit.UnitConversion;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
