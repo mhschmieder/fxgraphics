@@ -32,9 +32,9 @@ package com.mhschmieder.fxgraphicstoolkit.geometry;
 
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 
-import com.mhschmieder.commonstoolkit.math.Axis;
-import com.mhschmieder.commonstoolkit.math.MathExt;
-import com.mhschmieder.commonstoolkit.math.OrthogonalAxes;
+import com.mhschmieder.mathtoolkit.Axis;
+import com.mhschmieder.mathtoolkit.MathExt;
+import com.mhschmieder.mathtoolkit.OrthogonalAxes;
 import com.mhschmieder.physicstoolkit.DistanceUnit;
 import com.mhschmieder.physicstoolkit.UnitConversion;
 
@@ -1256,8 +1256,8 @@ public final class GeometryUtilities {
 
     public static Vector3D negatePoint3D( final Vector3D point3D ) {
         final Vector3D negatedPoint3D = new Vector3D( -point3D.getX(),
-                                                    -point3D.getY(),
-                                                    -point3D.getZ() );
+                                                      -point3D.getY(),
+                                                      -point3D.getZ() );
         return negatedPoint3D;
     }
 
@@ -1756,8 +1756,8 @@ public final class GeometryUtilities {
     }
 
     public static Vector3D rotateInPlane( final Vector3D point3D,
-                                         final OrthogonalAxes orthogonalAxes,
-                                         final double angleInRadians ) {
+                                          final OrthogonalAxes orthogonalAxes,
+                                          final double angleInRadians ) {
         double axis1Value = 0.0d;
         double axis2Value = 0.0d;
 
@@ -2186,7 +2186,7 @@ public final class GeometryUtilities {
 
         return new BoundingBox( minX, minY, width, height );
     }
-    
+
     // Get an AWT rectangle, converted from generic Extents.
     public static java.awt.geom.Rectangle2D rectangleAwtFromExtents( final Extents2D extents ) {
         final double x = extents.getX();

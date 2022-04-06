@@ -1090,14 +1090,16 @@ public final class ShapeUtilities {
         circle.getTransforms().add( affineTransform );
 
         final double targetDimension = diameter * 1.5;
-        final Line targetX = new Line( -0.5d * targetDimension, 0.0d, 0.5d * targetDimension, 0.0d );
+        final Line targetX =
+                           new Line( -0.5d * targetDimension, 0.0d, 0.5d * targetDimension, 0.0d );
         targetX.getTransforms().add( affineTransform );
 
         // NOTE: At this time (20151020) it is unknown whether union will
         // produce the correct graphics.
         Shape result = Shape.union( circle, targetX );
 
-        final Line targetY = new Line( 0.0d, -0.5d * targetDimension, 0.0d, 0.5d * targetDimension );
+        final Line targetY =
+                           new Line( 0.0d, -0.5d * targetDimension, 0.0d, 0.5d * targetDimension );
         targetY.getTransforms().add( affineTransform );
         result = Shape.union( result, targetY );
 

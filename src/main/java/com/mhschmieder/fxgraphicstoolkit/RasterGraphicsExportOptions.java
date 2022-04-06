@@ -49,16 +49,16 @@ public final class RasterGraphicsExportOptions extends GraphicsExportOptions {
 
     // Partially specified constructor when everything but Image Size is known.
     public RasterGraphicsExportOptions( final boolean pExportAll,
-                                       final boolean pExportChart,
-                                       final boolean pExportAuxiliary ) {
+                                        final boolean pExportChart,
+                                        final boolean pExportAuxiliary ) {
         this( pExportAll, pExportChart, pExportAuxiliary, null );
     }
 
     // Fully specified constructor when everything is known.
     public RasterGraphicsExportOptions( final boolean pExportAll,
-                                       final boolean pExportChart,
-                                       final boolean pExportAuxiliary,
-                                       final ImageSize pImageSize ) {
+                                        final boolean pExportChart,
+                                        final boolean pExportAuxiliary,
+                                        final ImageSize pImageSize ) {
         super( pExportAll, pExportChart, pExportAuxiliary );
 
         imageSize = ( pImageSize != null ) ? new ImageSize( pImageSize ) : new ImageSize();
@@ -98,9 +98,9 @@ public final class RasterGraphicsExportOptions extends GraphicsExportOptions {
 
     // Fully specified pseudo-constructor.
     public void setRasterGraphicsExportOptions( final boolean pExportAll,
-                                               final boolean pExportChart,
-                                               final boolean pExportAuxiliary,
-                                               final ImageSize pImageSize ) {
+                                                final boolean pExportChart,
+                                                final boolean pExportAuxiliary,
+                                                final ImageSize pImageSize ) {
         setGraphicsExportOptions( pExportAll, pExportChart, pExportAuxiliary );
 
         imageSize.setImageSize( pImageSize );
@@ -109,9 +109,9 @@ public final class RasterGraphicsExportOptions extends GraphicsExportOptions {
     // Pseudo-copy constructor.
     public void setRasterGraphicsExportOptions( final RasterGraphicsExportOptions pRasterGraphicsExportOptions ) {
         setRasterGraphicsExportOptions( pRasterGraphicsExportOptions.isExportAll(),
-                                       pRasterGraphicsExportOptions.isExportChart(),
-                                       pRasterGraphicsExportOptions.isExportAuxiliary(),
-                                       pRasterGraphicsExportOptions.getImageSize() );
+                                        pRasterGraphicsExportOptions.isExportChart(),
+                                        pRasterGraphicsExportOptions.isExportAuxiliary(),
+                                        pRasterGraphicsExportOptions.getImageSize() );
     }
 
     public void setImageSize( final ImageSize pImageSize ) {
