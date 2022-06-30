@@ -79,7 +79,7 @@ public class InputEventUtilities {
     }
 
     public static final void zoom( final Node node, final ScrollEvent event ) {
-        final double zoomFactor = Math.pow( 1.003d, event.getDeltaY() );
+        final double zoomFactor = StrictMath.pow( 1.003d, event.getDeltaY() );
         final Point2D zoomPosition = new Point2D( event.getSceneX(), event.getSceneY() );
         zoom( node, zoomFactor, zoomPosition.getX(), zoomPosition.getY() );
     }

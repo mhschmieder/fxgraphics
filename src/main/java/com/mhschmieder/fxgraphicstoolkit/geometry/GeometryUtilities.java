@@ -628,10 +628,10 @@ public final class GeometryUtilities {
                                               final double end ) {
         final double inversePosition = 1.0d - position;
 
-        final double b1 = Math.pow( position, 3.0d );
+        final double b1 = StrictMath.pow( position, 3.0d );
         final double b2 = 3.0d * MathExt.sqr( position ) * inversePosition;
         final double b3 = 3.0d * MathExt.sqr( inversePosition ) * position;
-        final double b4 = Math.pow( inversePosition, 3.0d );
+        final double b4 = StrictMath.pow( inversePosition, 3.0d );
 
         final double cubicBezierValue = ( b1 * start ) + ( b2 * control1 ) + ( b3 * control2 )
                 + ( b4 * end );
