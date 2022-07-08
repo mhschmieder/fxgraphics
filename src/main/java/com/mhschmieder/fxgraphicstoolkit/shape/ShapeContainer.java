@@ -28,7 +28,7 @@
  *
  * Project: https://github.com/mhschmieder/fxguitoolkit
  */
-package com.mhschmieder.fxgraphicstoolkit.geometry;
+package com.mhschmieder.fxgraphicstoolkit.shape;
 
 import com.mhschmieder.physicstoolkit.DistanceUnit;
 

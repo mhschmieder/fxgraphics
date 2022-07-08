@@ -37,7 +37,7 @@ import java.util.Locale;
  * orientation values for graphical objects. For example, it may be relative to
  * a plane cutting through an object's geometric center or COG.
  *
- * NOTE: Other than for Presentation String, this is now redundant with JavaFX.
+ * NOTE: Other than for string conversions, this is now redundant with JavaFX.
  */
 public enum Orientation {
     HORIZONTAL, VERTICAL;

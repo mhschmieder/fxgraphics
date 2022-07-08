@@ -32,9 +32,9 @@ package com.mhschmieder.fxgraphicstoolkit.geometry;
 
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 
-import com.mhschmieder.mathtoolkit.MathExt;
-import com.mhschmieder.mathtoolkit.geometry.Axis;
-import com.mhschmieder.mathtoolkit.geometry.OrthogonalAxes;
+import com.mhschmieder.mathtoolkit.MathUtilities;
+import com.mhschmieder.mathtoolkit.geometry.euclidian.Axis;
+import com.mhschmieder.mathtoolkit.geometry.euclidian.OrthogonalAxes;
 import com.mhschmieder.physicstoolkit.DistanceUnit;
 import com.mhschmieder.physicstoolkit.UnitConversion;
 
@@ -430,10 +430,10 @@ public final class GeometryUtilities {
         // Gather the squares of relevant terms, as pre-factors.
         double rx = Math.abs( arcTo.getRadiusX() );
         double ry = Math.abs( arcTo.getRadiusY() );
-        double Prx = MathExt.sqr( rx );
-        double Pry = MathExt.sqr( ry );
-        final double Px1 = MathExt.sqr( x1 );
-        final double Py1 = MathExt.sqr( y1 );
+        double Prx = MathUtilities.sqr( rx );
+        double Pry = MathUtilities.sqr( ry );
+        final double Px1 = MathUtilities.sqr( x1 );
+        final double Py1 = MathUtilities.sqr( y1 );
 
         // Check that the two ellipse radii are large enough, via ratios.
         final double radiiCheck = ( Px1 / Prx ) + ( Py1 / Pry );
@@ -447,8 +447,8 @@ public final class GeometryUtilities {
             }
 
             // Recalculate the squares of the adjusted radii.
-            Prx = MathExt.sqr( rx );
-            Pry = MathExt.sqr( ry );
+            Prx = MathUtilities.sqr( rx );
+            Pry = MathUtilities.sqr( ry );
         }
 
         // Step 2: Compute (cx1, cy1).
@@ -475,8 +475,8 @@ public final class GeometryUtilities {
         double angleStartDegrees = Math.toDegrees( sign * Math.acos( p / n ) );
 
         // Compute the angle extent.
-        n = Math.sqrt( ( MathExt.sqr( ux ) + MathExt.sqr( uy ) )
-                * ( MathExt.sqr( vx ) + MathExt.sqr( vy ) ) );
+        n = Math.sqrt( ( MathUtilities.sqr( ux ) + MathUtilities.sqr( uy ) )
+                * ( MathUtilities.sqr( vx ) + MathUtilities.sqr( vy ) ) );
         p = ( ux * vx ) + ( uy * vy );
         sign = ( ( ( ux * vy ) - ( uy * vx ) ) < 0.0d ) ? -1d : 1.0d;
         double angleExtentDegrees = Math.toDegrees( sign * Math.acos( p / n ) );
@@ -629,8 +629,8 @@ public final class GeometryUtilities {
         final double inversePosition = 1.0d - position;
 
         final double b1 = StrictMath.pow( position, 3.0d );
-        final double b2 = 3.0d * MathExt.sqr( position ) * inversePosition;
-        final double b3 = 3.0d * MathExt.sqr( inversePosition ) * position;
+        final double b2 = 3.0d * MathUtilities.sqr( position ) * inversePosition;
+        final double b3 = 3.0d * MathUtilities.sqr( inversePosition ) * position;
         final double b4 = StrictMath.pow( inversePosition, 3.0d );
 
         final double cubicBezierValue = ( b1 * start ) + ( b2 * control1 ) + ( b3 * control2 )
@@ -868,9 +868,9 @@ public final class GeometryUtilities {
                                                    final double end ) {
         final double inversePosition = 1.0d - position;
 
-        final double b1 = MathExt.sqr( inversePosition );
+        final double b1 = MathUtilities.sqr( inversePosition );
         final double b2 = 2.0d * inversePosition * position;
-        final double b3 = MathExt.sqr( position );
+        final double b3 = MathUtilities.sqr( position );
 
         final double quadraticBezierValue = ( b1 * start ) + ( b2 * control ) + ( b3 * end );
 
@@ -1661,8 +1661,8 @@ public final class GeometryUtilities {
                 // dotprod is the length of the px,py vector
                 // projected on the x2,y2=>x1,y1 vector times the
                 // length of the x2,y2=>x1,y1 vector
-                projlenSq = MathExt.sqr( dotprod )
-                        / ( MathExt.sqr( x2Adjusted ) + MathExt.sqr( y2Adjusted ) );
+                projlenSq = MathUtilities.sqr( dotprod )
+                        / ( MathUtilities.sqr( x2Adjusted ) + MathUtilities.sqr( y2Adjusted ) );
             }
         }
 
@@ -1670,7 +1670,7 @@ public final class GeometryUtilities {
         // vector minus the length of its projection onto the line
         // (which is zero if the projection falls outside the range
         // of the line segment).
-        double lenSq = ( MathExt.sqr( pxAdjusted ) + MathExt.sqr( pyAdjusted ) ) - projlenSq;
+        double lenSq = ( MathUtilities.sqr( pxAdjusted ) + MathUtilities.sqr( pyAdjusted ) ) - projlenSq;
         if ( lenSq < 0.0d ) {
             lenSq = 0.0d;
         }

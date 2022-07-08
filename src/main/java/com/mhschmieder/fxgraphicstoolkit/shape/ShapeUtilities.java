@@ -28,11 +28,12 @@
  *
  * Project: https://github.com/mhschmieder/fxguitoolkit
  */
-package com.mhschmieder.fxgraphicstoolkit.geometry;
+package com.mhschmieder.fxgraphicstoolkit.shape;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mhschmieder.fxgraphicstoolkit.geometry.GeometryUtilities;
 import com.mhschmieder.fxgraphicstoolkit.paint.ColorConstants;
 
 import javafx.collections.ObservableList;
