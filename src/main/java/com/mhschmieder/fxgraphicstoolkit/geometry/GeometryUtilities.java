@@ -32,9 +32,9 @@ package com.mhschmieder.fxgraphicstoolkit.geometry;
 
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 
-import com.mhschmieder.mathtoolkit.Axis;
 import com.mhschmieder.mathtoolkit.MathExt;
-import com.mhschmieder.mathtoolkit.OrthogonalAxes;
+import com.mhschmieder.mathtoolkit.geometry.Axis;
+import com.mhschmieder.mathtoolkit.geometry.OrthogonalAxes;
 import com.mhschmieder.physicstoolkit.DistanceUnit;
 import com.mhschmieder.physicstoolkit.UnitConversion;
 
