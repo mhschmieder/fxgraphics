@@ -31,6 +31,7 @@
 package com.mhschmieder.fxgraphicstoolkit.geometry;
 
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
+import org.apache.commons.math3.util.FastMath;
 
 import com.mhschmieder.mathtoolkit.MathUtilities;
 import com.mhschmieder.mathtoolkit.geometry.euclidian.Axis;
@@ -628,10 +629,10 @@ public final class GeometryUtilities {
                                               final double end ) {
         final double inversePosition = 1.0d - position;
 
-        final double b1 = StrictMath.pow( position, 3.0d );
+        final double b1 = FastMath.pow( position, 3.0d );
         final double b2 = 3.0d * MathUtilities.sqr( position ) * inversePosition;
         final double b3 = 3.0d * MathUtilities.sqr( inversePosition ) * position;
-        final double b4 = StrictMath.pow( inversePosition, 3.0d );
+        final double b4 = FastMath.pow( inversePosition, 3.0d );
 
         final double cubicBezierValue = ( b1 * start ) + ( b2 * control1 ) + ( b3 * control2 )
                 + ( b4 * end );

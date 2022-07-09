@@ -30,6 +30,8 @@
  */
 package com.mhschmieder.fxgraphicstoolkit.input;
 
+import org.apache.commons.math3.util.FastMath;
+
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -79,7 +81,7 @@ public class InputEventUtilities {
     }
 
     public static final void zoom( final Node node, final ScrollEvent event ) {
-        final double zoomFactor = StrictMath.pow( 1.003d, event.getDeltaY() );
+        final double zoomFactor = FastMath.pow( 1.003d, event.getDeltaY() );
         final Point2D zoomPosition = new Point2D( event.getSceneX(), event.getSceneY() );
         zoom( node, zoomFactor, zoomPosition.getX(), zoomPosition.getY() );
     }
