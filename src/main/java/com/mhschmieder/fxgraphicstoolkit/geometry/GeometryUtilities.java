@@ -1243,16 +1243,23 @@ public final class GeometryUtilities {
     }
 
     public static Point2D negatePoint2D( final Point2D point2D, final Axis axis ) {
+        Point2D negatedPoint = Point2D.ZERO;
+        
         switch ( axis ) {
         case X:
-            return new Point2D( -point2D.getX(), point2D.getY() );
+            negatedPoint = new Point2D( -point2D.getX(), point2D.getY() );
+            break;
         case Y:
-            return new Point2D( point2D.getX(), -point2D.getY() );
+            negatedPoint = new Point2D( point2D.getX(), -point2D.getY() );
+            break;
         case Z:
-            return new Point2D( point2D.getX(), point2D.getY() );
+            negatedPoint = new Point2D( point2D.getX(), point2D.getY() );
+            break;
         default:
-            return Point2D.ZERO;
+            break;
         }
+        
+        return negatedPoint;
     }
 
     public static Vector3D negatePoint3D( final Vector3D point3D ) {
@@ -1263,16 +1270,23 @@ public final class GeometryUtilities {
     }
 
     public static Vector3D negatePoint3D( final Vector3D point3D, final Axis axis ) {
+        Vector3D negatedPoint = Vector3D.ZERO;
+        
         switch ( axis ) {
         case X:
-            return new Vector3D( -point3D.getX(), point3D.getY(), point3D.getZ() );
+            negatedPoint = new Vector3D( -point3D.getX(), point3D.getY(), point3D.getZ() );
+            break;
         case Y:
-            return new Vector3D( point3D.getX(), -point3D.getY(), point3D.getZ() );
+            negatedPoint = new Vector3D( point3D.getX(), -point3D.getY(), point3D.getZ() );
+            break;
         case Z:
-            return new Vector3D( point3D.getX(), point3D.getY(), -point3D.getZ() );
+            negatedPoint = new Vector3D( point3D.getX(), point3D.getY(), -point3D.getZ() );
+            break;
         default:
-            return Vector3D.ZERO;
+            break;
         }
+        
+        return negatedPoint;
     }
 
     /*
@@ -1304,16 +1318,23 @@ public final class GeometryUtilities {
     public static Point2D projectToPlane( final Vector3D point3D,
                                           final OrthogonalAxes orthogonalAxes ) {
         // Project a 3D point to a plane defined by an orthogonal axis pair.
+        Point2D projectedPoint = Point2D.ZERO;
+        
         switch ( orthogonalAxes ) {
         case XY:
-            return new Point2D( point3D.getX(), point3D.getY() );
+            projectedPoint = new Point2D( point3D.getX(), point3D.getY() );
+            break;
         case XZ:
-            return new Point2D( point3D.getX(), point3D.getZ() );
+            projectedPoint = new Point2D( point3D.getX(), point3D.getZ() );
+            break;
         case YZ:
-            return new Point2D( point3D.getY(), point3D.getZ() );
+            projectedPoint = new Point2D( point3D.getY(), point3D.getZ() );
+            break;
         default:
-            return Point2D.ZERO;
+            break;
         }
+        
+        return projectedPoint;
     }
 
     /**
@@ -1785,16 +1806,23 @@ public final class GeometryUtilities {
         final double axis2ValueRotated = ( axis1Value * Math.sin( angleInRadians ) )
                 + ( axis2Value * Math.cos( angleInRadians ) );
 
+        Vector3D rotatedPoint = Vector3D.ZERO;
+        
         switch ( orthogonalAxes ) {
         case XY:
-            return new Vector3D( axis1ValueRotated, axis2ValueRotated, 0.0d );
+            rotatedPoint = new Vector3D( axis1ValueRotated, axis2ValueRotated, 0.0d );
+            break;
         case XZ:
-            return new Vector3D( axis1ValueRotated, 0.0d, axis2ValueRotated );
+            rotatedPoint = new Vector3D( axis1ValueRotated, 0.0d, axis2ValueRotated );
+            break;
         case YZ:
-            return new Vector3D( 0.0d, axis1ValueRotated, axis2ValueRotated );
+            rotatedPoint = new Vector3D( 0.0d, axis1ValueRotated, axis2ValueRotated );
+            break;
         default:
-            return Vector3D.ZERO;
+            break;
         }
+        
+        return rotatedPoint;
     }
 
     /**

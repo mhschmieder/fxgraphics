@@ -44,9 +44,15 @@ public enum Orientation {
 
     @SuppressWarnings("nls")
     public static Orientation abbreviatedValueOf( final String abbreviatedOrientation ) {
-        return ( "hz".equalsIgnoreCase( abbreviatedOrientation ) )
-            ? HORIZONTAL
-            : ( "vt".equalsIgnoreCase( abbreviatedOrientation ) ) ? VERTICAL : defaultValue();
+        if ( "hz".equalsIgnoreCase( abbreviatedOrientation ) ) {
+            return HORIZONTAL;
+        }
+
+        if ( "vt".equalsIgnoreCase( abbreviatedOrientation ) ) {
+            return VERTICAL;
+        }
+        
+        return defaultValue();
     }
 
     public static Orientation canonicalValueOf( final String canonicalOrientation ) {
@@ -60,16 +66,22 @@ public enum Orientation {
     }
 
     public final String toAbbreviatedString() {
+        String abbreviatedString = null;
+        
         switch ( this ) {
         case HORIZONTAL:
-            return "hz"; //$NON-NLS-1$
+            abbreviatedString = "hz"; //$NON-NLS-1$
+            break;
         case VERTICAL:
-            return "vt"; //$NON-NLS-1$
+            abbreviatedString = "vt"; //$NON-NLS-1$
+            break;
         default:
             final String errMessage = "Unexpected " //$NON-NLS-1$
                     + this.getClass().getSimpleName() + " " + this; //$NON-NLS-1$
             throw new IllegalArgumentException( errMessage );
         }
+        
+        return abbreviatedString;
     }
 
     public final String toCanonicalString() {
@@ -77,16 +89,22 @@ public enum Orientation {
     }
 
     public final String toPresentationString() {
+        String presentationString = null;
+        
         switch ( this ) {
         case HORIZONTAL:
-            return "Horizontal"; //$NON-NLS-1$
+            presentationString = "Horizontal"; //$NON-NLS-1$
+            break;
         case VERTICAL:
-            return "Vertical"; //$NON-NLS-1$
+            presentationString = "Vertical"; //$NON-NLS-1$
+            break;
         default:
             final String errMessage = "Unexpected " //$NON-NLS-1$
                     + this.getClass().getSimpleName() + " " + this; //$NON-NLS-1$
             throw new IllegalArgumentException( errMessage );
         }
+        
+        return presentationString;
     }
 
 }
