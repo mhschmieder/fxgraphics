@@ -138,7 +138,7 @@ public final class GeometryUtilities {
                                     final boolean useFuzzyEq ) {
         if ( useFuzzyEq ) {
             // Add a fudge factor to account for floating point imprecision.
-            final double fudgeFactor = 0.02d * Math.max( bounds.getWidth(), bounds.getHeight() );
+            final double fudgeFactor = 0.02d * FastMath.max( bounds.getWidth(), bounds.getHeight() );
             final Rectangle2D rect2 = new Rectangle2D( bounds.getMinX() - fudgeFactor,
                                                        bounds.getMinY() - fudgeFactor,
                                                        bounds.getWidth() + fudgeFactor,
@@ -420,17 +420,17 @@ public final class GeometryUtilities {
         final double dy2 = 0.5d * ( startY - endY );
 
         // Convert ellipse rotation angle from degrees to radians.
-        final double xAxisRotationRadians = Math.toRadians( arcTo.getXAxisRotation() );
-        final double cosAngle = Math.cos( xAxisRotationRadians );
-        final double sinAngle = Math.sin( xAxisRotationRadians );
+        final double xAxisRotationRadians = FastMath.toRadians( arcTo.getXAxisRotation() );
+        final double cosAngle = FastMath.cos( xAxisRotationRadians );
+        final double sinAngle = FastMath.sin( xAxisRotationRadians );
 
         // Step 1: Compute (x1, y1).
         final double x1 = ( cosAngle * dx2 ) + ( sinAngle * dy2 );
         final double y1 = ( -sinAngle * dx2 ) + ( cosAngle * dy2 );
 
         // Gather the squares of relevant terms, as pre-factors.
-        double rx = Math.abs( arcTo.getRadiusX() );
-        double ry = Math.abs( arcTo.getRadiusY() );
+        double rx = FastMath.abs( arcTo.getRadiusX() );
+        double ry = FastMath.abs( arcTo.getRadiusY() );
         double Prx = MathUtilities.sqr( rx );
         double Pry = MathUtilities.sqr( ry );
         final double Px1 = MathUtilities.sqr( x1 );
@@ -439,7 +439,7 @@ public final class GeometryUtilities {
         // Check that the two ellipse radii are large enough, via ratios.
         final double radiiCheck = ( Px1 / Prx ) + ( Py1 / Pry );
         if ( radiiCheck > 1.0d ) {
-            final double radialRoot = Math.sqrt( radiiCheck );
+            final double radialRoot = FastMath.sqrt( radiiCheck );
             rx *= radialRoot;
             ry *= radialRoot;
 
@@ -458,8 +458,8 @@ public final class GeometryUtilities {
         double sign = ( ( localLargeArcFlag == localSweepFlag ) ? -1d : 1.0d );
         double sq = ( ( Prx * Pry ) - ( Prx * Py1 ) - ( Pry * Px1 ) )
                 / ( ( Prx * Py1 ) + ( Pry * Px1 ) );
-        sq = Math.max( 0.0d, sq );
-        final double coef = ( sign * Math.sqrt( sq ) );
+        sq = FastMath.max( 0.0d, sq );
+        final double coef = ( sign * FastMath.sqrt( sq ) );
         final double cx1 = coef * ( ( rx * y1 ) / ry );
         final double cy1 = coef * ( -( ry * x1 ) / rx );
 
@@ -470,17 +470,17 @@ public final class GeometryUtilities {
         final double vy = ( -y1 - cy1 ) / ry;
 
         // Compute the angle start.
-        double n = Math.hypot( ux, uy );
+        double n = FastMath.hypot( ux, uy );
         double p = ux; // (1d * ux) + (0d * uy)
         sign = ( ( uy < 0.0d ) ? -1d : 1.0d );
-        double angleStartDegrees = Math.toDegrees( sign * Math.acos( p / n ) );
+        double angleStartDegrees = FastMath.toDegrees( sign * FastMath.acos( p / n ) );
 
         // Compute the angle extent.
-        n = Math.sqrt( ( MathUtilities.sqr( ux ) + MathUtilities.sqr( uy ) )
+        n = FastMath.sqrt( ( MathUtilities.sqr( ux ) + MathUtilities.sqr( uy ) )
                 * ( MathUtilities.sqr( vx ) + MathUtilities.sqr( vy ) ) );
         p = ( ux * vx ) + ( uy * vy );
         sign = ( ( ( ux * vy ) - ( uy * vx ) ) < 0.0d ) ? -1d : 1.0d;
-        double angleExtentDegrees = Math.toDegrees( sign * Math.acos( p / n ) );
+        double angleExtentDegrees = FastMath.toDegrees( sign * FastMath.acos( p / n ) );
         if ( !localSweepFlag && ( angleExtentDegrees > 0.0d ) ) {
             angleExtentDegrees -= 360d;
         }
@@ -493,9 +493,9 @@ public final class GeometryUtilities {
         // Now all we need is the mid-way angle, and simple trigonometry then
         // gives us the (x, y) coordinate pair for the arc mid-point.
         final double arcMidAngleDegrees = 0.5d * ( angleStartDegrees + angleExtentDegrees );
-        final double arcMidAngleRadians = Math.toRadians( arcMidAngleDegrees );
-        final double arcMidX = Math.cos( arcMidAngleRadians );
-        final double arcMidY = Math.sin( arcMidAngleRadians );
+        final double arcMidAngleRadians = FastMath.toRadians( arcMidAngleDegrees );
+        final double arcMidX = FastMath.cos( arcMidAngleRadians );
+        final double arcMidY = FastMath.sin( arcMidAngleRadians );
         final Point2D arcMidPoint = new Point2D( arcMidX, arcMidY );
 
         return arcMidPoint;
@@ -693,12 +693,12 @@ public final class GeometryUtilities {
      * @return A combined bounding box, if the two intersect
      */
     public static BoundingBox getIntersection( final Bounds rect1, final Bounds rect2 ) {
-        final double x1 = Math.max( rect1.getMinX(), rect2.getMinX() );
-        final double y1 = Math.max( rect1.getMinY(), rect2.getMinY() );
-        final double z1 = Math.max( rect1.getMinZ(), rect2.getMinZ() );
-        final double x2 = Math.min( rect1.getMaxX(), rect2.getMaxX() );
-        final double y2 = Math.min( rect1.getMaxY(), rect2.getMaxY() );
-        final double z2 = Math.min( rect1.getMaxZ(), rect2.getMaxZ() );
+        final double x1 = FastMath.max( rect1.getMinX(), rect2.getMinX() );
+        final double y1 = FastMath.max( rect1.getMinY(), rect2.getMinY() );
+        final double z1 = FastMath.max( rect1.getMinZ(), rect2.getMinZ() );
+        final double x2 = FastMath.min( rect1.getMaxX(), rect2.getMaxX() );
+        final double y2 = FastMath.min( rect1.getMaxY(), rect2.getMaxY() );
+        final double z2 = FastMath.min( rect1.getMaxZ(), rect2.getMaxZ() );
         final double width = x2 - x1;
         final double height = y2 - y1;
         final double depth = z2 - z1;
@@ -722,10 +722,10 @@ public final class GeometryUtilities {
      * @return A combined rectangle, if the two intersect
      */
     public static Rectangle2D getIntersection( final Rectangle2D rect1, final Rectangle2D rect2 ) {
-        final double x1 = Math.max( rect1.getMinX(), rect2.getMinX() );
-        final double y1 = Math.max( rect1.getMinY(), rect2.getMinY() );
-        final double x2 = Math.min( rect1.getMaxX(), rect2.getMaxX() );
-        final double y2 = Math.min( rect1.getMaxY(), rect2.getMaxY() );
+        final double x1 = FastMath.max( rect1.getMinX(), rect2.getMinX() );
+        final double y1 = FastMath.max( rect1.getMinY(), rect2.getMinY() );
+        final double x2 = FastMath.min( rect1.getMaxX(), rect2.getMaxX() );
+        final double y2 = FastMath.min( rect1.getMaxY(), rect2.getMaxY() );
         final double width = x2 - x1;
         final double height = y2 - y1;
         final boolean intersects = ( width >= 0 ) && ( height >= 0 );
@@ -1368,7 +1368,7 @@ public final class GeometryUtilities {
                                      final double y2,
                                      final double px,
                                      final double py ) {
-        return Math.sqrt( ptLineDistSq( x1, y1, x2, y2, px, py ) );
+        return FastMath.sqrt( ptLineDistSq( x1, y1, x2, y2, px, py ) );
     }
 
     /**
@@ -1557,7 +1557,7 @@ public final class GeometryUtilities {
                                     final double y2,
                                     final double px,
                                     final double py ) {
-        return Math.sqrt( ptSegDistSq( x1, y1, x2, y2, px, py ) );
+        return FastMath.sqrt( ptSegDistSq( x1, y1, x2, y2, px, py ) );
     }
 
     /**
@@ -1800,11 +1800,11 @@ public final class GeometryUtilities {
             break;
         }
 
-        final double axis1ValueRotated = ( axis1Value * Math.cos( angleInRadians ) )
-                - ( axis2Value * Math.sin( angleInRadians ) );
+        final double axis1ValueRotated = ( axis1Value * FastMath.cos( angleInRadians ) )
+                - ( axis2Value * FastMath.sin( angleInRadians ) );
 
-        final double axis2ValueRotated = ( axis1Value * Math.sin( angleInRadians ) )
-                + ( axis2Value * Math.cos( angleInRadians ) );
+        final double axis2ValueRotated = ( axis1Value * FastMath.sin( angleInRadians ) )
+                + ( axis2Value * FastMath.cos( angleInRadians ) );
 
         Vector3D rotatedPoint = Vector3D.ZERO;
         
@@ -1844,7 +1844,7 @@ public final class GeometryUtilities {
                                      final double y,
                                      final double offsetX,
                                      final double theta ) {
-        final double xTransformed = ( ( x * Math.cos( theta ) ) - ( y * Math.sin( theta ) ) )
+        final double xTransformed = ( ( x * FastMath.cos( theta ) ) - ( y * FastMath.sin( theta ) ) )
                 + offsetX;
         return xTransformed;
     }
@@ -1868,7 +1868,7 @@ public final class GeometryUtilities {
                                      final double y,
                                      final double offsetY,
                                      final double theta ) {
-        final double yTransformed = ( ( x * Math.sin( theta ) ) + ( y * Math.cos( theta ) ) )
+        final double yTransformed = ( ( x * FastMath.sin( theta ) ) + ( y * FastMath.cos( theta ) ) )
                 + offsetY;
         return yTransformed;
     }
@@ -1998,10 +1998,10 @@ public final class GeometryUtilities {
             // are non-existent and we can return any non-existent rectangle
             // as an answer. Thus, returning r2 meets that criterion.
             // Either way, r2 is our answer.
-            return new java.awt.Rectangle( ( int ) Math.round( r2.getMinX() ),
-                                           ( int ) Math.round( r2.getMinY() ),
-                                           ( int ) Math.round( r2.getWidth() ),
-                                           ( int ) Math.round( r2.getHeight() ) );
+            return new java.awt.Rectangle( ( int ) FastMath.round( r2.getMinX() ),
+                                           ( int ) FastMath.round( r2.getMinY() ),
+                                           ( int ) FastMath.round( r2.getWidth() ),
+                                           ( int ) FastMath.round( r2.getHeight() ) );
         }
 
         double rx2 = r2.getWidth();
@@ -2013,10 +2013,10 @@ public final class GeometryUtilities {
             // are non-existent and we can return any non-existent rectangle
             // as an answer. Thus, returning r1 meets that criterion.
             // Either way, r1 is our answer.
-            return new java.awt.Rectangle( ( int ) Math.round( r1.getMinX() ),
-                                           ( int ) Math.round( r1.getMinY() ),
-                                           ( int ) Math.round( r1.getWidth() ),
-                                           ( int ) Math.round( r1.getHeight() ) );
+            return new java.awt.Rectangle( ( int ) FastMath.round( r1.getMinX() ),
+                                           ( int ) FastMath.round( r1.getMinY() ),
+                                           ( int ) FastMath.round( r1.getWidth() ),
+                                           ( int ) FastMath.round( r1.getHeight() ) );
         }
 
         double tx1 = r1.getMinX();
@@ -2055,10 +2055,10 @@ public final class GeometryUtilities {
             ty2 = Double.MAX_VALUE;
         }
 
-        return new java.awt.Rectangle( ( int ) Math.round( tx1 ),
-                                       ( int ) Math.round( ty1 ),
-                                       ( int ) Math.round( tx2 ),
-                                       ( int ) Math.round( ty2 ) );
+        return new java.awt.Rectangle( ( int ) FastMath.round( tx1 ),
+                                       ( int ) FastMath.round( ty1 ),
+                                       ( int ) FastMath.round( tx2 ),
+                                       ( int ) FastMath.round( ty2 ) );
     }
 
     /**

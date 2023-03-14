@@ -33,6 +33,8 @@ package com.mhschmieder.fxgraphicstoolkit.shape;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.math3.util.FastMath;
+
 import com.mhschmieder.fxgraphicstoolkit.geometry.GeometryUtilities;
 import com.mhschmieder.fxgraphicstoolkit.paint.ColorConstants;
 
@@ -267,16 +269,16 @@ public final class ShapeUtilities {
                                     final boolean closed ) {
         // Draw a single arc, at the specified distance from its bounding box.
         // NOTE: We flip y-axis related values due to screen coordinates.
-        final double beginAngleRadians = Math.toRadians( arcStartDegrees );
-        final double cosBegin = Math.cos( beginAngleRadians );
-        final double sinBegin = -Math.sin( beginAngleRadians );
+        final double beginAngleRadians = FastMath.toRadians( arcStartDegrees );
+        final double cosBegin = FastMath.cos( beginAngleRadians );
+        final double sinBegin = -FastMath.sin( beginAngleRadians );
         final double startX = left + ( arcRadiusX * ( 1.0d + cosBegin ) );
         final double startY = top + ( arcRadiusY * ( 1.0d + sinBegin ) );
         pathElements.add( new MoveTo( startX, startY ) );
 
-        final double endAngleRadians = Math.toRadians( arcExtentDegrees ) + beginAngleRadians;
-        final double cosEnd = Math.cos( endAngleRadians );
-        final double sinEnd = -Math.sin( endAngleRadians );
+        final double endAngleRadians = FastMath.toRadians( arcExtentDegrees ) + beginAngleRadians;
+        final double cosEnd = FastMath.cos( endAngleRadians );
+        final double sinEnd = -FastMath.sin( endAngleRadians );
         final double endX = left + ( arcRadiusX * ( 1.0d + cosEnd ) );
         final double endY = top + ( arcRadiusY * ( 1.0d + sinEnd ) );
         pathElements.add( new ArcTo( arcRadiusX,
@@ -902,7 +904,7 @@ public final class ShapeUtilities {
                                     final double[] xPts,
                                     final double[] yPts ) {
         // NOTE: Substituting Polyline for now, as Polygon isn't showing up.
-        final int numberOfVertices = Math.min( xPts.length, yPts.length );
+        final int numberOfVertices = FastMath.min( xPts.length, yPts.length );
         final List< Double > coordinates = new ArrayList<>( 2 * ( numberOfVertices + 1 ) );
         for ( int i = 0; i < numberOfVertices; i++ ) {
             coordinates.add( Double.valueOf( xPts[ i ] ) );
@@ -927,7 +929,7 @@ public final class ShapeUtilities {
     public static void drawPolyline( final List< Shape > polylineGraphics,
                                      final double[] xPts,
                                      final double[] yPts ) {
-        final int numberOfVertices = Math.min( xPts.length, yPts.length );
+        final int numberOfVertices = FastMath.min( xPts.length, yPts.length );
         final List< Double > coordinates = new ArrayList<>( 2 * numberOfVertices );
         for ( int i = 0; i < numberOfVertices; i++ ) {
             coordinates.add( Double.valueOf( xPts[ i ] ) );

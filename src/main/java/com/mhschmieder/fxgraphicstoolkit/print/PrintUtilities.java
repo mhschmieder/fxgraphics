@@ -30,6 +30,8 @@
  */
 package com.mhschmieder.fxgraphicstoolkit.print;
 
+import org.apache.commons.math3.util.FastMath;
+
 import javafx.print.JobSettings;
 import javafx.print.PageLayout;
 import javafx.print.PrinterJob;
@@ -57,7 +59,7 @@ public final class PrintUtilities {
         final double scaleX = pageLayout.getPrintableWidth() / node.getBoundsInParent().getWidth();
         final double scaleY =
                             pageLayout.getPrintableHeight() / node.getBoundsInParent().getHeight();
-        final double minimumScale = Math.min( scaleX, scaleY );
+        final double minimumScale = FastMath.min( scaleX, scaleY );
         final Scale printJobScale = new Scale( minimumScale, minimumScale );
 
         return printJobScale;

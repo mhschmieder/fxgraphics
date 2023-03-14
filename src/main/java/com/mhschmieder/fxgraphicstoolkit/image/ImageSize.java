@@ -34,6 +34,8 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Locale;
 
+import org.apache.commons.math3.util.FastMath;
+
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Dimension2D;
@@ -134,7 +136,7 @@ public class ImageSize {
         }
 
         // NOTE: This is a fail-safe in case of any uncaught exceptions.
-        return Math.min( PIXEL_DIMENSIONS_HEIGHT_DEFAULT, PIXEL_DIMENSIONS_WIDTH_DEFAULT );
+        return FastMath.min( PIXEL_DIMENSIONS_HEIGHT_DEFAULT, PIXEL_DIMENSIONS_WIDTH_DEFAULT );
     }
 
     // Utility method to convert a pixel dimension from a double
