@@ -28,7 +28,7 @@
  *
  * Project: https://github.com/mhschmieder/fxgraphicstoolkit
  */
-package com.mhschmieder.fxgraphicstoolkit;
+package com.mhschmieder.fxgraphicstoolkit.io;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
