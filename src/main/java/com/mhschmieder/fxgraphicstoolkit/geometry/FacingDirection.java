@@ -33,47 +33,44 @@ package com.mhschmieder.fxgraphicstoolkit.geometry;
 import java.util.Locale;
 
 /**
- * The <code>Orientation</code> enum is an enumeration for conventional
- * orientation values for graphical objects. For example, it may be relative to
- * a plane cutting through an object's geometric center or COG.
+ * The <code>FacingDirection</code> class is an enumeration for facing direction
+ * values for three dimensional objects in a two dimensional projection plane.
  *
- * NOTE: Other than for string conversions, this is now redundant with JavaFX.
+ * NOTE: Other than for Presentation String, this is now redundant with JavaFX.
  */
-public enum Orientation {
-    HORIZONTAL, VERTICAL;
+public enum FacingDirection {
+    RIGHT, LEFT;
 
-    @SuppressWarnings("nls")
-    public static Orientation abbreviatedValueOf( final String abbreviatedOrientation ) {
-        if ( "hz".equalsIgnoreCase( abbreviatedOrientation ) ) {
-            return HORIZONTAL;
+    public static FacingDirection abbreviatedValueOf( final String abbreviatedFacingDirection ) {
+        if ( "r".equalsIgnoreCase( abbreviatedFacingDirection ) ) { //$NON-NLS-1$
+            return RIGHT;
         }
-
-        if ( "vt".equalsIgnoreCase( abbreviatedOrientation ) ) {
-            return VERTICAL;
+        else if ( "l".equalsIgnoreCase( abbreviatedFacingDirection ) ) { //$NON-NLS-1$
+            return LEFT;
         }
         
         return defaultValue();
     }
 
-    public static Orientation canonicalValueOf( final String canonicalOrientation ) {
-        return ( canonicalOrientation != null )
-            ? valueOf( canonicalOrientation.toUpperCase( Locale.ENGLISH ) )
+    public static FacingDirection canonicalValueOf( final String canonicalFacingDirection ) {
+        return ( canonicalFacingDirection != null )
+            ? valueOf( canonicalFacingDirection.toUpperCase( Locale.ENGLISH ) )
             : defaultValue();
     }
 
-    public static Orientation defaultValue() {
-        return HORIZONTAL;
+    public static FacingDirection defaultValue() {
+        return RIGHT;
     }
 
     public final String toAbbreviatedString() {
         String abbreviatedString = null;
         
         switch ( this ) {
-        case HORIZONTAL:
-            abbreviatedString = "hz"; //$NON-NLS-1$
+        case RIGHT:
+            abbreviatedString = "r"; //$NON-NLS-1$
             break;
-        case VERTICAL:
-            abbreviatedString = "vt"; //$NON-NLS-1$
+        case LEFT:
+            abbreviatedString = "l"; //$NON-NLS-1$
             break;
         default:
             final String errMessage = "Unexpected " //$NON-NLS-1$
@@ -92,11 +89,11 @@ public enum Orientation {
         String presentationString = null;
         
         switch ( this ) {
-        case HORIZONTAL:
-            presentationString = "Horizontal"; //$NON-NLS-1$
+        case RIGHT:
+            presentationString = "Right"; //$NON-NLS-1$
             break;
-        case VERTICAL:
-            presentationString = "Vertical"; //$NON-NLS-1$
+        case LEFT:
+            presentationString = "Left"; //$NON-NLS-1$
             break;
         default:
             final String errMessage = "Unexpected " //$NON-NLS-1$
