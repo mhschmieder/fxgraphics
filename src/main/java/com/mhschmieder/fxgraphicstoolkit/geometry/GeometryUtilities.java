@@ -31,6 +31,7 @@
 package com.mhschmieder.fxgraphicstoolkit.geometry;
 
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
+import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.apache.commons.math3.util.FastMath;
 
 import com.mhschmieder.mathtoolkit.MathUtilities;
@@ -42,6 +43,7 @@ import com.mhschmieder.physicstoolkit.UnitConversion;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
+import javafx.geometry.Point3D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.shape.ArcTo;
 import javafx.scene.shape.CubicCurveTo;
@@ -154,6 +156,21 @@ public final class GeometryUtilities {
         final Point2D p2 = new Point2D( line.getEndX(), line.getEndY() );
 
         return area.contains( p1 ) || area.contains( p2 );
+    }
+
+    // TODO: Rout out the remaining calls and replace with VectorUtilities
+    //  version that uses Apache Math Vector3D and doesn't depend on JavaFX.
+    public static Point2D copyPoint2D( final Point2D point2D ) {
+        final Point2D copiedPoint2D = new Point2D( point2D.getX(), point2D.getY() );
+        return copiedPoint2D;
+    }
+
+    // TODO: Rout out the remaining calls and replace with VectorUtilities
+    //  version that uses Apache Math Vector3D and doesn't depend on JavaFX.
+    public static Point3D copyPoint3D( final Point3D point3D ) {
+        final Point3D copiedPoint3D =
+                                     new Point3D( point3D.getX(), point3D.getY(), point3D.getZ() );
+        return copiedPoint3D;
     }
 
     /**
