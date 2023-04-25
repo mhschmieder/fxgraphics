@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2023 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -1131,7 +1131,7 @@ public final class GeometryUtilities {
     /*
      * Returns a new transform from a supplied reference point.
      */
-    public static Affine getReferencePointTransform( final Point2D referencePoint ) {
+    public static Affine getReferencePointTransform( final Vector2D referencePoint ) {
         final Affine affineTransform = new Affine();
 
         // Effectively move to the reference point as the origin.
@@ -1332,20 +1332,20 @@ public final class GeometryUtilities {
         return out;
     }
 
-    public static Point2D projectToPlane( final Vector3D point3D,
-                                          final OrthogonalAxes orthogonalAxes ) {
+    public static Vector2D projectToPlane( final Vector3D point3D,
+                                           final OrthogonalAxes orthogonalAxes ) {
         // Project a 3D point to a plane defined by an orthogonal axis pair.
-        Point2D projectedPoint = Point2D.ZERO;
+        Vector2D projectedPoint = Vector2D.ZERO;
         
         switch ( orthogonalAxes ) {
         case XY:
-            projectedPoint = new Point2D( point3D.getX(), point3D.getY() );
+            projectedPoint = new Vector2D( point3D.getX(), point3D.getY() );
             break;
         case XZ:
-            projectedPoint = new Point2D( point3D.getX(), point3D.getZ() );
+            projectedPoint = new Vector2D( point3D.getX(), point3D.getZ() );
             break;
         case YZ:
-            projectedPoint = new Point2D( point3D.getY(), point3D.getZ() );
+            projectedPoint = new Vector2D( point3D.getY(), point3D.getZ() );
             break;
         default:
             break;
