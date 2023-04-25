@@ -30,13 +30,10 @@
  */
 package com.mhschmieder.fxgraphicstoolkit.geometry;
 
-import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.apache.commons.math3.util.FastMath;
 
 import com.mhschmieder.mathtoolkit.MathUtilities;
-import com.mhschmieder.mathtoolkit.geometry.euclidian.Axis;
-import com.mhschmieder.mathtoolkit.geometry.euclidian.OrthogonalAxes;
 import com.mhschmieder.physicstoolkit.DistanceUnit;
 import com.mhschmieder.physicstoolkit.UnitConversion;
 
@@ -158,18 +155,15 @@ public final class GeometryUtilities {
         return area.contains( p1 ) || area.contains( p2 );
     }
 
-    // TODO: Rout out the remaining calls and replace with VectorUtilities
-    //  version that uses Apache Math Vector3D and doesn't depend on JavaFX.
+    // TODO: Try to replace usages with VectorUtilities version (Vector2D).
     public static Point2D copyPoint2D( final Point2D point2D ) {
         final Point2D copiedPoint2D = new Point2D( point2D.getX(), point2D.getY() );
         return copiedPoint2D;
     }
 
-    // TODO: Rout out the remaining calls and replace with VectorUtilities
-    //  version that uses Apache Math Vector3D and doesn't depend on JavaFX.
+    // TODO: Try to replace usages with VectorUtilities version (Vector3D).
     public static Point3D copyPoint3D( final Point3D point3D ) {
-        final Point3D copiedPoint3D =
-                                     new Point3D( point3D.getX(), point3D.getY(), point3D.getZ() );
+        final Point3D copiedPoint3D = new Point3D( point3D.getX(), point3D.getY(), point3D.getZ() );
         return copiedPoint3D;
     }
 
@@ -763,42 +757,6 @@ public final class GeometryUtilities {
         return awtLine;
     }
 
-    /**
-     * Returns the octant of a 3D point relative to an origin:
-     * 1, 2, 3, 4, 5, 6, 7, or 8
-     *
-     * @param point
-     *            The point to judge relative to the origin
-     * @param origin
-     *            The origin to reference for determining the octant of the
-     *            supplied 3D point
-     * @return The octant number for a supplied 3D point
-     */
-    public static int getOctant( final Vector3D point, final Vector3D origin ) {
-        if ( point.getZ() < origin.getZ() ) {
-            if ( point.getX() < origin.getX() ) {
-                if ( point.getY() >= origin.getY() ) {
-                    return 6;
-                }
-                return 7;
-            }
-            if ( point.getY() >= origin.getY() ) {
-                return 5;
-            }
-            return 8;
-        }
-        if ( point.getX() < origin.getX() ) {
-            if ( point.getY() >= origin.getY() ) {
-                return 2;
-            }
-            return 3;
-        }
-        if ( point.getY() >= origin.getY() ) {
-            return 1;
-        }
-        return 4;
-    }
-
     /* Get an AWT point, converted from JavaFX. */
     public static java.awt.geom.Point2D getPoint( final Point2D fxPoint ) {
         final java.awt.geom.Point2D awtPoint = new java.awt.geom.Point2D.Double( fxPoint.getX(),
@@ -893,30 +851,6 @@ public final class GeometryUtilities {
         final double quadraticBezierValue = ( b1 * start ) + ( b2 * control ) + ( b3 * end );
 
         return quadraticBezierValue;
-    }
-
-    /**
-     * Returns the quadrant of a 2D point relative to an origin:
-     * 1, 2, 3, or 4
-     *
-     * @param point
-     *            The point to judge relative to the origin
-     * @param origin
-     *            The origin to reference for determining the quadrant of the
-     *            supplied 2D point
-     * @return The quadrant number for a supplied 2D point
-     */
-    public static int getQuadrant( final Point2D point, final Point2D origin ) {
-        if ( point.getX() < origin.getX() ) {
-            if ( point.getY() >= origin.getY() ) {
-                return 2;
-            }
-            return 3;
-        }
-        if ( point.getY() >= origin.getY() ) {
-            return 1;
-        }
-        return 4;
     }
 
     /*
@@ -1254,58 +1188,6 @@ public final class GeometryUtilities {
                                line.getEndY() );
     }
 
-    public static Point2D negatePoint2D( final Point2D point2D ) {
-        final Point2D negatedPoint2D = new Point2D( -point2D.getX(), -point2D.getY() );
-        return negatedPoint2D;
-    }
-
-    public static Point2D negatePoint2D( final Point2D point2D, final Axis axis ) {
-        Point2D negatedPoint = Point2D.ZERO;
-        
-        switch ( axis ) {
-        case X:
-            negatedPoint = new Point2D( -point2D.getX(), point2D.getY() );
-            break;
-        case Y:
-            negatedPoint = new Point2D( point2D.getX(), -point2D.getY() );
-            break;
-        case Z:
-            negatedPoint = new Point2D( point2D.getX(), point2D.getY() );
-            break;
-        default:
-            break;
-        }
-        
-        return negatedPoint;
-    }
-
-    public static Vector3D negatePoint3D( final Vector3D point3D ) {
-        final Vector3D negatedPoint3D = new Vector3D( -point3D.getX(),
-                                                      -point3D.getY(),
-                                                      -point3D.getZ() );
-        return negatedPoint3D;
-    }
-
-    public static Vector3D negatePoint3D( final Vector3D point3D, final Axis axis ) {
-        Vector3D negatedPoint = Vector3D.ZERO;
-        
-        switch ( axis ) {
-        case X:
-            negatedPoint = new Vector3D( -point3D.getX(), point3D.getY(), point3D.getZ() );
-            break;
-        case Y:
-            negatedPoint = new Vector3D( point3D.getX(), -point3D.getY(), point3D.getZ() );
-            break;
-        case Z:
-            negatedPoint = new Vector3D( point3D.getX(), point3D.getY(), -point3D.getZ() );
-            break;
-        default:
-            break;
-        }
-        
-        return negatedPoint;
-    }
-
     /*
      * @since 1.2
      */
@@ -1330,28 +1212,6 @@ public final class GeometryUtilities {
             out |= OUT_BOTTOM;
         }
         return out;
-    }
-
-    public static Vector2D projectToPlane( final Vector3D point3D,
-                                           final OrthogonalAxes orthogonalAxes ) {
-        // Project a 3D point to a plane defined by an orthogonal axis pair.
-        Vector2D projectedPoint = Vector2D.ZERO;
-        
-        switch ( orthogonalAxes ) {
-        case XY:
-            projectedPoint = new Vector2D( point3D.getX(), point3D.getY() );
-            break;
-        case XZ:
-            projectedPoint = new Vector2D( point3D.getX(), point3D.getZ() );
-            break;
-        case YZ:
-            projectedPoint = new Vector2D( point3D.getY(), point3D.getZ() );
-            break;
-        default:
-            break;
-        }
-        
-        return projectedPoint;
     }
 
     /**
@@ -1792,54 +1652,6 @@ public final class GeometryUtilities {
                               rectangle.getMinY(),
                               rectangle.getWidth(),
                               rectangle.getHeight() );
-    }
-
-    public static Vector3D rotateInPlane( final Vector3D point3D,
-                                          final OrthogonalAxes orthogonalAxes,
-                                          final double angleInRadians ) {
-        double axis1Value = 0.0d;
-        double axis2Value = 0.0d;
-
-        switch ( orthogonalAxes ) {
-        case XY:
-            axis1Value = point3D.getX();
-            axis2Value = point3D.getY();
-            break;
-        case XZ:
-            axis1Value = point3D.getX();
-            axis2Value = point3D.getZ();
-            break;
-        case YZ:
-            axis1Value = point3D.getY();
-            axis2Value = point3D.getZ();
-            break;
-        default:
-            break;
-        }
-
-        final double axis1ValueRotated = ( axis1Value * FastMath.cos( angleInRadians ) )
-                - ( axis2Value * FastMath.sin( angleInRadians ) );
-
-        final double axis2ValueRotated = ( axis1Value * FastMath.sin( angleInRadians ) )
-                + ( axis2Value * FastMath.cos( angleInRadians ) );
-
-        Vector3D rotatedPoint = Vector3D.ZERO;
-        
-        switch ( orthogonalAxes ) {
-        case XY:
-            rotatedPoint = new Vector3D( axis1ValueRotated, axis2ValueRotated, 0.0d );
-            break;
-        case XZ:
-            rotatedPoint = new Vector3D( axis1ValueRotated, 0.0d, axis2ValueRotated );
-            break;
-        case YZ:
-            rotatedPoint = new Vector3D( 0.0d, axis1ValueRotated, axis2ValueRotated );
-            break;
-        default:
-            break;
-        }
-        
-        return rotatedPoint;
     }
 
     /**
