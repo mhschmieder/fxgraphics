@@ -36,9 +36,10 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 /**
- * This class contains the options for Formatted Vector Graphics Export actions.
+ * This class contains the options for Rendered Graphics Export actions,
+ * which refer to standard Vector Graphics Exports done via Java 2D Rendering.
  */
-public class FormattedVectorGraphicsExportOptions {
+public class RenderedGraphicsExportOptions {
 
     private static final boolean    EXPORT_AUXILIARY_PANEL_DEFAULT    = true;
     private static final boolean    EXPORT_INFORMATION_TABLES_DEFAULT = true;
@@ -52,7 +53,7 @@ public class FormattedVectorGraphicsExportOptions {
 
     // Default constructor when nothing is known.
     @SuppressWarnings("nls")
-    public FormattedVectorGraphicsExportOptions() {
+    public RenderedGraphicsExportOptions() {
         this( "",
               EXPORT_AUXILIARY_PANEL_DEFAULT,
               EXPORT_INFORMATION_TABLES_DEFAULT,
@@ -60,18 +61,18 @@ public class FormattedVectorGraphicsExportOptions {
     }
 
     // Copy constructor.
-    public FormattedVectorGraphicsExportOptions( final FormattedVectorGraphicsExportOptions pFormattedVectorGraphicsExportOptions ) {
-        this( pFormattedVectorGraphicsExportOptions.getTitle(),
-              pFormattedVectorGraphicsExportOptions.isExportAuxiliaryPanel(),
-              pFormattedVectorGraphicsExportOptions.isExportInformationTables(),
-              pFormattedVectorGraphicsExportOptions.isExportOptionalItem() );
+    public RenderedGraphicsExportOptions( final RenderedGraphicsExportOptions pRenderedGraphicsExportOptions ) {
+        this( pRenderedGraphicsExportOptions.getTitle(),
+              pRenderedGraphicsExportOptions.isExportAuxiliaryPanel(),
+              pRenderedGraphicsExportOptions.isExportInformationTables(),
+              pRenderedGraphicsExportOptions.isExportOptionalItem() );
     }
 
     // Fully specified constructor when everything is known.
-    public FormattedVectorGraphicsExportOptions( final String pTitle,
-                                                 final boolean pExportAuxiliary,
-                                                 final boolean pExportInformationTables,
-                                                 final boolean pExportOptionalItem ) {
+    public RenderedGraphicsExportOptions( final String pTitle,
+                                          final boolean pExportAuxiliary,
+                                          final boolean pExportInformationTables,
+                                          final boolean pExportOptionalItem ) {
         title = new SimpleStringProperty( pTitle );
 
         exportAuxiliaryPanel = new SimpleBooleanProperty( pExportAuxiliary );
@@ -129,21 +130,18 @@ public class FormattedVectorGraphicsExportOptions {
     }
 
     // Pseudo-copy constructor.
-    public final void setFormattedVectorGraphicsExportOptions( final FormattedVectorGraphicsExportOptions pFormattedVectorGraphicsExportOptions ) {
-        setFormattedVectorGraphicsExportOptions( pFormattedVectorGraphicsExportOptions.getTitle(),
-                                                 pFormattedVectorGraphicsExportOptions
-                                                         .isExportAuxiliaryPanel(),
-                                                 pFormattedVectorGraphicsExportOptions
-                                                         .isExportInformationTables(),
-                                                 pFormattedVectorGraphicsExportOptions
-                                                         .isExportOptionalItem() );
+    public final void setRenderedGraphicsExportOptions( final RenderedGraphicsExportOptions pRenderedGraphicsExportOptions ) {
+        setRenderedGraphicsExportOptions( pRenderedGraphicsExportOptions.getTitle(),
+                                          pRenderedGraphicsExportOptions.isExportAuxiliaryPanel(),
+                                          pRenderedGraphicsExportOptions.isExportInformationTables(),
+                                          pRenderedGraphicsExportOptions.isExportOptionalItem() );
     }
 
     // Fully specified pseudo-constructor.
-    public final void setFormattedVectorGraphicsExportOptions( final String pTitle,
-                                                               final boolean pExportAuxiliaryPanel,
-                                                               final boolean pExportInformationTables,
-                                                               final boolean pExportOptionalItem ) {
+    public final void setRenderedGraphicsExportOptions( final String pTitle,
+                                                        final boolean pExportAuxiliaryPanel,
+                                                        final boolean pExportInformationTables,
+                                                        final boolean pExportOptionalItem ) {
         setTitle( pTitle );
 
         setExportAuxiliaryPanel( pExportAuxiliaryPanel );
