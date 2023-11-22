@@ -66,10 +66,7 @@ public final class ImageUtilities {
                                                   final String imageFormatName ) {
         try ( final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream() ) {
             final BufferedImage bufferedImage = SwingFXUtils.fromFXImage( image, null );
-            if ( bufferedImage == null ) {
-                return null;
-            }
-            if ( !ImageIO.write( bufferedImage, imageFormatName, byteArrayOutputStream ) ) {
+            if ( ( bufferedImage == null ) || !ImageIO.write( bufferedImage, imageFormatName, byteArrayOutputStream ) ) {
                 return null;
             }
             return byteArrayOutputStream.toByteArray();

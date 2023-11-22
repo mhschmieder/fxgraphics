@@ -51,7 +51,7 @@ public enum Orientation {
         if ( "vt".equalsIgnoreCase( abbreviatedOrientation ) ) {
             return VERTICAL;
         }
-        
+
         return defaultValue();
     }
 
@@ -67,7 +67,7 @@ public enum Orientation {
 
     public final String toAbbreviatedString() {
         String abbreviatedString = null;
-        
+
         switch ( this ) {
         case HORIZONTAL:
             abbreviatedString = "hz"; //$NON-NLS-1$
@@ -80,7 +80,7 @@ public enum Orientation {
                     + this.getClass().getSimpleName() + " " + this; //$NON-NLS-1$
             throw new IllegalArgumentException( errMessage );
         }
-        
+
         return abbreviatedString;
     }
 
@@ -90,7 +90,7 @@ public enum Orientation {
 
     public final String toPresentationString() {
         String presentationString = null;
-        
+
         switch ( this ) {
         case HORIZONTAL:
             presentationString = "Horizontal"; //$NON-NLS-1$
@@ -103,7 +103,7 @@ public enum Orientation {
                     + this.getClass().getSimpleName() + " " + this; //$NON-NLS-1$
             throw new IllegalArgumentException( errMessage );
         }
-        
+
         return presentationString;
     }
 

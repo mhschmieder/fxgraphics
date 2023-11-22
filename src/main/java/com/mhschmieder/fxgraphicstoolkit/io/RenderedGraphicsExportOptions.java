@@ -133,7 +133,8 @@ public class RenderedGraphicsExportOptions {
     public final void setRenderedGraphicsExportOptions( final RenderedGraphicsExportOptions pRenderedGraphicsExportOptions ) {
         setRenderedGraphicsExportOptions( pRenderedGraphicsExportOptions.getTitle(),
                                           pRenderedGraphicsExportOptions.isExportAuxiliaryPanel(),
-                                          pRenderedGraphicsExportOptions.isExportInformationTables(),
+                                          pRenderedGraphicsExportOptions
+                                                  .isExportInformationTables(),
                                           pRenderedGraphicsExportOptions.isExportOptionalItem() );
     }
 

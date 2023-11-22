@@ -137,7 +137,8 @@ public final class GeometryUtilities {
                                     final boolean useFuzzyEq ) {
         if ( useFuzzyEq ) {
             // Add a fudge factor to account for floating point imprecision.
-            final double fudgeFactor = 0.02d * FastMath.max( bounds.getWidth(), bounds.getHeight() );
+            final double fudgeFactor =
+                                     0.02d * FastMath.max( bounds.getWidth(), bounds.getHeight() );
             final Rectangle2D rect2 = new Rectangle2D( bounds.getMinX() - fudgeFactor,
                                                        bounds.getMinY() - fudgeFactor,
                                                        bounds.getWidth() + fudgeFactor,
@@ -1569,7 +1570,8 @@ public final class GeometryUtilities {
         // vector minus the length of its projection onto the line
         // (which is zero if the projection falls outside the range
         // of the line segment).
-        double lenSq = ( MathUtilities.sqr( pxAdjusted ) + MathUtilities.sqr( pyAdjusted ) ) - projlenSq;
+        double lenSq = ( MathUtilities.sqr( pxAdjusted ) + MathUtilities.sqr( pyAdjusted ) )
+                - projlenSq;
         if ( lenSq < 0.0d ) {
             lenSq = 0.0d;
         }
@@ -1673,8 +1675,9 @@ public final class GeometryUtilities {
                                      final double y,
                                      final double offsetX,
                                      final double theta ) {
-        final double xTransformed = ( ( x * FastMath.cos( theta ) ) - ( y * FastMath.sin( theta ) ) )
-                + offsetX;
+        final double xTransformed =
+                                  ( ( x * FastMath.cos( theta ) ) - ( y * FastMath.sin( theta ) ) )
+                                          + offsetX;
         return xTransformed;
     }
 
@@ -1697,8 +1700,9 @@ public final class GeometryUtilities {
                                      final double y,
                                      final double offsetY,
                                      final double theta ) {
-        final double yTransformed = ( ( x * FastMath.sin( theta ) ) + ( y * FastMath.cos( theta ) ) )
-                + offsetY;
+        final double yTransformed =
+                                  ( ( x * FastMath.sin( theta ) ) + ( y * FastMath.cos( theta ) ) )
+                                          + offsetY;
         return yTransformed;
     }
 

@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the FxGuiToolkit Library
+ * This file is part of the FxGraphicsToolkit Library
  *
  * You should have received a copy of the MIT License along with the
- * GuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
+ * FxGraphicsToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/fxguitoolkit
+ * Project: https://github.com/mhschmieder/fxgraphicstoolkit
  */
 package com.mhschmieder.fxgraphicstoolkit.shape;
 
@@ -203,6 +203,8 @@ public final class ShapeUtilities {
      *            Large arg flag: determines which arc to use (large/small)
      * @param sweepFlag
      *            Sweep flag: determines which arc to use (direction)
+     * @param closed
+     *            {@code true} if the arc path should be auto-closed
      */
     public static void drawArcPath( final List< Shape > arcGraphics,
                                     final double left,
@@ -257,6 +259,8 @@ public final class ShapeUtilities {
      *            Large arg flag: determines which arc to use (large/small)
      * @param sweepFlag
      *            Sweep flag: determines which arc to use (direction)
+     * @param closed
+     *            {@code true} if the arc path should be auto-closed
      */
     public static void drawArcPath( final ObservableList< PathElement > pathElements,
                                     final double left,
@@ -322,6 +326,8 @@ public final class ShapeUtilities {
      *            Large arg flag: determines which arc to use (large/small)
      * @param sweepFlag
      *            Sweep flag: determines which arc to use (direction)
+     * @param closed
+     *            {@code true} if the arc path should be auto-closed
      */
     public static void drawArcPath( final Path path,
                                     final double left,
@@ -953,6 +959,10 @@ public final class ShapeUtilities {
      *
      * @param rayGraphics
      *            The list of shapes to which we will add the x-axis ray
+     * @param startX
+     *            The x-coordinate of the start point for the ray
+     * @param startY
+     *            The y-coordinate of the start point for the ray
      * @param rayLength
      *            The bounded length of the ray, as a positive offset
      */
@@ -975,6 +985,10 @@ public final class ShapeUtilities {
      *
      * @param path
      *            The path to which we will add the x-axis ray
+     * @param startX
+     *            The x-coordinate of the start point for the ray
+     * @param startY
+     *            The y-coordinate of the start point for the ray
      * @param rayLength
      *            The bounded length of the ray, as a positive offset
      */
@@ -997,6 +1011,10 @@ public final class ShapeUtilities {
      *
      * @param rayGraphics
      *            The list of shapes to which we will add the y-axis ray
+     * @param startX
+     *            The x-coordinate of the start point for the ray
+     * @param startY
+     *            The y-coordinate of the start point for the ray
      * @param rayLength
      *            The bounded length of the ray, as a positive offset
      */
@@ -1019,6 +1037,10 @@ public final class ShapeUtilities {
      *
      * @param path
      *            The path to which we will add the y-axis ray
+     * @param startX
+     *            The x-coordinate of the start point for the ray
+     * @param startY
+     *            The y-coordinate of the start point for the ray
      * @param rayLength
      *            The bounded length of the ray, as a positive offset
      */
@@ -1136,6 +1158,8 @@ public final class ShapeUtilities {
      *
      * @param shape
      *            The untransformed shape in object space
+     * @param referencePoint
+     *            The reference point to move the shape to
      */
     public static void moveShapeToReferencePoint( final Shape shape,
                                                   final Pair< Double, Double > referencePoint ) {
@@ -1149,6 +1173,8 @@ public final class ShapeUtilities {
      *
      * @param shape
      *            The untransformed shape in object space
+     * @param referencePoint
+     *            The reference point to move the shape to
      */
     public static void moveShapeToReferencePoint( final Shape shape,
                                                   final Vector2D referencePoint ) {
@@ -1156,5 +1182,4 @@ public final class ShapeUtilities {
                 .getReferencePointTransform( referencePoint );
         shape.getTransforms().add( affineTransform );
     }
-
 }

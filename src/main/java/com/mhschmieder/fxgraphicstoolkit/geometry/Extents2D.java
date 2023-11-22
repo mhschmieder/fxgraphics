@@ -46,7 +46,7 @@ public class Extents2D {
 
     public static final double     X_METERS_DEFAULT      = 0.0d;
     public static final double     Y_METERS_DEFAULT      = 0.0d;
-    public static final double     WIDTH_METERS_DEFAULT  = 40d;
+    public static final double     WIDTH_METERS_DEFAULT  = 40.0d;
     public static final double     HEIGHT_METERS_DEFAULT = 20.0d;
 
     // NOTE: These fields must follow JavaFX Property Bean naming conventions.
@@ -56,10 +56,43 @@ public class Extents2D {
     protected final DoubleProperty height;
 
     /**
-     * Default constructor, which zeroes everything.
+     * Default constructor, which sets default bounds.
      */
     public Extents2D() {
-        this( 0.0d, 0.0d, 0.0d, 0.0d );
+        this( X_METERS_DEFAULT, Y_METERS_DEFAULT, WIDTH_METERS_DEFAULT, HEIGHT_METERS_DEFAULT );
+    }
+
+    /**
+     * Cross-constructor from {@link Rectangle} to {@link Extents2D}.
+     *
+     * @param pBoundary
+     *            The {@link Rectangle} to use for setting the fields
+     */
+    public Extents2D( final Rectangle pBoundary ) {
+        this( pBoundary.getX(), pBoundary.getY(), pBoundary.getWidth(), pBoundary.getHeight() );
+    }
+
+    /**
+     * Cross-constructor from {@link Rectangle2D} to {@link Extents2D}.
+     *
+     * @param pBounds
+     *            The {@link Rectangle2D} to use for setting the fields
+     */
+    public Extents2D( final Rectangle2D pBounds ) {
+        this( pBounds.getMinX(), pBounds.getMinY(), pBounds.getWidth(), pBounds.getHeight() );
+    }
+
+    /**
+     * Cross-constructor from {@link Bounds} to {@link Extents2D}.
+     *
+     * @param computedBounds
+     *            The {@link Bounds} to use for setting the fields
+     */
+    public Extents2D( final Bounds computedBounds ) {
+        this( computedBounds.getMinX(),
+              computedBounds.getMinY(),
+              computedBounds.getWidth(),
+              computedBounds.getHeight() );
     }
 
     /**
@@ -94,26 +127,6 @@ public class Extents2D {
         this( pExtents.getX(), pExtents.getY(), pExtents.getWidth(), pExtents.getHeight() );
     }
 
-    /**
-     * Cross-constructor from {@link Rectangle} to {@link Extents2D}.
-     *
-     * @param pBoundary
-     *            The {@link Rectangle} to use for setting the fields
-     */
-    public Extents2D( final Rectangle pBoundary ) {
-        this( pBoundary.getX(), pBoundary.getY(), pBoundary.getWidth(), pBoundary.getHeight() );
-    }
-
-    /**
-     * Cross-constructor from {@link Rectangle2D} to {@link Extents2D}.
-     *
-     * @param pBounds
-     *            The {@link Rectangle2D} to use for setting the fields
-     */
-    public Extents2D( final Rectangle2D pBounds ) {
-        this( pBounds.getMinX(), pBounds.getMinY(), pBounds.getWidth(), pBounds.getHeight() );
-    }
-
     @Override
     public boolean equals( final Object other ) {
         if ( this == other ) {
@@ -133,8 +146,52 @@ public class Extents2D {
         return Objects.hash( x, y, width, height );
     }
 
+    public final DoubleProperty xProperty() {
+        return x;
+    }
+
+    public final double getX() {
+        return x.get();
+    }
+
+    public final void setX( final double pX ) {
+        x.set( pX );
+    }
+
+    public final DoubleProperty yProperty() {
+        return y;
+    }
+
+    public final double getY() {
+        return y.get();
+    }
+
+    public final void setY( final double pY ) {
+        y.set( pY );
+    }
+
+    public final DoubleProperty widthProperty() {
+        return width;
+    }
+
+    public final double getWidth() {
+        return width.get();
+    }
+
+    public final void setWidth( final double pWidth ) {
+        width.set( pWidth );
+    }
+
+    public final DoubleProperty heightProperty() {
+        return height;
+    }
+
     public final double getHeight() {
         return height.get();
+    }
+
+    public final void setHeight( final double pHeight ) {
+        height.set( pHeight );
     }
 
     public final Point2D getMaximumPoint() {
@@ -145,22 +202,6 @@ public class Extents2D {
     public final Point2D getMinimumPoint() {
         final Point2D minimumPoint = new Point2D( getX(), getY() );
         return minimumPoint;
-    }
-
-    public final double getWidth() {
-        return width.get();
-    }
-
-    public final double getX() {
-        return x.get();
-    }
-
-    public final double getY() {
-        return y.get();
-    }
-
-    public final DoubleProperty heightProperty() {
-        return height;
     }
 
     /*
@@ -210,33 +251,4 @@ public class Extents2D {
                     pRectangle.getWidth(),
                     pRectangle.getHeight() );
     }
-
-    public final void setHeight( final double pHeight ) {
-        height.set( pHeight );
-    }
-
-    public final void setWidth( final double pWidth ) {
-        width.set( pWidth );
-    }
-
-    public final void setX( final double pX ) {
-        x.set( pX );
-    }
-
-    public final void setY( final double pY ) {
-        y.set( pY );
-    }
-
-    public final DoubleProperty widthProperty() {
-        return width;
-    }
-
-    public final DoubleProperty xProperty() {
-        return x;
-    }
-
-    public final DoubleProperty yProperty() {
-        return y;
-    }
-
 }

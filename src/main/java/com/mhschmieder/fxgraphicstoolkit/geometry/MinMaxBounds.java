@@ -61,10 +61,7 @@ public final class MinMaxBounds extends BoundingBox {
         if ( this == obj ) {
             return true;
         }
-        if ( !super.equals( obj ) ) {
-            return false;
-        }
-        if ( getClass() != obj.getClass() ) {
+        if ( !super.equals( obj ) || ( getClass() != obj.getClass() ) ) {
             return false;
         }
         final MinMaxBounds other = ( MinMaxBounds ) obj;

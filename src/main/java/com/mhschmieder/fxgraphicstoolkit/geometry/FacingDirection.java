@@ -48,7 +48,7 @@ public enum FacingDirection {
         else if ( "l".equalsIgnoreCase( abbreviatedFacingDirection ) ) { //$NON-NLS-1$
             return LEFT;
         }
-        
+
         return defaultValue();
     }
 
@@ -64,7 +64,7 @@ public enum FacingDirection {
 
     public final String toAbbreviatedString() {
         String abbreviatedString = null;
-        
+
         switch ( this ) {
         case RIGHT:
             abbreviatedString = "r"; //$NON-NLS-1$
@@ -77,7 +77,7 @@ public enum FacingDirection {
                     + this.getClass().getSimpleName() + " " + this; //$NON-NLS-1$
             throw new IllegalArgumentException( errMessage );
         }
-        
+
         return abbreviatedString;
     }
 
@@ -87,7 +87,7 @@ public enum FacingDirection {
 
     public final String toPresentationString() {
         String presentationString = null;
-        
+
         switch ( this ) {
         case RIGHT:
             presentationString = "Right"; //$NON-NLS-1$
@@ -100,7 +100,7 @@ public enum FacingDirection {
                     + this.getClass().getSimpleName() + " " + this; //$NON-NLS-1$
             throw new IllegalArgumentException( errMessage );
         }
-        
+
         return presentationString;
     }
 

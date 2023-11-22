@@ -82,7 +82,7 @@ public enum MouseToolMode {
     @SuppressWarnings("nls")
     public final String toLabel() {
         String label = "select";
-        
+
         switch ( this ) {
         case SELECT:
             label = "select";
@@ -114,7 +114,7 @@ public enum MouseToolMode {
         default:
             break;
         }
-        
+
         return label;
     }
 
