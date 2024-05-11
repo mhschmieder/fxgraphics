@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2024 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the FxuiToolkit Library
+ * This file is part of the FxGraphicsToolkit Library
  *
  * You should have received a copy of the MIT License along with the
- * GuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
+ * FxGraphicsToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/fxguitoolkit
+ * Project: https://github.com/mhschmieder/fxgraphicstoolkit
  */
 package com.mhschmieder.fxgraphicstoolkit.image;
 
@@ -44,6 +44,12 @@ import javafx.scene.SnapshotParameters;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
+import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Circle;
 
 /**
  * This is a utility class for generic common image functionality.
@@ -467,6 +473,8 @@ public final class ImageUtilities {
     }
 
     /**
+     * Sets an {@link Image} on an {@link ImageView} then fits to aspect ratio.
+     * 
      * @param imageView
      *            The Image View container for the Image
      * @param image
@@ -493,7 +501,7 @@ public final class ImageUtilities {
         // If not, use the supplied fit dimensions (if valid) and apply the
         // supplied Aspect Ration to whichever fit dimension wasn't provided.
         // NOTE: Provide -1.0 (e.g.) to invalidate any of the numeric
-        // arguments.
+        //  arguments.
         final double fitWidthAdjusted = preserveSourceImageRatio
             ? ( fitWidth > 0.0d ) ? fitWidth : -1d
             : ( derivedImageAspectRatio > 0.0d )
@@ -519,6 +527,88 @@ public final class ImageUtilities {
         imageView.setFitHeight( fitHeightAdjusted );
         imageView.setSmooth( false );
         imageView.setCache( true );
+    }
+
+    /**
+     * Sets an {@link Image} on an {@link ImageView} then fits to aspect ratio,
+     * optionally cropping to a circle. Due to this additional functionality,
+     * the aspect ratio fit is done differently than in the method above.
+     * 
+     * @param imageView
+     *            The Image View container for the Image
+     * @param image
+     *            The actual Image itself
+     * @param applyCroppingCircle
+     *            {@code true} if the image should be cropped to a circle
+     * @param circleRadius
+     *            The radius of the cropping circle, in pixels
+     */
+    public static void setImageView( final ImageView imageView,
+                                     final Image image,
+                                     final boolean applyCroppingCircle,
+                                     final double circleRadius ) {
+        // Update the image in its Image View scene graph node, then rescale.
+        imageView.setImage( image );
+
+        // Rescale the image to use the maximum dimension vs. the minimum
+        // dimension for the image sizing, so that there is no gap in the
+        // circular boundary of the container when the image isn't 1:1.
+        final double imageWidth = image.getWidth();
+        final double imageHeight = image.getHeight();
+        
+        final double aspectRatio = imageWidth / imageHeight;
+        final double scaleFactor = ( aspectRatio > 1.0d ) 
+                ? aspectRatio 
+                : 1.0d / aspectRatio;
+        final double imageFitWidth = imageWidth * scaleFactor;
+        final double imageFitHeight = imageHeight * scaleFactor;
+        
+        imageView.setFitWidth( imageFitWidth );
+        imageView.setFitHeight( imageFitHeight );
+
+        if ( applyCroppingCircle ) {
+            cropImageToCircle( imageView, circleRadius );
+        }
+    }
+    
+    /**
+     * Crops an already loaded image to a circle, given a supplied radius.
+     * 
+     * @param imageView
+     *            The Image View container for the Image to be cropped
+     * @param circleRadius
+     *            The radius of the cropping circle, in pixels
+     */
+    public static void cropImageToCircle( final ImageView imageView,
+                                          final double circleRadius ) {
+        // The cropping circle must account for the actual image dimensions,
+        // and must adjust the radius for the offset of the border width.
+        final double centerX = 0.5d * imageView.getFitWidth();
+        final double centerY = 0.5d * imageView.getFitHeight();
+        final double radius = circleRadius - 3.0d;
+        final Circle crop = new Circle( centerX, centerY, radius );
+        imageView.setClip( crop );
+    }
+
+    /**
+     * Update an Image View container, using a JAR-resident resource.
+     *
+     * @param imageView
+     *            The Image View container for the Image
+     * @param jarRelativeImageFilename
+     *            The file name of an image file contained in this JAR
+     * @param backgroundLoading
+     *            Flag for whether to use background loading or immediate
+     *            loading of the Image
+     */
+    public static void updateImageView( final ImageView imageView,
+                                        final String jarRelativeImageFilename,
+                                        final boolean backgroundLoading ) {
+        // Load the referenced Image as a JAR-resident resource.
+        final Image image = loadImageAsJarResource( jarRelativeImageFilename, backgroundLoading );
+
+        // Update the Image View container with the pre-loaded Image.
+        updateImageView( imageView, image, backgroundLoading );
     }
 
     /**
@@ -598,26 +688,28 @@ public final class ImageUtilities {
             }
         }
     }
-
+    
     /**
-     * Update an Image View container, using a JAR-resident resource.
-     *
-     * @param imageView
-     *            The Image View container for the Image
-     * @param jarRelativeImageFilename
-     *            The file name of an image file contained in this JAR
-     * @param backgroundLoading
-     *            Flag for whether to use background loading or immediate
-     *            loading of the Image
+     * Updates the picture hosted in a Rectangle, replacing any placeholder
+     * graphic if present. The picture must be loaded as an ImagePattern.
+     * 
+     * @param picture The Image to use as the hosted picture
+     * @param imagePlaceholderRegion The container's placeholder graphic
+     * @param imageContainer The container that hosts the picture
+     * @param blankingColor The blanking color when no picture is available
      */
-    public static void updateImageView( final ImageView imageView,
-                                        final String jarRelativeImageFilename,
-                                        final boolean backgroundLoading ) {
-        // Load the referenced Image as a JAR-resident resource.
-        final Image image = loadImageAsJarResource( jarRelativeImageFilename, backgroundLoading );
+    public static void updatePicture( final Image picture,
+                                      final Region imagePlaceholderRegion,
+                                      final Rectangle imageContainer,
+                                      final Color blankingColor ) {
+        // Blank out the placeholder image if we now have a valid one.
+        final boolean imageValid = picture != null;
+        imagePlaceholderRegion.setVisible( !imageValid );
 
-        // Update the Image View container with the pre-loaded Image.
-        updateImageView( imageView, image, backgroundLoading );
+        // Update the displayed picture in its container.
+        final Paint fillPattern = imageValid 
+                ? new ImagePattern( picture ) 
+                : blankingColor;
+        imageContainer.setFill( fillPattern );
     }
-
 }
