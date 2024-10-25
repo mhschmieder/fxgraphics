@@ -81,28 +81,49 @@ public class ColorConstants {
     public static final Color DIMOLIVE                           = Color.rgb( 128, 128, 10 );
     public static final Color DIMORANGE                          = Color.rgb( 128, 70, 10 );
     public static final Color DIMPURPLE                          = Color.rgb( 128, 10, 128 );
-    public static final Color GRAY05                             = Color.rgb( 13, 13, 13 );
-    public static final Color GRAY10                             = Color.rgb( 26, 26, 26 );
-    public static final Color GRAY15                             = Color.rgb( 39, 39, 39 );
-    public static final Color GRAY19                             = Color.rgb( 49, 49, 49 );
-    public static final Color GRAY20                             = Color.rgb( 51, 51, 51 );
+    public static final Color GRAY05                             = Color.rgb( 13, 13, 13 ); // Night Mode, Heavy Gray
+    public static final Color GRAY10                             = Color.rgb( 26, 26, 26 ); // US Navy Background Gray
+    public static final Color GRAY15_5                           = Color.rgb( 39, 39, 39 ); // 15.5% Gray
+    public static final Color GRAY17                             = Color.rgb( 43, 43, 43 ); // US Navy Very Dark Gray
+    public static final Color GRAY19_5                           = Color.rgb( 49, 49, 49 ); // 19.5% Gray
+    public static final Color GRAY20                             = Color.rgb( 51, 51, 51 ); // Dark Charcoal
+    public static final Color GRAY20_5                           = Color.rgb( 52, 52, 52 ); // 20.5% Gray, Jet
+    public static final Color GRAY21_5                           = Color.rgb( 55, 55, 55 ); // 21.5% Gray, Eclipse
+    public static final Color GRAY23_5                           = Color.rgb( 60, 60, 60 ); // Onyx
     public static final Color GRAY25                             = Color.rgb( 64, 64, 64 );
     public static final Color GRAY30                             = Color.rgb( 77, 77, 77 );
-    public static final Color GRAY32_5                           = Color.rgb( 83, 83, 83 );       // 32.5
-    public static final Color GRAY33_3                           = Color.rgb( 85, 85, 85 );       // 1/3
+    public static final Color GRAY32_5                           = Color.rgb( 83, 83, 83 ); // 32.5% Gray
+    public static final Color GRAY33_3                           = Color.rgb( 85, 85, 85 ); // 1/3 Gray, Davy's Gray
+    public static final Color GRAY37                             = Color.rgb( 94, 94, 94 ); // Scorpion
+    public static final Color GRAY37_5                           = Color.rgb( 96, 96, 96 ); // 37.5% Gray, Shades On
     public static final Color GRAY40                             = Color.rgb( 102, 102, 102 );
+    public static final Color GRAY40_5                           = Color.rgb( 103, 103, 103 ); // 40.5% Gray, Granite
+    public static final Color GRAY41                             = Color.DIMGRAY; // Color.rgb( 105, 105, 105 )
+    public static final Color GRAY42                             = Color.rgb( 107, 107, 107 ); // Anvil Gray
     public static final Color GRAY45                             = Color.rgb( 115, 115, 115 );
-    public static final Color GRAY50                             = Color.rgb( 128, 128, 128 );    // Color.GRAY
-    public static final Color GRAY55                             = Color.rgb( 140, 140, 140 );    // Color.GRAY
+    public static final Color GRAY46                             = Color.rgb( 117, 117, 117 ); // Sonic Gray/Silver
+    public static final Color GRAY50                             = Color.GRAY; // Color.rgb( 128, 128, 128 )
+    public static final Color GRAY55                             = Color.rgb( 140, 140, 140 );
+    public static final Color GRAY59                             = Color.rgb( 151, 151, 151 ); // Solid Gray
+    public static final Color GRAY59_5                           = Color.rgb( 152, 152, 152 ); // 59.5% Gray, Spanish Gray
     public static final Color GRAY60                             = Color.rgb( 153, 153, 153 );
-    public static final Color GRAY60_5                           = Color.rgb( 155, 155, 155 );    // 60.5
-    public static final Color GRAY66_6                           = Color.rgb( 170, 170, 170 );    // 2/3
-    public static final Color GRAY70                             = Color.rgb( 177, 177, 177 );
-    public static final Color GRAY75                             = Color.rgb( 192, 192, 192 );    // Color.SILVER
-    public static final Color GRAY80                             = Color.rgb( 203, 203, 203 );
-    public static final Color GRAY85                             = Color.rgb( 216, 216, 216 );
-    public static final Color GRAY86                             = Color.rgb( 220, 220, 220 );
-    public static final Color GRAY90                             = Color.rgb( 231, 231, 231 );
+    public static final Color GRAY60_5                           = Color.rgb( 155, 155, 155 ); // 60.5% Gray
+    public static final Color GRAY63                             = Color.rgb( 161, 161, 161 ); // Perfect Gray
+    public static final Color GRAY65                             = Color.rgb( 166, 166, 166 ); // Quick Silver
+    public static final Color GRAY66                             = Color.DARKGRAY; // Color.rgb( 169, 169, 169 )
+    public static final Color GRAY66_6                           = Color.rgb( 170, 170, 170 ); // 2/3 Gray
+    public static final Color GRAY67                             = Color.rgb( 172, 172, 172 ); // Silver Chalice
+    public static final Color GRAY69_5                           = Color.rgb( 177, 177, 177 ); // 69.5% Gray
+    public static final Color GRAY74_5                           = Color.rgb( 190, 190, 190 ); // 74.5% Gray, Medium Gray
+    public static final Color GRAY75_5                           = Color.SILVER; // Color.rgb( 192, 192, 192 )
+    public static final Color GRAY79_5                           = Color.rgb( 203, 203, 203 ); // 79.5% Gray
+    public static final Color GRAY82_5                           = Color.LIGHTGRAY; // Color.rgb( 211, 211, 211 )
+    public static final Color GRAY84_5                           = Color.rgb( 216, 216, 216 ); // 84.5% Gray
+    public static final Color GRAY85_5                           = Color.rgb( 218, 218, 218 ); // 85.5% Gray, Gentle Gray
+    public static final Color GRAY86                             = Color.GAINSBORO; // Color.rgb( 220, 220, 220 )
+    public static final Color GRAY90_5                           = Color.rgb( 231, 231, 231 ); // 90.5% Gray, Day Mode
+    public static final Color GRAY94                             = Color.rgb( 240, 240, 240 ); // Smoky White
+    public static final Color GRAY96                             = Color.WHITESMOKE; // Color.rgb( 245, 245, 245 )
     public static final Color LEMON                              = Color.rgb( 202, 202, 70 );
     public static final Color LIGHTBLUEGRAY                      = Color.rgb( 212, 216, 224 );
     public static final Color LIGHTBURGUNDY                      = Color.rgb( 124, 32, 32 );
@@ -123,10 +144,10 @@ public class ColorConstants {
     public static final Color NOTES_FOREGROUND_COLOR             = Color.BLACK;
 
     // Predefine the polarity "reversed" and "normal" toggle button colors.
-    public static final Color POLARITY_NORMAL_BACKGROUND_COLOR   = GRAY15;
+    public static final Color POLARITY_NORMAL_BACKGROUND_COLOR   = GRAY15_5;
     public static final Color POLARITY_NORMAL_FOREGROUND_COLOR   = Color.WHITE;
 
-    public static final Color POLARITY_REVERSED_BACKGROUND_COLOR = GRAY85;
+    public static final Color POLARITY_REVERSED_BACKGROUND_COLOR = GRAY84_5;
     public static final Color POLARITY_REVERSED_FOREGROUND_COLOR = Color.BLACK;
 
     // Predefine the mute switch "muted" and "unmuted" toggle button colors.
@@ -223,9 +244,25 @@ public class ColorConstants {
     // NOTE: This is from an old request for indicating locked objects.
     public static final Color OBJECT_LOCKED_COLOR                = Color.rgb( 191, 64, 64 );
 
-    // These are approximate to the current Day and Night colors.
-    public static final Color DAY_MODE                           = GRAY90;
+    // These are approximate to commonly set Day and Night contrast mode colors.
+    public static final Color DAY_MODE                           = GRAY90_5;
     public static final Color NIGHT_MODE                         = GRAY05;
+    
+    // Although these are common named grays, they aren't included in the CSS3 spec.
+    public static final Color DARK_CHARCOAL                      = GRAY20;
+    public static final Color DAVYS_GRAY                         = GRAY33_3;
+    public static final Color SPANISH_GRAY                       = GRAY59_5;
+    public static final Color MEDIUM_GRAY                        = GRAY74_5;
+   
+    // This is a common dark background color when black is too intense. 
+    // It is 10% Gray. This is the background for the US Navy style guidelines,
+    // which are a good reference as they canvassed everything out there.
+    public static final Color NAVY_BACKGROUND_GRAY               = GRAY10;
+    
+    // This is another gray variant that is part of the US Navy standard but
+    // isn't part of most official named gray lists as those focus more on the
+    // lighter end of the gray spectrum overall.
+    public static final Color NAVY_VERY_DARK_GRAY                = GRAY17;
 
     // NOTE: This is meant to be used as the default layout pane background in
     // windows that support custom colors per user, until a new color is chosen.
