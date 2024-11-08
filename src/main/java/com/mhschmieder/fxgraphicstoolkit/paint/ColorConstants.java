@@ -122,6 +122,7 @@ public class ColorConstants {
     public static final Color GRAY85_5                           = Color.rgb( 218, 218, 218 ); // 85.5% Gray, Gentle Gray
     public static final Color GRAY86                             = Color.GAINSBORO; // Color.rgb( 220, 220, 220 )
     public static final Color GRAY90_5                           = Color.rgb( 231, 231, 231 ); // 90.5% Gray, Day Mode
+    public static final Color GRAY92                             = Color.rgb( 236, 236, 236 ); // Smoky White
     public static final Color GRAY94                             = Color.rgb( 240, 240, 240 ); // Smoky White
     public static final Color GRAY96                             = Color.WHITESMOKE; // Color.rgb( 245, 245, 245 )
     public static final Color LEMON                              = Color.rgb( 202, 202, 70 );
