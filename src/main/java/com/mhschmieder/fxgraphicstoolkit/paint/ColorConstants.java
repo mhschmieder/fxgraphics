@@ -158,12 +158,12 @@ public class ColorConstants {
     public static final Color MUTED_BACKGROUND_COLOR             = Color.RED;
     public static final Color MUTED_FOREGROUND_COLOR             = Color.WHITE;
 
-    // Predefine the status "included" and "excluded" toggle button colors.
-    public static final Color EXCLUDED_BACKGROUND_COLOR          = GRAY30;
-    public static final Color EXCLUDED_FOREGROUND_COLOR          = Color.WHITE;
+    // Predefine the status "included" and "ignored" toggle button colors.
+    public static final Color IGNORED_BACKGROUND_COLOR           = GRAY30;
+    public static final Color IGNORED_FOREGROUND_COLOR           = Color.WHITE;
 
-    public static final Color INCLUDED_BACKGROUND_COLOR          = BRIGHTGREEN;
-    public static final Color INCLUDED_FOREGROUND_COLOR          = Color.BLUE;
+    public static final Color INCLUDED_BACKGROUND_COLOR          = Color.AQUA;
+    public static final Color INCLUDED_FOREGROUND_COLOR          = Color.BLACK;
 
     // Predefine the status "active" and "inactive" toggle button colors.
     public static final Color INACTIVE_BACKGROUND_COLOR          = GRAY30;
