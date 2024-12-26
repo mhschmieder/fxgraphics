@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2023 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,11 +32,16 @@ package com.mhschmieder.fxgraphicstoolkit;
 
 import javafx.beans.property.StringProperty;
 
-public interface LabelAssignable {
-
-    String getLabel();
+/**
+ * An interface for JavaFX objects that contracts an implementing class to add 
+ * and expose an observable label property. Not to be confused with the more
+ * generic enum-oriented {code LabelAssignable} interface in commonstoolkit.
+ */
+public interface FxLabelAssignable {
 
     StringProperty labelProperty();
+
+    String getLabel();
 
     void setLabel( final String pLabel );
 
