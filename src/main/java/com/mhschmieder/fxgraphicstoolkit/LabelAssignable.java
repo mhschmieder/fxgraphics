@@ -35,9 +35,10 @@ import javafx.beans.property.StringProperty;
 /**
  * An interface for JavaFX objects that contracts an implementing class to add 
  * and expose an observable label property. Not to be confused with the more
- * generic enum-oriented {code LabelAssignable} interface in commonstoolkit.
+ * generic enum-oriented {@code Labeled} interface in commonstoolkit, or the
+ * general purpose non-observable non-JavaFX {@code LabeledObject} interface.
  */
-public interface FxLabelAssignable {
+public interface LabelAssignable {
 
     StringProperty labelProperty();
 
