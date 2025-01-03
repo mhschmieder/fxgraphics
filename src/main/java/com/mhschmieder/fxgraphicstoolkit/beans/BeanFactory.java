@@ -39,7 +39,7 @@ import javafx.beans.binding.BooleanBinding;
 public final class BeanFactory {
 
     /**
-     * The default constructor is disabled, as this is a static utilities class.
+     * The default constructor is disabled, as this is a static factory class.
      */
     private BeanFactory() {}
 
