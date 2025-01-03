@@ -34,7 +34,7 @@ import javafx.beans.Observable;
 import javafx.beans.binding.BooleanBinding;
 
 /**
- * Factory for Observables in the JavaFX Beans subpackage.
+ * Factory for Observable Properties in the JavaFX Beans sub-package.
  */
 public final class BeanFactory {
 
@@ -43,7 +43,23 @@ public final class BeanFactory {
      */
     private BeanFactory() {}
 
-    public static BooleanBinding makeBooleanBinding( final Observable... dependencies ) {
+    /**
+     * Returns a {@link BooleanBinding} object with its binding dependencies set.
+     * <p>
+     * This starts observing the dependencies for changes. If the value of one of
+     * the supplied dependencies changes, the binding is marked as invalid.
+     * <p>
+     * Call this method in the owning class for the returned {@link BooleanBinding}
+     * instead of directly invoking the {@link BooleanBinding} constructor, to 
+     * avoid otherwise identical boilerplate code that is verbose and that 
+     * increases the distance in code between the observable properties being
+     * constructed and their being passed as binding dependencies.
+     *
+     * @param dependencies
+     *            the dependencies to observe on the {@link BooleanBinding}
+     * @return a {@link BooleanBinding} object with its binding dependencies set
+     */
+   public static BooleanBinding makeBooleanBinding( final Observable... dependencies ) {
         // Establish the dirty flag criteria as a change to any listed dependency.
         return new BooleanBinding() {
             {
@@ -52,10 +68,14 @@ public final class BeanFactory {
                 super.bind( dependencies );
             }
 
+            /**
+             * Auto-clears the invalidation by overriding with a status that is
+             * affirmative of a value change having triggered this call.
+             *
+             * @return true
+             */
             @Override
             protected boolean computeValue() {
-                // Auto-clear the invalidation by overriding with a status that is
-                // affirmative of a change having been the trigger for this call.
                 return true;
             }
         };
