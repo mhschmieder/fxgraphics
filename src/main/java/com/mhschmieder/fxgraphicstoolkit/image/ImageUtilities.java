@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2024 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -185,18 +185,6 @@ public final class ImageUtilities {
                              derivedImageAspectRatio,
                              fitWidth,
                              fitHeight );
-    }
-
-    /**
-     * Create a Logo as an Image View, using a JAR-resident resource.
-     *
-     * @param jarRelativeLogoFilename
-     *            The file name of the image icon file contained in this JAR
-     * @return The Image View created from the supplied file name
-     */
-    public static ImageView createLogo( final String jarRelativeLogoFilename ) {
-        // Background-load the Logo into an Image View container.
-        return getImageView( jarRelativeLogoFilename, true );
     }
 
     /**
