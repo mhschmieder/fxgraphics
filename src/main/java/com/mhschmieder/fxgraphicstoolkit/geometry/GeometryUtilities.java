@@ -260,8 +260,8 @@ public final class GeometryUtilities {
                 }
 
                 // NOTE: The arc mid-point is either being calculated
-                // incorrectly, or transformed incorrectly, but if we pass in
-                // the transformed end points it is also wrong.
+                //  incorrectly, or transformed incorrectly, but if we pass in
+                //  the transformed end points it is also wrong.
                 // final Point2D arcMid = getArcMidPoint( at, startX, startY,
                 // endX, endY );
                 // final double arcMidX = arcMid.getX();
