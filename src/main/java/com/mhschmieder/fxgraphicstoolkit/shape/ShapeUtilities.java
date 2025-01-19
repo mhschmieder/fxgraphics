@@ -33,7 +33,6 @@ package com.mhschmieder.fxgraphicstoolkit.shape;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.apache.commons.math3.util.FastMath;
 
 import com.mhschmieder.fxgraphicstoolkit.geometry.GeometryUtilities;
@@ -1083,7 +1082,7 @@ public final class ShapeUtilities {
     }
 
     // Get generic Crosshair graphics, at a specific reference point location.
-    public static List< Shape > getCrosshairGraphics( final Vector2D referencePoint,
+    public static List< Shape > getCrosshairGraphics( final Point2D referencePoint,
                                                       final double crosshairDimension ) {
         // Draw the Crosshair graphics at the origin.
         final List< Shape > crosshairGraphics = getCrosshairGraphics( crosshairDimension );
@@ -1177,7 +1176,7 @@ public final class ShapeUtilities {
      *            The reference point to move the shape to
      */
     public static void moveShapeToReferencePoint( final Shape shape,
-                                                  final Vector2D referencePoint ) {
+                                                  final Point2D referencePoint ) {
         final Transform affineTransform = GeometryUtilities
                 .getReferencePointTransform( referencePoint );
         shape.getTransforms().add( affineTransform );

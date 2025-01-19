@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2023 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,6 @@
  */
 package com.mhschmieder.fxgraphicstoolkit.geometry;
 
-import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.apache.commons.math3.util.FastMath;
 
 import com.mhschmieder.mathtoolkit.MathUtilities;
@@ -1066,7 +1065,7 @@ public final class GeometryUtilities {
     /*
      * Returns a new transform from a supplied reference point.
      */
-    public static Affine getReferencePointTransform( final Vector2D referencePoint ) {
+    public static Affine getReferencePointTransform( final Point2D referencePoint ) {
         final Affine affineTransform = new Affine();
 
         // Effectively move to the reference point as the origin.
