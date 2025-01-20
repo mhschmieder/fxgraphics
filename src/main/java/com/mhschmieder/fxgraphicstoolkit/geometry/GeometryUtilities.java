@@ -33,6 +33,8 @@ package com.mhschmieder.fxgraphicstoolkit.geometry;
 import org.apache.commons.math3.util.FastMath;
 
 import com.mhschmieder.mathtoolkit.MathUtilities;
+import com.mhschmieder.mathtoolkit.geometry.euclidian.Axis;
+import com.mhschmieder.mathtoolkit.geometry.euclidian.OrthogonalAxes;
 import com.mhschmieder.physicstoolkit.DistanceUnit;
 import com.mhschmieder.physicstoolkit.UnitConversion;
 
@@ -106,6 +108,118 @@ public final class GeometryUtilities {
      */
     public static final double ONE_POINT_IN_METERS = 0.000352778;
 
+    public static Point3D negatePoint3D( final Point3D point3D, 
+                                         final Axis axis ) {
+        Point3D negatedPoint = Point3D.ZERO;
+        
+        switch ( axis ) {
+        case X:
+            negatedPoint = new Point3D( -point3D.getX(), point3D.getY(), point3D.getZ() );
+            break;
+        case Y:
+            negatedPoint = new Point3D( point3D.getX(), -point3D.getY(), point3D.getZ() );
+            break;
+        case Z:
+            negatedPoint = new Point3D( point3D.getX(), point3D.getY(), -point3D.getZ() );
+            break;
+        default:
+            break;
+        }
+        
+        return negatedPoint;
+    }
+
+    public static Point3D exchangeCoordinates( final Point3D point3D,
+                                               final OrthogonalAxes orthogonalAxes ) {
+        Point3D swappedPoint = Point3D.ZERO;
+        
+        switch ( orthogonalAxes ) {
+        case XY:
+            swappedPoint = new Point3D( point3D.getY(), point3D.getX(), point3D.getZ() );
+            break;
+        case XZ:
+            swappedPoint = new Point3D( point3D.getZ(), point3D.getY(), point3D.getX() );
+            break;
+        case YZ:
+            swappedPoint = new Point3D( point3D.getX(), point3D.getZ(), point3D.getY() );
+            break;
+        default:
+            break; 
+        }
+        
+        return swappedPoint;
+    }
+
+    public static Point2D projectToPlane( final Point3D point3D,
+                                          final OrthogonalAxes orthogonalAxes ) {
+        // Project a 3D point to a plane defined by an orthogonal axis pair.
+        Point2D projectedPoint = Point2D.ZERO;
+        
+        switch ( orthogonalAxes ) {
+        case XY:
+            projectedPoint = new Point2D( point3D.getX(), point3D.getY() );
+            break;
+        case XZ:
+            projectedPoint = new Point2D( point3D.getX(), point3D.getZ() );
+            break;
+        case YZ:
+            projectedPoint = new Point2D( point3D.getY(), point3D.getZ() );
+            break;
+        default:
+            break;
+        }
+        
+        return projectedPoint;
+    }
+
+    public static Point3D rotateInPlane( final Point3D point3D,
+                                         final OrthogonalAxes orthogonalAxes,
+                                         final double angleInRadians ) {
+        double axis1Value = 0.0d;
+        double axis2Value = 0.0d;
+    
+        switch ( orthogonalAxes ) {
+        case XY:
+            axis1Value = point3D.getX();
+            axis2Value = point3D.getY();
+            break;
+        case XZ:
+            axis1Value = point3D.getX();
+            axis2Value = point3D.getZ();
+            break;
+        case YZ:
+            axis1Value = point3D.getY();
+            axis2Value = point3D.getZ();
+            break;
+        default:
+            break;
+        }
+    
+        final double axis1ValueRotated = ( axis1Value * FastMath.cos( angleInRadians ) )
+                - ( axis2Value * FastMath.sin( angleInRadians ) );
+    
+        final double axis2ValueRotated = ( axis1Value * FastMath.sin( angleInRadians ) )
+                + ( axis2Value * FastMath.cos( angleInRadians ) );
+    
+        Point3D rotatedPoint = Point3D.ZERO;
+        
+        switch ( orthogonalAxes ) {
+        case XY:
+            rotatedPoint = new Point3D( axis1ValueRotated, axis2ValueRotated, 0.0d );
+            break;
+        case XZ:
+            rotatedPoint = new Point3D( axis1ValueRotated, 0.0d, axis2ValueRotated );
+            break;
+        case YZ:
+            rotatedPoint = new Point3D( 0.0d, axis1ValueRotated, axis2ValueRotated );
+            break;
+        default:
+            break;
+        }
+        
+        return rotatedPoint;
+    }
+
     public static BoundingBox boundsFromExtents( final Extents2D extents ) {
         return new BoundingBox( extents.getX(),
                                 extents.getY(),
@@ -129,7 +243,7 @@ public final class GeometryUtilities {
 
     /*
      * NOTE: This is a unitless method, but does assume the units are at
-     * least consistent. Preferably everything is metric (meters).
+     *  least consistent. Preferably everything is metric (meters).
      */
     public static boolean contains( final Bounds bounds,
                                     final Point2D point,
@@ -155,13 +269,11 @@ public final class GeometryUtilities {
         return area.contains( p1 ) || area.contains( p2 );
     }
 
-    // TODO: Try to replace usages with VectorUtilities version (Vector2D).
     public static Point2D copyPoint2D( final Point2D point2D ) {
         final Point2D copiedPoint2D = new Point2D( point2D.getX(), point2D.getY() );
         return copiedPoint2D;
     }
 
-    // TODO: Try to replace usages with VectorUtilities version (Vector3D).
     public static Point3D copyPoint3D( final Point3D point3D ) {
         final Point3D copiedPoint3D = new Point3D( point3D.getX(), point3D.getY(), point3D.getZ() );
         return copiedPoint3D;
