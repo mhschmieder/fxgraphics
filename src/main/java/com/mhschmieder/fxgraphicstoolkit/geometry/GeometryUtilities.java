@@ -30,7 +30,6 @@
  */
 package com.mhschmieder.fxgraphicstoolkit.geometry;
 
-import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 import org.apache.commons.math3.util.FastMath;
 
 import com.mhschmieder.mathtoolkit.MathUtilities;
