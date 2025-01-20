@@ -30,6 +30,7 @@
  */
 package com.mhschmieder.fxgraphicstoolkit.geometry;
 
+import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 import org.apache.commons.math3.util.FastMath;
 
 import com.mhschmieder.mathtoolkit.MathUtilities;
@@ -107,6 +108,13 @@ public final class GeometryUtilities {
      * google said</a>.
      */
     public static final double ONE_POINT_IN_METERS = 0.000352778;
+
+    public static Point3D negatePoint3D( final Point3D point3D ) {
+        final Point3D negatedPoint3D = new Point3D( -point3D.getX(),
+                                                    -point3D.getY(),
+                                                    -point3D.getZ() );
+        return negatedPoint3D;
+    }
 
     public static Point3D negatePoint3D( final Point3D point3D, 
                                          final Axis axis ) {
