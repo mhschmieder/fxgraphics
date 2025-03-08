@@ -67,6 +67,22 @@ public final class BeanFactory {
                 // is invalidated and notifies its listeners.
                 super.bind( dependencies );
             }
+            
+            /**
+             * If any of the dependencies is also a {@link BooleanBinding}, this
+             * forces an evaluation so that it doesn't prematurely exit. In most
+             * contexts, a nested {@link BooleanBinding} from a superclass is a
+             * way of avoiding copy/paste of superclass observable values, which
+             * need to be checked when we use the superclass nesting shortcut.
+             * <p>
+             * NOTE: Overriding this method to invoke {@code get()} should also
+             *  eliminate the need for an {@link InvalidationListener} to invoke
+             *  {@code get()} on the {@link BooleanBinding} in its callback code.
+             */
+           @Override
+            protected void onInvalidating() {
+                get();
+            }
 
             /**
              * Auto-clears the invalidation by overriding with a status that is
