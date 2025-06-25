@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2023 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,90 +32,41 @@ package com.mhschmieder.fxgraphicstoolkit.input;
 
 import java.util.Locale;
 
+import com.mhschmieder.commonstoolkit.lang.EnumUtilities;
+import com.mhschmieder.commonstoolkit.lang.Labeled;
+
 /**
  * The <code>MouseToolMode</code> enum is an enumeration of typical mouse modes.
  */
-public enum MouseToolMode {
-    SELECT, MOVE, ROTATE, ZOOM, PAN, DRAW, MEASURE, COPY, PASTE;
+public enum MouseToolMode implements Labeled< MouseToolMode > {
+    SELECT( "select" ), 
+    MOVE( "move" ), 
+    ROTATE( "rotate" ), 
+    ZOOM( "zoom" ), 
+    PAN( "pan" ), 
+    DRAW( "draw" ), 
+    MEASURE( "measure" ), 
+    COPY( "copy" ), 
+    PASTE( "paste" );
+    
+    final String label;
+    
+    private MouseToolMode( final String pLabel ) {
+        label = pLabel;
+    }
 
-    @SuppressWarnings("nls")
-    public static MouseToolMode canonicalValueOf( final String mouseMode ) {
-        if ( mouseMode == null ) {
-            return defaultValue();
-        }
-        else if ( "select".equalsIgnoreCase( mouseMode ) ) {
-            return SELECT;
-        }
-        else if ( "move".equalsIgnoreCase( mouseMode ) ) {
-            return MOVE;
-        }
-        else if ( "rotate".equalsIgnoreCase( mouseMode ) ) {
-            return ROTATE;
-        }
-        else if ( "zoom".equalsIgnoreCase( mouseMode ) ) {
-            return ZOOM;
-        }
-        else if ( "pan".equalsIgnoreCase( mouseMode ) ) {
-            return PAN;
-        }
-        else if ( "draw".equalsIgnoreCase( mouseMode ) ) {
-            return DRAW;
-        }
-        else if ( "measure".equalsIgnoreCase( mouseMode ) ) {
-            return MEASURE;
-        }
-        else if ( "copy".equalsIgnoreCase( mouseMode ) ) {
-            return COPY;
-        }
-        else if ( "paste".equalsIgnoreCase( mouseMode ) ) {
-            return PASTE;
-        }
-        else {
-            return valueOf( mouseMode.toUpperCase( Locale.ENGLISH ) );
-        }
+    @Override
+    public String label() {
+        return label;
+    }
+
+    @Override
+    public MouseToolMode valueOfLabel( final String text ) {
+        return ( MouseToolMode ) EnumUtilities.getLabeledEnumFromLabel( 
+            text, values() );
     }
 
     public static MouseToolMode defaultValue() {
         return SELECT;
     }
-
-    @SuppressWarnings("nls")
-    public final String toLabel() {
-        String label = "select";
-
-        switch ( this ) {
-        case SELECT:
-            label = "select";
-            break;
-        case MOVE:
-            label = "move";
-            break;
-        case ROTATE:
-            label = "rotate";
-            break;
-        case ZOOM:
-            label = "zoom";
-            break;
-        case PAN:
-            label = "pan";
-            break;
-        case DRAW:
-            label = "draw";
-            break;
-        case MEASURE:
-            label = "measure";
-            break;
-        case COPY:
-            label = "copy";
-            break;
-        case PASTE:
-            label = "paste";
-            break;
-        default:
-            break;
-        }
-
-        return label;
-    }
-
 }
