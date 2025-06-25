@@ -44,7 +44,7 @@ public enum MouseToolMode implements Labeled< MouseToolMode > {
     ROTATE( "rotate" ), 
     ZOOM( "zoom" ), 
     PAN( "pan" ), 
-    DRAW( "draw" ), 
+    LINE( "line" ), 
     MEASURE( "measure" ), 
     COPY( "copy" ), 
     PASTE( "paste" );
