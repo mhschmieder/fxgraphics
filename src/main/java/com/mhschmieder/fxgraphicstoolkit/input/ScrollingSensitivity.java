@@ -30,41 +30,30 @@
  */
 package com.mhschmieder.fxgraphicstoolkit.input;
 
-import com.mhschmieder.commonstoolkit.lang.EnumUtilities;
-import com.mhschmieder.commonstoolkit.lang.Labeled;
+import java.util.Locale;
 
 /**
- * The <code>MouseToolMode</code> enum is an enumeration of typical mouse tool modes.
+ * The <code>ScrollingSensitivity</code> enum is an enumeration of supported
+ * mouse scrolling sensitivity levels.
+ *
+ * @version 1.0
+ *
+ * @author Mark Schmieder
  */
-public enum MouseToolMode implements Labeled< MouseToolMode > {
-    SELECT( "select" ), 
-    MOVE( "move" ), 
-    ROTATE( "rotate" ), 
-    ZOOM( "zoom" ), 
-    PAN( "pan" ), 
-    LINE( "line" ), 
-    MEASURE( "measure" ), 
-    COPY( "copy" ), 
-    PASTE( "paste" );
-    
-    final String label;
-    
-    private MouseToolMode( final String pLabel ) {
-        label = pLabel;
+public enum ScrollingSensitivity {
+    OFF, COARSE, MEDIUM, FINE;
+
+    public static ScrollingSensitivity canonicalValueOf( final String canonicalScrollingSensitivity ) {
+        return ( canonicalScrollingSensitivity != null )
+            ? valueOf( canonicalScrollingSensitivity.toUpperCase( Locale.ENGLISH ) )
+            : defaultValue();
     }
 
-    @Override
-    public String label() {
-        return label;
+    public static ScrollingSensitivity defaultValue() {
+        return OFF;
     }
 
-    @Override
-    public MouseToolMode valueOfLabel( final String text ) {
-        return ( MouseToolMode ) EnumUtilities.getLabeledEnumFromLabel( 
-            text, values() );
-    }
-
-    public static MouseToolMode defaultValue() {
-        return SELECT;
+    public final String toCanonicalString() {
+        return toString().toLowerCase( Locale.ENGLISH );
     }
 }

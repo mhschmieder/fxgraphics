@@ -30,41 +30,27 @@
  */
 package com.mhschmieder.fxgraphicstoolkit.input;
 
-import com.mhschmieder.commonstoolkit.lang.EnumUtilities;
-import com.mhschmieder.commonstoolkit.lang.Labeled;
+import javafx.scene.Node;
 
 /**
- * The <code>MouseToolMode</code> enum is an enumeration of typical mouse tool modes.
+ * A contract for methods that an implementer must provide to a 
+ * {@link GestureManager}.
  */
-public enum MouseToolMode implements Labeled< MouseToolMode > {
-    SELECT( "select" ), 
-    MOVE( "move" ), 
-    ROTATE( "rotate" ), 
-    ZOOM( "zoom" ), 
-    PAN( "pan" ), 
-    LINE( "line" ), 
-    MEASURE( "measure" ), 
-    COPY( "copy" ), 
-    PASTE( "paste" );
+public interface GestureHandler {
+
+    /**
+     * Returns the {@link Node} that serves as the clickable Content Pane
+     * for a Cartesian Chart or other primary graphical display canvas.
+     *
+     * @return The {@link Node} to listen on for mouse events or gestures
+     *         regarding interactive graphical objects, such as those that
+     *         are contained in a Chart Overlay Group
+     */
+    Node getClickableContentNode();
     
-    final String label;
-    
-    private MouseToolMode( final String pLabel ) {
-        label = pLabel;
-    }
+    MouseToolMode getMouseMode();
 
-    @Override
-    public String label() {
-        return label;
-    }
-
-    @Override
-    public MouseToolMode valueOfLabel( final String text ) {
-        return ( MouseToolMode ) EnumUtilities.getLabeledEnumFromLabel( 
-            text, values() );
-    }
-
-    public static MouseToolMode defaultValue() {
-        return SELECT;
-    }
+    void zoom( final double zoomFactor,
+               final double xPixels,
+               final double yPixels );
 }
