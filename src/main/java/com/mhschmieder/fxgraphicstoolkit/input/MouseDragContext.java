@@ -1,7 +1,7 @@
 /**
  * MIT License
  *
- * Copyright (c) 2020, 2022 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the FxGuiToolkit Library
+ * This file is part of the FxGraphicsToolkit Library
  *
  * You should have received a copy of the MIT License along with the
- * GuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
+ * FxGraphicsToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/fxguitoolkit
+ * Project: https://github.com/mhschmieder/fxgraphicstoolkit
  */
 package com.mhschmieder.fxgraphicstoolkit.input;
 
@@ -35,7 +35,7 @@ package com.mhschmieder.fxgraphicstoolkit.input;
  * related handling.
  * <p>
  * TODO: Add the ALT key detection etc., and change to more general name?
- * Possibly add the drag box and its handling as well?
+ *  Possibly add the drag box and its handling as well?
  */
 public class MouseDragContext {
 
@@ -55,7 +55,7 @@ public class MouseDragContext {
 
     // This is the initializer when interacting with Drag events.
     // NOTE: The first Drag Event is thrown out, so we zero the destination.
-    // This ensures that the deltas stay scaled properly on each succession.
+    //  This ensures that the deltas stay scaled properly on each succession.
     public void initializeDrag( final double firstX, final double firstY ) {
         _dragDestinationX = 0.0d;
         _dragDestinationY = 0.0d;
@@ -66,8 +66,8 @@ public class MouseDragContext {
 
     // This is the initializer when interacting with Move events.
     // NOTE: It is most likely the source will be set to the destination in
-    // such cases, as the first Move Event is not thrown out as with Drag Events
-    // and otherwise would result in an overly large initial delta computation.
+    //  such cases, as the first Move Event is not thrown out as with Drag Events
+    //  and otherwise would result in an overly large initial delta computation.
     public void initializeMove( final double firstX,
                                 final double firstY,
                                 final double lastX,
@@ -85,9 +85,10 @@ public class MouseDragContext {
 
     @Override
     public String toString() {
-        return "MouseDragContext[lastX:" + _dragDestinationX + ", lastY:" + _dragDestinationY //$NON-NLS-1$ //$NON-NLS-2$
-                + ",\n\tfirstX:" + _dragOriginX + ", firstY:" + _dragOriginY //$NON-NLS-1$ //$NON-NLS-2$
-                + ", valid:" + _valid + "]"; //$NON-NLS-1$ //$NON-NLS-2$
+        return "MouseDragContext[lastX:" + _dragDestinationX 
+                + ", lastY:" + _dragDestinationY
+                + ",\n\tfirstX:" + _dragOriginX 
+                + ", firstY:" + _dragOriginY
+                + ", valid:" + _valid + "]";
     }
-
 }
