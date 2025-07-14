@@ -55,7 +55,7 @@ public class CartesianRotationManager extends RotationManager {
     /** Cache a local copy of the x axis so we can apply proper scaling. */
     protected ValueAxis< Number > _xAxis;
 
-    /** The y axis displays ticks along the left of the Sound Field. */
+    /** Cache a local copy of the y axis so we can apply proper scaling. */
     protected ValueAxis< Number > _yAxis;
 
     public CartesianRotationManager( final MouseToolManager mouseToolManager,
