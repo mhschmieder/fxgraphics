@@ -240,6 +240,8 @@ public class GestureManager {
             break;
         }
 
-        gestureHandler.zoom( zoomFactor, event.getSceneX(), event.getSceneY() );
+        gestureHandler.zoom( zoomFactor,
+                             event.getSceneX(), 
+                             event.getSceneY() );
     }
 }
