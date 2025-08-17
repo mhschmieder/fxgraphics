@@ -10,7 +10,7 @@
 	<version>0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>FxGraphicsToolkit</name>
+	<name>fxgraphicstoolkit</name>
 	<url>https://github.com/mhschmieder/fxgraphicstoolkit </url>
 	<description>Utilities and custom classes for JavaFX based Graphics work.</description>
 
