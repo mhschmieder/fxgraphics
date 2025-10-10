@@ -30,14 +30,11 @@
  */
 package com.mhschmieder.fxgraphicstoolkit.shape;
 
-import java.util.List;
-
 import com.mhschmieder.fxgraphicstoolkit.paint.ColorConstants;
 import com.mhschmieder.fxgraphicstoolkit.paint.ColorUtilities;
 import com.mhschmieder.fxgraphicstoolkit.render.HighlightUtilities;
 import com.mhschmieder.physicstoolkit.DistanceUnit;
 import com.mhschmieder.physicstoolkit.UnitConversion;
-
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.ObservableList;
@@ -48,6 +45,8 @@ import javafx.scene.shape.Shape;
 import javafx.scene.shape.StrokeType;
 import javafx.scene.transform.Scale;
 import javafx.scene.transform.Transform;
+
+import java.util.List;
 
 /**
  * This container allows for encapsulation of multiple JavaFX Shapes for a

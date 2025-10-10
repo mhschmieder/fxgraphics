@@ -30,11 +30,10 @@
  */
 package com.mhschmieder.fxgraphicstoolkit.input;
 
-import org.apache.commons.math3.util.FastMath;
-
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
+import org.apache.commons.math3.util.FastMath;
 
 /**
  * A specialization of the Drag Box Manager, for Cartesian Space, which is the

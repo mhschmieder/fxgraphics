@@ -1,7 +1,7 @@
-/**
+/*
  * MIT License
  *
- * Copyright (c) 2020, 2023 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,26 +30,57 @@
  */
 package com.mhschmieder.fxgraphicstoolkit.geometry;
 
+import com.mhschmieder.commonstoolkit.lang.Abbreviated;
+import com.mhschmieder.commonstoolkit.lang.EnumUtilities;
+import com.mhschmieder.commonstoolkit.lang.Labeled;
+
 import java.util.Locale;
 
 /**
  * The <code>FacingDirection</code> class is an enumeration for facing direction
- * values for three dimensional objects in a two dimensional projection plane.
+ * values for three-dimensional objects in a two-dimensional projection plane.
  *
  * NOTE: Other than for Presentation String, this is now redundant with JavaFX.
  */
-public enum FacingDirection {
-    RIGHT, LEFT;
+public enum FacingDirection implements Labeled< FacingDirection >,
+        Abbreviated< FacingDirection > {
+    RIGHT( "Right", "r" ),
+    LEFT( "Left", "l" );
 
-    public static FacingDirection abbreviatedValueOf( final String abbreviatedFacingDirection ) {
-        if ( "r".equalsIgnoreCase( abbreviatedFacingDirection ) ) { //$NON-NLS-1$
-            return RIGHT;
-        }
-        else if ( "l".equalsIgnoreCase( abbreviatedFacingDirection ) ) { //$NON-NLS-1$
-            return LEFT;
-        }
+    private String label;
+    private String abbreviation;
 
-        return defaultValue();
+    FacingDirection( final String pLabel,
+                     final String pAbbreviation ) {
+        label = pLabel;
+        abbreviation = pAbbreviation;
+    }
+
+    @Override
+    public final String label() {
+        return label;
+    }
+
+    @Override
+    public FacingDirection valueOfLabel( final String text ) {
+        return ( FacingDirection ) EnumUtilities.getLabeledEnumFromLabel(
+                text, values() );
+    }
+
+    @Override
+    public final String abbreviation() {
+        return abbreviation;
+    }
+
+    @Override
+    public FacingDirection valueOfAbbreviation( final String abbreviatedText ) {
+        return ( FacingDirection ) EnumUtilities
+                .getAbbreviatedEnumFromAbbreviation(
+                        abbreviatedText, values() );
+    }
+
+    public static FacingDirection defaultValue() {
+        return RIGHT;
     }
 
     public static FacingDirection canonicalValueOf( final String canonicalFacingDirection ) {
@@ -58,50 +89,7 @@ public enum FacingDirection {
             : defaultValue();
     }
 
-    public static FacingDirection defaultValue() {
-        return RIGHT;
-    }
-
-    public final String toAbbreviatedString() {
-        String abbreviatedString = null;
-
-        switch ( this ) {
-        case RIGHT:
-            abbreviatedString = "r"; //$NON-NLS-1$
-            break;
-        case LEFT:
-            abbreviatedString = "l"; //$NON-NLS-1$
-            break;
-        default:
-            final String errMessage = "Unexpected " //$NON-NLS-1$
-                    + this.getClass().getSimpleName() + " " + this; //$NON-NLS-1$
-            throw new IllegalArgumentException( errMessage );
-        }
-
-        return abbreviatedString;
-    }
-
     public final String toCanonicalString() {
         return toString().toLowerCase( Locale.ENGLISH );
     }
-
-    public final String toPresentationString() {
-        String presentationString = null;
-
-        switch ( this ) {
-        case RIGHT:
-            presentationString = "Right"; //$NON-NLS-1$
-            break;
-        case LEFT:
-            presentationString = "Left"; //$NON-NLS-1$
-            break;
-        default:
-            final String errMessage = "Unexpected " //$NON-NLS-1$
-                    + this.getClass().getSimpleName() + " " + this; //$NON-NLS-1$
-            throw new IllegalArgumentException( errMessage );
-        }
-
-        return presentationString;
-    }
-
 }

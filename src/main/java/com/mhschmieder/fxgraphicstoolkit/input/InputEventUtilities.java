@@ -30,13 +30,12 @@
  */
 package com.mhschmieder.fxgraphicstoolkit.input;
 
-import org.apache.commons.math3.util.FastMath;
-
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.input.ZoomEvent;
+import org.apache.commons.math3.util.FastMath;
 
 /**
  * This is a utility class for handling events from input devices, such as

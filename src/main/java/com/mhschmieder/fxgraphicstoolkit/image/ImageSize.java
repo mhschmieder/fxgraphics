@@ -30,15 +30,14 @@
  */
 package com.mhschmieder.fxgraphicstoolkit.image;
 
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.util.Locale;
-
-import org.apache.commons.math3.util.FastMath;
-
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Dimension2D;
+import org.apache.commons.math3.util.FastMath;
+
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.Locale;
 
 public class ImageSize {
 

@@ -30,13 +30,11 @@
  */
 package com.mhschmieder.fxgraphicstoolkit.input;
 
-import org.apache.commons.math3.util.FastMath;
-
 import com.mhschmieder.physicstoolkit.DistanceUnit;
 import com.mhschmieder.physicstoolkit.UnitConversion;
-
 import javafx.geometry.Point2D;
 import javafx.scene.chart.ValueAxis;
+import org.apache.commons.math3.util.FastMath;
 
 /**
  * A specialization of the Rotation Manager, for Cartesian Space, which is the

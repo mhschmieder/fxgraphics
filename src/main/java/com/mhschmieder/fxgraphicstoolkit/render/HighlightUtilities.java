@@ -30,12 +30,12 @@
  */
 package com.mhschmieder.fxgraphicstoolkit.render;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.shape.Shape;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This is a utility class for highlighting utilities and methods.

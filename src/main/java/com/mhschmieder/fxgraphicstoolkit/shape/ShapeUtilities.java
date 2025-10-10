@@ -30,14 +30,8 @@
  */
 package com.mhschmieder.fxgraphicstoolkit.shape;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.math3.util.FastMath;
-
 import com.mhschmieder.fxgraphicstoolkit.geometry.GeometryUtilities;
 import com.mhschmieder.fxgraphicstoolkit.paint.ColorConstants;
-
 import javafx.collections.ObservableList;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
@@ -58,6 +52,10 @@ import javafx.scene.shape.StrokeType;
 import javafx.scene.transform.Affine;
 import javafx.scene.transform.Transform;
 import javafx.util.Pair;
+import org.apache.commons.math3.util.FastMath;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public final class ShapeUtilities {
 

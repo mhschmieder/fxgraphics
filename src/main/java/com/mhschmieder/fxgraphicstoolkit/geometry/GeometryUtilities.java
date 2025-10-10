@@ -30,14 +30,11 @@
  */
 package com.mhschmieder.fxgraphicstoolkit.geometry;
 
-import org.apache.commons.math3.util.FastMath;
-
 import com.mhschmieder.mathtoolkit.MathUtilities;
 import com.mhschmieder.mathtoolkit.geometry.euclidian.Axis;
 import com.mhschmieder.mathtoolkit.geometry.euclidian.OrthogonalAxes;
 import com.mhschmieder.physicstoolkit.DistanceUnit;
 import com.mhschmieder.physicstoolkit.UnitConversion;
-
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
@@ -56,6 +53,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.VLineTo;
 import javafx.scene.transform.Affine;
 import javafx.util.Pair;
+import org.apache.commons.math3.util.FastMath;
 
 /**
  * This utility class is mostly for converting between JavaFX and AWT graphics

@@ -31,7 +31,6 @@
 package com.mhschmieder.fxgraphicstoolkit.shape;
 
 import com.mhschmieder.physicstoolkit.DistanceUnit;
-
 import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;

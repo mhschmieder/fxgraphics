@@ -1,7 +1,7 @@
-/**
+/*
  * MIT License
  *
- * Copyright (c) 2020, 2023 Mark Schmieder
+ * Copyright (c) 2020, 2025 Mark Schmieder
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -30,6 +30,10 @@
  */
 package com.mhschmieder.fxgraphicstoolkit.geometry;
 
+import com.mhschmieder.commonstoolkit.lang.Abbreviated;
+import com.mhschmieder.commonstoolkit.lang.EnumUtilities;
+import com.mhschmieder.commonstoolkit.lang.Labeled;
+
 import java.util.Locale;
 
 /**
@@ -39,20 +43,46 @@ import java.util.Locale;
  *
  * NOTE: Other than for string conversions, this is now redundant with JavaFX.
  */
-public enum Orientation {
-    HORIZONTAL, VERTICAL;
+public enum Orientation implements Labeled< Orientation >,
+        Abbreviated< Orientation > {
+    HORIZONTAL( "Horizontal", "hz" ),
+    VERTICAL( "Vertical", "vt" );
 
-    @SuppressWarnings("nls")
-    public static Orientation abbreviatedValueOf( final String abbreviatedOrientation ) {
-        if ( "hz".equalsIgnoreCase( abbreviatedOrientation ) ) {
-            return HORIZONTAL;
-        }
+    private String label;
+    private String abbreviation;
 
-        if ( "vt".equalsIgnoreCase( abbreviatedOrientation ) ) {
-            return VERTICAL;
-        }
+    Orientation( final String pLabel,
+                       final String pAbbreviation ) {
+        label = pLabel;
+        abbreviation = pAbbreviation;
+    }
 
-        return defaultValue();
+    @Override
+    public final String label() {
+        return label;
+    }
+
+    @Override
+    public Orientation valueOfLabel( final String text ) {
+        return ( Orientation ) EnumUtilities.getLabeledEnumFromLabel(
+                text, values() );
+    }
+
+    @Override
+    public final String abbreviation() {
+        return abbreviation;
+    }
+
+    @Override
+    public Orientation valueOfAbbreviation(
+            final String abbreviatedText ) {
+        return ( Orientation ) EnumUtilities
+                .getAbbreviatedEnumFromAbbreviation(
+                        abbreviatedText, values() );
+    }
+
+    public static Orientation defaultValue() {
+        return HORIZONTAL;
     }
 
     public static Orientation canonicalValueOf( final String canonicalOrientation ) {
@@ -61,50 +91,7 @@ public enum Orientation {
             : defaultValue();
     }
 
-    public static Orientation defaultValue() {
-        return HORIZONTAL;
-    }
-
-    public final String toAbbreviatedString() {
-        String abbreviatedString = null;
-
-        switch ( this ) {
-        case HORIZONTAL:
-            abbreviatedString = "hz"; //$NON-NLS-1$
-            break;
-        case VERTICAL:
-            abbreviatedString = "vt"; //$NON-NLS-1$
-            break;
-        default:
-            final String errMessage = "Unexpected " //$NON-NLS-1$
-                    + this.getClass().getSimpleName() + " " + this; //$NON-NLS-1$
-            throw new IllegalArgumentException( errMessage );
-        }
-
-        return abbreviatedString;
-    }
-
     public final String toCanonicalString() {
         return toString().toLowerCase( Locale.ENGLISH );
     }
-
-    public final String toPresentationString() {
-        String presentationString = null;
-
-        switch ( this ) {
-        case HORIZONTAL:
-            presentationString = "Horizontal"; //$NON-NLS-1$
-            break;
-        case VERTICAL:
-            presentationString = "Vertical"; //$NON-NLS-1$
-            break;
-        default:
-            final String errMessage = "Unexpected " //$NON-NLS-1$
-                    + this.getClass().getSimpleName() + " " + this; //$NON-NLS-1$
-            throw new IllegalArgumentException( errMessage );
-        }
-
-        return presentationString;
-    }
-
 }

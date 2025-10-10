@@ -30,14 +30,12 @@
  */
 package com.mhschmieder.fxgraphicstoolkit.input;
 
-import org.apache.commons.math3.util.FastMath;
-
 import com.mhschmieder.commonstoolkit.util.ClientProperties;
 import com.mhschmieder.commonstoolkit.util.SystemType;
-
 import javafx.scene.Node;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.input.ZoomEvent;
+import org.apache.commons.math3.util.FastMath;
 
 /**
  * Generalized manager for some of the more common gestures; especially ones

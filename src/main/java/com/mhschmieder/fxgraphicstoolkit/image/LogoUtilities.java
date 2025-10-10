@@ -31,7 +31,6 @@
 package com.mhschmieder.fxgraphicstoolkit.image;
 
 import com.mhschmieder.fxgraphicstoolkit.paint.ColorUtilities;
-
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 

@@ -31,7 +31,6 @@
 package com.mhschmieder.fxgraphicstoolkit.input;
 
 import com.mhschmieder.fxgraphicstoolkit.shape.ShapeUtilities;
-
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Path;

@@ -30,12 +30,7 @@
  */
 package com.mhschmieder.fxgraphicstoolkit.input;
 
-import java.util.List;
-
-import org.apache.commons.math3.util.FastMath;
-
 import com.mhschmieder.fxgraphicstoolkit.render.HighlightUtilities;
-
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
@@ -44,6 +39,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.shape.StrokeType;
+import org.apache.commons.math3.util.FastMath;
+
+import java.util.List;
 
 /**
  * A stateful manager for drag-box handling via the mouse.

@@ -30,14 +30,14 @@
  */
 package com.mhschmieder.fxgraphicstoolkit.geometry;
 
-import java.util.Objects;
-
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.shape.Rectangle;
+
+import java.util.Objects;
 
 /**
  * This is a simple class for describing extents in 2D Cartesian Space.
