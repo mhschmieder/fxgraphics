@@ -47,15 +47,21 @@
             <artifactId>commons-math3</artifactId>
             <version>3.6.1</version>
         </dependency>
+        <dependency>
+            <groupId>com.mhschmieder</groupId>
+            <artifactId>jcommons</artifactId>
+            <version>0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
 		<dependency>
 			<groupId>com.mhschmieder</groupId>
-			<artifactId>commonstoolkit</artifactId>
+			<artifactId>jmath</artifactId>
 			<version>0.1-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>
         <dependency>
             <groupId>com.mhschmieder</groupId>
-            <artifactId>physicstoolkit</artifactId>
+            <artifactId>jphysics</artifactId>
             <version>0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>

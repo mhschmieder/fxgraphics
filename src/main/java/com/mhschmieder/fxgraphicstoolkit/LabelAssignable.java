@@ -1,4 +1,4 @@
-/**
+/*
  * MIT License
  *
  * Copyright (c) 2020, 2025 Mark Schmieder
@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the FxCommonsToolkit Library
+ * This file is part of the FxGraphicsToolkit Library
  *
  * You should have received a copy of the MIT License along with the
- * FxCommonsToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
+ * FxGraphicsToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/fxcommonstoolkit
+ * Project: https://github.com/mhschmieder/fxgraphicstoolkit
  */
 package com.mhschmieder.fxgraphicstoolkit;
 
@@ -35,7 +35,7 @@ import javafx.beans.property.StringProperty;
 /**
  * An interface for JavaFX objects that contracts an implementing class to add 
  * and expose an observable label property. Not to be confused with the more
- * generic enum-oriented {@code Labeled} interface in commonstoolkit, or the
+ * generic enum-oriented {@code Labeled} interface in jcommons, or the
  * general purpose non-observable non-JavaFX {@code LabeledObject} interface.
  */
 public interface LabelAssignable {

@@ -30,8 +30,8 @@
  */
 package com.mhschmieder.fxgraphicstoolkit.input;
 
-import com.mhschmieder.commonstoolkit.lang.EnumUtilities;
-import com.mhschmieder.commonstoolkit.lang.Labeled;
+import com.mhschmieder.jcommons.lang.EnumUtilities;
+import com.mhschmieder.jcommons.lang.Labeled;
 
 /**
  * The <code>MouseToolMode</code> enum is an enumeration of typical mouse tool modes.

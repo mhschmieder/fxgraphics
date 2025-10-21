@@ -30,11 +30,11 @@
  */
 package com.mhschmieder.fxgraphicstoolkit.geometry;
 
-import com.mhschmieder.mathtoolkit.MathUtilities;
-import com.mhschmieder.mathtoolkit.geometry.euclidian.Axis;
-import com.mhschmieder.mathtoolkit.geometry.euclidian.OrthogonalAxes;
-import com.mhschmieder.physicstoolkit.DistanceUnit;
-import com.mhschmieder.physicstoolkit.UnitConversion;
+import com.mhschmieder.jmath.MathUtilities;
+import com.mhschmieder.jmath.geometry.euclidian.Axis;
+import com.mhschmieder.jmath.geometry.euclidian.OrthogonalAxes;
+import com.mhschmieder.jphysics.DistanceUnit;
+import com.mhschmieder.jphysics.UnitConversion;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
