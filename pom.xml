@@ -6,12 +6,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.mhschmieder</groupId>
-    <artifactId>fxgraphicstoolkit</artifactId>
+    <artifactId>fxgraphics</artifactId>
 	<version>0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>fxgraphicstoolkit</name>
-	<url>https://github.com/mhschmieder/fxgraphicstoolkit </url>
+	<name>fxgraphics</name>
+	<url>https://github.com/mhschmieder/fxgraphics</url>
 	<description>Utilities and custom classes for JavaFX based Graphics work.</description>
 
 	<licenses>
@@ -23,9 +23,9 @@
 	</licenses>
 
 	<scm>
-		<url>https://github.com/mhschmieder/fxgraphicstoolkit</url>
-		<connection>scm:git:git://github.com/mhschmieder/fxgraphicstoolkit.git</connection>
-		<developerConnection>scm:git:git@github.com:mhschmieder/fxgraphicstoolkit.git</developerConnection>
+		<url>https://github.com/mhschmieder/fxgraphics</url>
+		<connection>scm:git:git://github.com/mhschmieder/fxgraphics.git</connection>
+		<developerConnection>scm:git:git@github.com:mhschmieder/fxgraphics.git</developerConnection>
 	</scm>
 
 	<developers>
@@ -67,7 +67,7 @@
         </dependency>
         <dependency>
             <groupId>com.mhschmieder</groupId>
-            <artifactId>graphicstoolkit</artifactId>
+            <artifactId>jgraphics</artifactId>
             <version>0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
