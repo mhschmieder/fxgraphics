@@ -1,7 +1,7 @@
-/**
+/*
  * MIT License
  *
- * Copyright (c) 2020, 2025 Mark Schmieder
+ * Copyright (c) 2020, 2025, Mark Schmieder. All rights reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -58,7 +58,7 @@ import org.apache.commons.math3.util.FastMath;
 /**
  * This utility class is mostly for converting between JavaFX and AWT graphics
  * classes, such as points. It does not have state.
- *
+ * <p>
  * Functions that say "since 1.2" (e.g.) were ported from AWT source code, and
  * may have JavaFX equivalents that we simply haven't discovered yet.
  */
@@ -225,27 +225,6 @@ public final class GeometryUtilities {
         return rotatedPoint;
     }
 
-    public static BoundingBox boundsFromExtents( final Extents2D extents ) {
-        return new BoundingBox( extents.getX(),
-                                extents.getY(),
-                                extents.getWidth(),
-                                extents.getHeight() );
-    }
-
-    public static BoundingBox boundsFromRectangle( final Rectangle rectangle ) {
-        return new BoundingBox( rectangle.getX(),
-                                rectangle.getY(),
-                                rectangle.getWidth(),
-                                rectangle.getHeight() );
-    }
-
-    public static BoundingBox boundsFromRectangle2D( final Rectangle2D rectangle ) {
-        return new BoundingBox( rectangle.getMinX(),
-                                rectangle.getMinY(),
-                                rectangle.getWidth(),
-                                rectangle.getHeight() );
-    }
-
     /*
      * NOTE: This is a unitless method, but does assume the units are at
      *  least consistent. Preferably everything is metric (meters).
@@ -275,13 +254,11 @@ public final class GeometryUtilities {
     }
 
     public static Point2D copyPoint2D( final Point2D point2D ) {
-        final Point2D copiedPoint2D = new Point2D( point2D.getX(), point2D.getY() );
-        return copiedPoint2D;
+        return new Point2D( point2D.getX(), point2D.getY() );
     }
 
     public static Point3D copyPoint3D( final Point3D point3D ) {
-        final Point3D copiedPoint3D = new Point3D( point3D.getX(), point3D.getY(), point3D.getZ() );
-        return copiedPoint3D;
+        return new Point3D( point3D.getX(), point3D.getY(), point3D.getZ() );
     }
 
     /**
@@ -510,14 +487,12 @@ public final class GeometryUtilities {
         }
 
         // Return the lowest coordinates as a Point2D instance.
-        final Pair< Double, Double > lowestPoint = new Pair<>( lowestX, lowestY );
-
-        return lowestPoint;
+        return new Pair<>( lowestX, lowestY );
     }
 
     /**
      * This method returns a Point2D that represents the (x, y) coordinate
-     * pair of the mid-point of a supplied arc, using the ArcTo representation.
+     * pair for the mid-point of a supplied arc, using the ArcTo representation.
      * <p>
      * NOTE: This method does not yet compute the correct point, so needs to
      * be debugged after switching the JM-1P enclosure back to using an
@@ -533,7 +508,7 @@ public final class GeometryUtilities {
      *            The x-coordinate of the end point of the arc
      * @param endY
      *            The y-coordinate of the end point of the arc
-     * @return A Point2D representing the (x, y) coordinate pair of the
+     * @return A Point2D representing the (x, y) coordinate pair for the
      *         mid-point of the arc
      */
     public static Point2D getArcMidPoint( final ArcTo arcTo,
@@ -548,7 +523,8 @@ public final class GeometryUtilities {
         final double dy2 = 0.5d * ( startY - endY );
 
         // Convert ellipse rotation angle from degrees to radians.
-        final double xAxisRotationRadians = FastMath.toRadians( arcTo.getXAxisRotation() );
+        final double xAxisRotationRadians = FastMath.toRadians(
+                arcTo.getXAxisRotation() );
         final double cosAngle = FastMath.cos( xAxisRotationRadians );
         final double sinAngle = FastMath.sin( xAxisRotationRadians );
 
@@ -624,95 +600,8 @@ public final class GeometryUtilities {
         final double arcMidAngleRadians = FastMath.toRadians( arcMidAngleDegrees );
         final double arcMidX = FastMath.cos( arcMidAngleRadians );
         final double arcMidY = FastMath.sin( arcMidAngleRadians );
-        final Point2D arcMidPoint = new Point2D( arcMidX, arcMidY );
 
-        return arcMidPoint;
-    }
-
-    /*
-     * Get a BoundingBox converted from Meters to current Distance Unit.
-     */
-    public static BoundingBox getBoundingBoxInDistanceUnit( final Bounds bounds,
-                                                            final DistanceUnit distanceUnit ) {
-        final BoundingBox boundingBox = getBoundingBoxInDistanceUnit( bounds,
-                                                                      DistanceUnit.METERS,
-                                                                      distanceUnit );
-
-        return boundingBox;
-    }
-
-    /*
-     * Get a BoundingBox converted from current to specified Distance Unit.
-     */
-    public static BoundingBox getBoundingBoxInDistanceUnit( final Bounds bounds,
-                                                            final DistanceUnit oldDistanceUnit,
-                                                            final DistanceUnit newDistanceUnit ) {
-        final double x = UnitConversion
-                .convertDistance( bounds.getMinX(), oldDistanceUnit, newDistanceUnit );
-        final double y = UnitConversion
-                .convertDistance( bounds.getMinY(), oldDistanceUnit, newDistanceUnit );
-        final double width = UnitConversion
-                .convertDistance( bounds.getWidth(), oldDistanceUnit, newDistanceUnit );
-        final double height = UnitConversion
-                .convertDistance( bounds.getHeight(), oldDistanceUnit, newDistanceUnit );
-        final BoundingBox boundingBox = new BoundingBox( x, y, width, height );
-
-        return boundingBox;
-    }
-
-    /*
-     * Get a BoundingBox converted from Meters to current Distance Unit.
-     */
-    public static BoundingBox getBoundingBoxInDistanceUnit( final Extents2D extents,
-                                                            final DistanceUnit distanceUnit ) {
-        final BoundingBox boundingBox = getBoundingBoxInDistanceUnit( extents,
-                                                                      DistanceUnit.METERS,
-                                                                      distanceUnit );
-
-        return boundingBox;
-    }
-
-    /*
-     * Get a BoundingBox converted from current to specified Distance Unit.
-     */
-    public static BoundingBox getBoundingBoxInDistanceUnit( final Extents2D extents,
-                                                            final DistanceUnit oldDistanceUnit,
-                                                            final DistanceUnit newDistanceUnit ) {
-        final double x = UnitConversion
-                .convertDistance( extents.getX(), oldDistanceUnit, newDistanceUnit );
-        final double y = UnitConversion
-                .convertDistance( extents.getY(), oldDistanceUnit, newDistanceUnit );
-        final double width = UnitConversion
-                .convertDistance( extents.getWidth(), oldDistanceUnit, newDistanceUnit );
-        final double height = UnitConversion
-                .convertDistance( extents.getHeight(), oldDistanceUnit, newDistanceUnit );
-        final BoundingBox boundingBox = new BoundingBox( x, y, width, height );
-
-        return boundingBox;
-    }
-
-    /*
-     * Get a BoundingBox converted from current Distance Unit to Meters.
-     */
-    public static BoundingBox getBoundingBoxInMeters( final Bounds bounds,
-                                                      final DistanceUnit distanceUnit ) {
-        final BoundingBox boundingBox = getBoundingBoxInDistanceUnit( bounds,
-                                                                      distanceUnit,
-                                                                      DistanceUnit.METERS );
-
-        return boundingBox;
-    }
-
-    /*
-     * Get a BoundingBox converted from current Distance Unit to Meters.
-     */
-    public static BoundingBox getBoundingBoxInMeters( final Extents2D extents,
-                                                      final DistanceUnit distanceUnit ) {
-        final BoundingBox boundingBox = getBoundingBoxInDistanceUnit( extents,
-                                                                      distanceUnit,
-                                                                      DistanceUnit.METERS );
-
-        return boundingBox;
+        return new Point2D( arcMidX, arcMidY );
     }
 
     public static double getCenterX( final Bounds bbox ) {
@@ -762,53 +651,8 @@ public final class GeometryUtilities {
         final double b3 = 3.0d * MathUtilities.sqr( inversePosition ) * position;
         final double b4 = FastMath.pow( inversePosition, 3.0d );
 
-        final double cubicBezierValue = ( b1 * start ) + ( b2 * control1 ) + ( b3 * control2 )
+        return ( b1 * start ) + ( b2 * control1 ) + ( b3 * control2 )
                 + ( b4 * end );
-
-        return cubicBezierValue;
-    }
-
-    /*
-     * Get an Extents2D converted from Meters to specified Distance Unit.
-     */
-    public static Extents2D getExtentsInDistanceUnit( final Extents2D extents,
-                                                      final DistanceUnit distanceUnit ) {
-        final Extents2D extents2D = getExtentsInDistanceUnit( extents,
-                                                              DistanceUnit.METERS,
-                                                              distanceUnit );
-
-        return extents2D;
-    }
-
-    /*
-     * Get an Extents2D converted from current to specified Distance Unit.
-     */
-    public static Extents2D getExtentsInDistanceUnit( final Extents2D extents,
-                                                      final DistanceUnit oldDistanceUnit,
-                                                      final DistanceUnit newDistanceUnit ) {
-        final double x = UnitConversion
-                .convertDistance( extents.getX(), oldDistanceUnit, newDistanceUnit );
-        final double y = UnitConversion
-                .convertDistance( extents.getY(), oldDistanceUnit, newDistanceUnit );
-        final double width = UnitConversion
-                .convertDistance( extents.getWidth(), oldDistanceUnit, newDistanceUnit );
-        final double height = UnitConversion
-                .convertDistance( extents.getHeight(), oldDistanceUnit, newDistanceUnit );
-        final Extents2D extents2D = new Extents2D( x, y, width, height );
-
-        return extents2D;
-    }
-
-    /*
-     * Get an Extents2D converted from current Distance Unit to Meters.
-     */
-    public static Extents2D getExtentsInMeters( final Extents2D extents,
-                                                final DistanceUnit distanceUnit ) {
-        final Extents2D extents2D = getExtentsInDistanceUnit( extents,
-                                                              distanceUnit,
-                                                              DistanceUnit.METERS );
-
-        return extents2D;
     }
 
     /**
@@ -834,9 +678,8 @@ public final class GeometryUtilities {
         if ( !intersects ) {
             return null;
         }
-        final BoundingBox intersection = new BoundingBox( x1, y1, z1, width, height, depth );
 
-        return intersection;
+        return new BoundingBox( x1, y1, z1, width, height, depth );
     }
 
     /**
@@ -860,25 +703,24 @@ public final class GeometryUtilities {
         if ( !intersects ) {
             return null;
         }
-        final Rectangle2D intersection = new Rectangle2D( x1, y1, width, height );
 
-        return intersection;
+        return new Rectangle2D( x1, y1, width, height );
     }
 
     /* Get an AWT line, converted from JavaFX. */
     public static java.awt.geom.Line2D getLine( final Line fxLine ) {
-        final java.awt.geom.Line2D awtLine = new java.awt.geom.Line2D.Double( fxLine.getStartX(),
-                                                                              fxLine.getStartY(),
-                                                                              fxLine.getEndX(),
-                                                                              fxLine.getEndY() );
-        return awtLine;
+        return new java.awt.geom.Line2D.Double(
+                fxLine.getStartX(),
+                fxLine.getStartY(),
+                fxLine.getEndX(),
+                fxLine.getEndY() );
     }
 
     /* Get an AWT point, converted from JavaFX. */
     public static java.awt.geom.Point2D getPoint( final Point2D fxPoint ) {
-        final java.awt.geom.Point2D awtPoint = new java.awt.geom.Point2D.Double( fxPoint.getX(),
-                                                                                 fxPoint.getY() );
-        return awtPoint;
+        return new java.awt.geom.Point2D.Double(
+                fxPoint.getX(),
+                fxPoint.getY() );
     }
 
     /*
@@ -891,9 +733,8 @@ public final class GeometryUtilities {
                        UnitConversion.convertDistance( xMeters, DistanceUnit.METERS, distanceUnit );
         final double y =
                        UnitConversion.convertDistance( yMeters, DistanceUnit.METERS, distanceUnit );
-        final Point2D point = new Point2D( x, y );
 
-        return point;
+        return new Point2D( x, y );
     }
 
     /*
@@ -905,9 +746,8 @@ public final class GeometryUtilities {
                 .convertDistance( pointMeters.getX(), DistanceUnit.METERS, distanceUnit );
         final double y = UnitConversion
                 .convertDistance( pointMeters.getY(), DistanceUnit.METERS, distanceUnit );
-        final Point2D point = new Point2D( x, y );
 
-        return point;
+        return new Point2D( x, y );
     }
 
     /*
@@ -916,13 +756,12 @@ public final class GeometryUtilities {
     public static Point2D getPointInMeters( final double x,
                                             final double y,
                                             final DistanceUnit distanceUnit ) {
-        final double xMeters =
-                             UnitConversion.convertDistance( x, distanceUnit, DistanceUnit.METERS );
-        final double yMeters =
-                             UnitConversion.convertDistance( y, distanceUnit, DistanceUnit.METERS );
-        final Point2D pointMeters = new Point2D( xMeters, yMeters );
+        final double xMeters = UnitConversion.convertDistance(
+                x, distanceUnit, DistanceUnit.METERS );
+        final double yMeters = UnitConversion.convertDistance(
+                y, distanceUnit, DistanceUnit.METERS );
 
-        return pointMeters;
+        return new Point2D( xMeters, yMeters );
     }
 
     /*
@@ -933,9 +772,8 @@ public final class GeometryUtilities {
                 .convertDistance( point.getX(), distanceUnit, DistanceUnit.METERS );
         final double yMeters = UnitConversion
                 .convertDistance( point.getY(), distanceUnit, DistanceUnit.METERS );
-        final Point2D pointMeters = new Point2D( xMeters, yMeters );
 
-        return pointMeters;
+        return new Point2D( xMeters, yMeters );
     }
 
     /**
@@ -965,206 +803,7 @@ public final class GeometryUtilities {
         final double b2 = 2.0d * inversePosition * position;
         final double b3 = MathUtilities.sqr( position );
 
-        final double quadraticBezierValue = ( b1 * start ) + ( b2 * control ) + ( b3 * end );
-
-        return quadraticBezierValue;
-    }
-
-    /*
-     * Get a Rectangle shape, converted from Meters to specified Distance Unit.
-     */
-    public static Rectangle getRectangleInDistanceUnit( final Bounds boundsMeters,
-                                                        final DistanceUnit distanceUnit ) {
-        final double x = UnitConversion
-                .convertDistance( boundsMeters.getMinX(), DistanceUnit.METERS, distanceUnit );
-        final double y = UnitConversion
-                .convertDistance( boundsMeters.getMinY(), DistanceUnit.METERS, distanceUnit );
-        final double width = UnitConversion
-                .convertDistance( boundsMeters.getWidth(), DistanceUnit.METERS, distanceUnit );
-        final double height = UnitConversion
-                .convertDistance( boundsMeters.getHeight(), DistanceUnit.METERS, distanceUnit );
-        final Rectangle rectangle = new Rectangle( x, y, width, height );
-
-        return rectangle;
-    }
-
-    /*
-     * Get a Rectangle2D converted from current to specified Distance Unit.
-     */
-    public static Rectangle2D getRectangleInDistanceUnit( final Bounds bounds,
-                                                          final DistanceUnit oldDistanceUnit,
-                                                          final DistanceUnit newDistanceUnit ) {
-        final double x = UnitConversion
-                .convertDistance( bounds.getMinX(), oldDistanceUnit, newDistanceUnit );
-        final double y = UnitConversion
-                .convertDistance( bounds.getMinY(), oldDistanceUnit, newDistanceUnit );
-        final double width = UnitConversion
-                .convertDistance( bounds.getWidth(), oldDistanceUnit, newDistanceUnit );
-        final double height = UnitConversion
-                .convertDistance( bounds.getHeight(), oldDistanceUnit, newDistanceUnit );
-        final Rectangle2D rectangle2D = new Rectangle2D( x, y, width, height );
-
-        return rectangle2D;
-    }
-
-    /*
-     * Get a Rectangle2D converted from current to specified Distance Unit.
-     */
-    public static Rectangle2D getRectangleInDistanceUnit( final Extents2D extents,
-                                                          final DistanceUnit oldDistanceUnit,
-                                                          final DistanceUnit newDistanceUnit ) {
-        final double x = UnitConversion
-                .convertDistance( extents.getX(), oldDistanceUnit, newDistanceUnit );
-        final double y = UnitConversion
-                .convertDistance( extents.getY(), oldDistanceUnit, newDistanceUnit );
-        final double width = UnitConversion
-                .convertDistance( extents.getWidth(), oldDistanceUnit, newDistanceUnit );
-        final double height = UnitConversion
-                .convertDistance( extents.getHeight(), oldDistanceUnit, newDistanceUnit );
-        final Rectangle2D rectangle2D = new Rectangle2D( x, y, width, height );
-
-        return rectangle2D;
-    }
-
-    /*
-     * Get a Rectangle2D converted from current to specified Distance Unit.
-     */
-    public static Rectangle2D getRectangleInDistanceUnit( final Rectangle rectangle,
-                                                          final DistanceUnit oldDistanceUnit,
-                                                          final DistanceUnit newDistanceUnit ) {
-        final double x = UnitConversion
-                .convertDistance( rectangle.getX(), oldDistanceUnit, newDistanceUnit );
-        final double y = UnitConversion
-                .convertDistance( rectangle.getY(), oldDistanceUnit, newDistanceUnit );
-        final double width = UnitConversion
-                .convertDistance( rectangle.getWidth(), oldDistanceUnit, newDistanceUnit );
-        final double height = UnitConversion
-                .convertDistance( rectangle.getHeight(), oldDistanceUnit, newDistanceUnit );
-        final Rectangle2D rectangle2D = new Rectangle2D( x, y, width, height );
-
-        return rectangle2D;
-    }
-
-    /*
-     * Get a Rectangle shape, converted from Meters to specified Distance Unit.
-     */
-    public static Rectangle getRectangleInDistanceUnit( final Rectangle2D rectangleMeters,
-                                                        final DistanceUnit distanceUnit ) {
-        final double x = UnitConversion
-                .convertDistance( rectangleMeters.getMinX(), DistanceUnit.METERS, distanceUnit );
-        final double y = UnitConversion
-                .convertDistance( rectangleMeters.getMinY(), DistanceUnit.METERS, distanceUnit );
-        final double width = UnitConversion
-                .convertDistance( rectangleMeters.getWidth(), DistanceUnit.METERS, distanceUnit );
-        final double height = UnitConversion
-                .convertDistance( rectangleMeters.getHeight(), DistanceUnit.METERS, distanceUnit );
-        final Rectangle rectangle = new Rectangle( x, y, width, height );
-
-        return rectangle;
-    }
-
-    /*
-     * Get a Rectangle2D converted from current to specified Distance Unit.
-     */
-    public static Rectangle2D getRectangleInDistanceUnit( final Rectangle2D rectangle,
-                                                          final DistanceUnit oldDistanceUnit,
-                                                          final DistanceUnit newDistanceUnit ) {
-        final double x = UnitConversion
-                .convertDistance( rectangle.getMinX(), oldDistanceUnit, newDistanceUnit );
-        final double y = UnitConversion
-                .convertDistance( rectangle.getMinY(), oldDistanceUnit, newDistanceUnit );
-        final double width = UnitConversion
-                .convertDistance( rectangle.getWidth(), oldDistanceUnit, newDistanceUnit );
-        final double height = UnitConversion
-                .convertDistance( rectangle.getHeight(), oldDistanceUnit, newDistanceUnit );
-        final Rectangle2D rectangle2D = new Rectangle2D( x, y, width, height );
-
-        return rectangle2D;
-    }
-
-    /*
-     * Get a Rectangle2D converted from current Distance Unit to Meters.
-     */
-    public static Rectangle2D getRectangleInMeters( final Bounds bounds,
-                                                    final DistanceUnit distanceUnit ) {
-        final Rectangle2D rectangleMeters = getRectangleInDistanceUnit( bounds,
-                                                                        distanceUnit,
-                                                                        DistanceUnit.METERS );
-
-        return rectangleMeters;
-    }
-
-    /*
-     * Get a Rectangle2D converted from current Distance Unit to Meters.
-     */
-    public static Rectangle2D getRectangleInMeters( final Extents2D extents,
-                                                    final DistanceUnit distanceUnit ) {
-        final Rectangle2D rectangleMeters = getRectangleInDistanceUnit( extents,
-                                                                        distanceUnit,
-                                                                        DistanceUnit.METERS );
-
-        return rectangleMeters;
-    }
-
-    /*
-     * Get a Rectangle2D converted from current Distance Unit to Meters.
-     */
-    public static Rectangle2D getRectangleInMeters( final Rectangle rectangle,
-                                                    final DistanceUnit distanceUnit ) {
-        final Rectangle2D rectangleMeters = getRectangleInDistanceUnit( rectangle,
-                                                                        distanceUnit,
-                                                                        DistanceUnit.METERS );
-
-        return rectangleMeters;
-    }
-
-    /*
-     * Get a Rectangle2D converted from current Distance Unit to Meters.
-     */
-    public static Rectangle2D getRectangleInMeters( final Rectangle2D rectangle,
-                                                    final DistanceUnit distanceUnit ) {
-        final Rectangle2D rectangleMeters = getRectangleInDistanceUnit( rectangle,
-                                                                        distanceUnit,
-                                                                        DistanceUnit.METERS );
-
-        return rectangleMeters;
-    }
-
-    public static java.awt.geom.Rectangle2D getRectangleMetersAwt( final Extents2D extents,
-                                                                   final DistanceUnit distanceUnit ) {
-        final double x = UnitConversion
-                .convertDistance( extents.getX(), distanceUnit, DistanceUnit.METERS );
-        final double y = UnitConversion
-                .convertDistance( extents.getY(), distanceUnit, DistanceUnit.METERS );
-        final double width = UnitConversion
-                .convertDistance( extents.getWidth(), distanceUnit, DistanceUnit.METERS );
-        final double height = UnitConversion
-                .convertDistance( extents.getHeight(), distanceUnit, DistanceUnit.METERS );
-        final java.awt.geom.Rectangle2D awtRectangle =
-                                                     new java.awt.geom.Rectangle2D.Double( x,
-                                                                                           y,
-                                                                                           width,
-                                                                                           height );
-        return awtRectangle;
-    }
-
-    // Get an AWT rectangle in meters, converted from JavaFX.
-    public static java.awt.geom.Rectangle2D getRectangleMetersAwt( final Rectangle fxRectangle,
-                                                                   final DistanceUnit distanceUnit ) {
-        final double x = UnitConversion
-                .convertDistance( fxRectangle.getX(), distanceUnit, DistanceUnit.METERS );
-        final double y = UnitConversion
-                .convertDistance( fxRectangle.getY(), distanceUnit, DistanceUnit.METERS );
-        final double width = UnitConversion
-                .convertDistance( fxRectangle.getWidth(), distanceUnit, DistanceUnit.METERS );
-        final double height = UnitConversion
-                .convertDistance( fxRectangle.getHeight(), distanceUnit, DistanceUnit.METERS );
-        final java.awt.geom.Rectangle2D awtRectangle =
-                                                     new java.awt.geom.Rectangle2D.Double( x,
-                                                                                           y,
-                                                                                           width,
-                                                                                           height );
-        return awtRectangle;
+        return ( b1 * start ) + ( b2 * control ) + ( b3 * end );
     }
 
     /*
@@ -1744,34 +1383,6 @@ public final class GeometryUtilities {
                             pt.getY() );
     }
 
-    public static Rectangle2D rectangle2DFromBounds( final Bounds bounds ) {
-        return new Rectangle2D( bounds.getMinX(),
-                                bounds.getMinY(),
-                                bounds.getWidth(),
-                                bounds.getHeight() );
-    }
-
-    public static Rectangle2D rectangle2DFromExtents( final Extents2D extents ) {
-        return new Rectangle2D( extents.getX(),
-                                extents.getY(),
-                                extents.getWidth(),
-                                extents.getHeight() );
-    }
-
-    public static Rectangle rectangleFromBounds( final Bounds bounds ) {
-        return new Rectangle( bounds.getMinX(),
-                              bounds.getMinY(),
-                              bounds.getWidth(),
-                              bounds.getHeight() );
-    }
-
-    public static Rectangle rectangleFromRectangle2D( final Rectangle2D rectangle ) {
-        return new Rectangle( rectangle.getMinX(),
-                              rectangle.getMinY(),
-                              rectangle.getWidth(),
-                              rectangle.getHeight() );
-    }
-
     /**
      * This method transforms a coordinate to its rotated and translated
      * x-axis location, as a partial of a full point transform, when a point
@@ -2165,60 +1776,274 @@ public final class GeometryUtilities {
         return new BoundingBox( minX, minY, width, height );
     }
 
-    // Get an AWT rectangle, converted from generic Extents.
-    public static java.awt.geom.Rectangle2D rectangleAwtFromExtents( final Extents2D extents ) {
-        final double x = extents.getX();
-        final double y = extents.getY();
-        final double width = extents.getWidth();
-        final double height = extents.getHeight();
-        final java.awt.geom.Rectangle2D awtRectangle =
-                                                     new java.awt.geom.Rectangle2D.Double( x,
-                                                                                           y,
-                                                                                           width,
-                                                                                           height );
-        return awtRectangle;
+    public static BoundingBox boundsFromRectangle( final Rectangle rectangle ) {
+        return new BoundingBox(
+                rectangle.getX(),
+                rectangle.getY(),
+                rectangle.getWidth(),
+                rectangle.getHeight() );
+    }
+
+    public static BoundingBox boundsFromRectangle2D(
+            final Rectangle2D rectangle ) {
+        return new BoundingBox(
+                rectangle.getMinX(),
+                rectangle.getMinY(),
+                rectangle.getWidth(),
+                rectangle.getHeight() );
     }
 
     // Get an AWT rectangle, converted from JavaFX.
-    public static java.awt.geom.Rectangle2D rectangleAwtFromRectangle( final Rectangle fxRectangle ) {
-        final double x = fxRectangle.getX();
-        final double y = fxRectangle.getY();
-        final double width = fxRectangle.getWidth();
-        final double height = fxRectangle.getHeight();
-        final java.awt.geom.Rectangle2D awtRectangle =
-                                                     new java.awt.geom.Rectangle2D.Double( x,
-                                                                                           y,
-                                                                                           width,
-                                                                                           height );
-        return awtRectangle;
-    }
-
-    // Get an AWT rectangle, converted from JavaFX.
-    public static java.awt.geom.Rectangle2D rectangleAwtFromRectangle2D( final Bounds fxBounds ) {
+    public static java.awt.geom.Rectangle2D rectangleAwtFromRectangle2D(
+            final Bounds fxBounds ) {
         final double x = fxBounds.getMinX();
         final double y = fxBounds.getMinY();
         final double width = fxBounds.getWidth();
         final double height = fxBounds.getHeight();
-        final java.awt.geom.Rectangle2D awtRectangle =
-                                                     new java.awt.geom.Rectangle2D.Double( x,
-                                                                                           y,
-                                                                                           width,
-                                                                                           height );
-        return awtRectangle;
+        return new java.awt.geom.Rectangle2D.Double(
+                x,
+                y,
+                width,
+                height );
     }
 
     // Get an AWT rectangle, converted from JavaFX.
-    public static java.awt.geom.Rectangle2D rectangleAwtFromRectangle2D( final Rectangle2D fxRectangle ) {
+    public static java.awt.geom.Rectangle2D rectangleAwtFromRectangle2D(
+            final Rectangle2D fxRectangle ) {
         final double x = fxRectangle.getMinX();
         final double y = fxRectangle.getMinY();
         final double width = fxRectangle.getWidth();
         final double height = fxRectangle.getHeight();
-        final java.awt.geom.Rectangle2D awtRectangle =
-                                                     new java.awt.geom.Rectangle2D.Double( x,
-                                                                                           y,
-                                                                                           width,
-                                                                                           height );
-        return awtRectangle;
+        return new java.awt.geom.Rectangle2D.Double(
+                x,
+                y,
+                width,
+                height );
     }
 
+    public static Rectangle2D rectangle2DFromBounds( final Bounds bounds ) {
+        return new Rectangle2D( bounds.getMinX(),
+                bounds.getMinY(),
+                bounds.getWidth(),
+                bounds.getHeight() );
+    }
+
+    public static Rectangle rectangleFromBounds( final Bounds bounds ) {
+        return new Rectangle( bounds.getMinX(),
+                bounds.getMinY(),
+                bounds.getWidth(),
+                bounds.getHeight() );
+    }
+
+    public static Rectangle rectangleFromRectangle2D( final Rectangle2D rectangle ) {
+        return new Rectangle( rectangle.getMinX(),
+                rectangle.getMinY(),
+                rectangle.getWidth(),
+                rectangle.getHeight() );
+    }
+
+    // Get an AWT rectangle, converted from JavaFX.
+    public static java.awt.geom.Rectangle2D rectangleAwtFromRectangle(
+            final Rectangle fxRectangle ) {
+        final double x = fxRectangle.getX();
+        final double y = fxRectangle.getY();
+        final double width = fxRectangle.getWidth();
+        final double height = fxRectangle.getHeight();
+        return new java.awt.geom.Rectangle2D.Double(
+                x,
+                y,
+                width,
+                height );
+    }
+
+    /*
+     * Get a BoundingBox converted from Meters to current Distance Unit.
+     */
+    public static BoundingBox getBoundingBoxInDistanceUnit(
+            final Bounds bounds,
+            final DistanceUnit distanceUnit ) {
+        return getBoundingBoxInDistanceUnit(
+                bounds,
+                DistanceUnit.METERS,
+                distanceUnit );
+    }
+
+    /*
+     * Get a BoundingBox converted from current to specified Distance Unit.
+     */
+    public static BoundingBox getBoundingBoxInDistanceUnit(
+            final Bounds bounds,
+            final DistanceUnit oldDistanceUnit,
+            final DistanceUnit newDistanceUnit ) {
+        final double x = UnitConversion
+                .convertDistance( bounds.getMinX(), oldDistanceUnit, newDistanceUnit );
+        final double y = UnitConversion
+                .convertDistance( bounds.getMinY(), oldDistanceUnit, newDistanceUnit );
+        final double width = UnitConversion
+                .convertDistance( bounds.getWidth(), oldDistanceUnit, newDistanceUnit );
+        final double height = UnitConversion
+                .convertDistance( bounds.getHeight(), oldDistanceUnit, newDistanceUnit );
+
+        return new BoundingBox( x, y, width, height );
+    }
+
+    /*
+     * Get a BoundingBox converted from current Distance Unit to Meters.
+     */
+    public static BoundingBox getBoundingBoxInMeters(
+            final Bounds bounds,
+            final DistanceUnit distanceUnit ) {
+        return getBoundingBoxInDistanceUnit(
+                bounds,
+                distanceUnit,
+                DistanceUnit.METERS );
+    }
+
+    /*
+     * Get a Rectangle shape, converted from Meters to specified Distance Unit.
+     */
+    public static Rectangle getRectangleInDistanceUnit(
+            final Bounds boundsMeters,
+            final DistanceUnit distanceUnit ) {
+        final double x = UnitConversion.convertDistance(
+                boundsMeters.getMinX(), DistanceUnit.METERS, distanceUnit );
+        final double y = UnitConversion.convertDistance(
+                boundsMeters.getMinY(), DistanceUnit.METERS, distanceUnit );
+        final double width = UnitConversion.convertDistance(
+                boundsMeters.getWidth(), DistanceUnit.METERS, distanceUnit );
+        final double height = UnitConversion.convertDistance(
+                boundsMeters.getHeight(), DistanceUnit.METERS, distanceUnit );
+
+        return new Rectangle( x, y, width, height );
+    }
+
+    /*
+     * Get a Rectangle2D converted from current to specified Distance Unit.
+     */
+    public static Rectangle2D getRectangleInDistanceUnit(
+            final Bounds bounds,
+            final DistanceUnit oldDistanceUnit,
+            final DistanceUnit newDistanceUnit ) {
+        final double x = UnitConversion.convertDistance(
+                bounds.getMinX(), oldDistanceUnit, newDistanceUnit );
+        final double y = UnitConversion.convertDistance(
+                bounds.getMinY(), oldDistanceUnit, newDistanceUnit );
+        final double width = UnitConversion.convertDistance(
+                bounds.getWidth(), oldDistanceUnit, newDistanceUnit );
+        final double height = UnitConversion.convertDistance(
+                bounds.getHeight(), oldDistanceUnit, newDistanceUnit );
+
+        return new Rectangle2D( x, y, width, height );
+    }
+
+    /*
+     * Get a Rectangle2D converted from current to specified Distance Unit.
+     */
+    public static Rectangle2D getRectangleInDistanceUnit(
+            final Rectangle rectangle,
+            final DistanceUnit oldDistanceUnit,
+            final DistanceUnit newDistanceUnit ) {
+        final double x = UnitConversion.convertDistance(
+                rectangle.getX(), oldDistanceUnit, newDistanceUnit );
+        final double y = UnitConversion.convertDistance(
+                rectangle.getY(), oldDistanceUnit, newDistanceUnit );
+        final double width = UnitConversion.convertDistance(
+                rectangle.getWidth(), oldDistanceUnit, newDistanceUnit );
+        final double height = UnitConversion.convertDistance(
+                rectangle.getHeight(), oldDistanceUnit, newDistanceUnit );
+
+        return new Rectangle2D( x, y, width, height );
+    }
+
+    /*
+     * Get a Rectangle shape, converted from Meters to specified Distance Unit.
+     */
+    public static Rectangle getRectangleInDistanceUnit(
+            final Rectangle2D rectangleMeters,
+            final DistanceUnit distanceUnit ) {
+        final double x = UnitConversion.convertDistance(
+                rectangleMeters.getMinX(), DistanceUnit.METERS, distanceUnit );
+        final double y = UnitConversion.convertDistance(
+                rectangleMeters.getMinY(), DistanceUnit.METERS, distanceUnit );
+        final double width = UnitConversion.convertDistance(
+                rectangleMeters.getWidth(), DistanceUnit.METERS, distanceUnit );
+        final double height = UnitConversion.convertDistance(
+                rectangleMeters.getHeight(), DistanceUnit.METERS, distanceUnit );
+
+        return new Rectangle( x, y, width, height );
+    }
+
+    /*
+     * Get a Rectangle2D converted from current to specified Distance Unit.
+     */
+    public static Rectangle2D getRectangleInDistanceUnit(
+            final Rectangle2D rectangle,
+            final DistanceUnit oldDistanceUnit,
+            final DistanceUnit newDistanceUnit ) {
+        final double x = UnitConversion.convertDistance(
+                rectangle.getMinX(), oldDistanceUnit, newDistanceUnit );
+        final double y = UnitConversion.convertDistance(
+                rectangle.getMinY(), oldDistanceUnit, newDistanceUnit );
+        final double width = UnitConversion.convertDistance(
+                rectangle.getWidth(), oldDistanceUnit, newDistanceUnit );
+        final double height = UnitConversion.convertDistance(
+                rectangle.getHeight(), oldDistanceUnit, newDistanceUnit );
+
+        return new Rectangle2D( x, y, width, height );
+    }
+
+    /*
+     * Get a Rectangle2D converted from current Distance Unit to Meters.
+     */
+    public static Rectangle2D getRectangleInMeters( final Bounds bounds,
+                                                    final DistanceUnit distanceUnit ) {
+        return getRectangleInDistanceUnit(
+                bounds,
+                distanceUnit,
+                DistanceUnit.METERS );
+    }
+
+    /*
+     * Get a Rectangle2D converted from current Distance Unit to Meters.
+     */
+    public static Rectangle2D getRectangleInMeters(
+            final Rectangle rectangle,
+            final DistanceUnit distanceUnit ) {
+        return getRectangleInDistanceUnit(
+                rectangle,
+                distanceUnit,
+                DistanceUnit.METERS );
+    }
+
+    /*
+     * Get a Rectangle2D converted from current Distance Unit to Meters.
+     */
+    public static Rectangle2D getRectangleInMeters(
+            final Rectangle2D rectangle,
+            final DistanceUnit distanceUnit ) {
+        return getRectangleInDistanceUnit(
+                rectangle,
+                distanceUnit,
+                DistanceUnit.METERS );
+    }
+
+    // Get an AWT rectangle in meters, converted from JavaFX.
+    public static java.awt.geom.Rectangle2D getRectangleMetersAwt(
+            final Rectangle fxRectangle,
+            final DistanceUnit distanceUnit ) {
+        final double x = UnitConversion.convertDistance(
+                fxRectangle.getX(), distanceUnit, DistanceUnit.METERS );
+        final double y = UnitConversion.convertDistance(
+                fxRectangle.getY(), distanceUnit, DistanceUnit.METERS );
+        final double width = UnitConversion.convertDistance(
+                fxRectangle.getWidth(), distanceUnit, DistanceUnit.METERS );
+        final double height = UnitConversion.convertDistance(
+                fxRectangle.getHeight(), distanceUnit, DistanceUnit.METERS );
+        return new java.awt.geom.Rectangle2D.Double(
+                x,
+                y,
+                width,
+                height );
+    }
 }
+
