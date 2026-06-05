@@ -49,7 +49,7 @@ public class GestureManager {
     private boolean gesturesEnabled;
 
     /** Keep track of the current Scrolling Sensitivity for the Mouse */
-    protected ScrollingSensitivity scrollingSensitivity;
+    protected com.mhschmieder.jgraphics.input.ScrollingSensitivity scrollingSensitivity;
 
     protected double scrollDeltaY;
     protected double scrollScale;
@@ -66,7 +66,7 @@ public class GestureManager {
        clientProperties = pClientProperties;
 
        gesturesEnabled = false;
-       scrollingSensitivity = ScrollingSensitivity.defaultValue();
+       scrollingSensitivity = com.mhschmieder.jgraphics.input.ScrollingSensitivity.defaultValue();
 
        scrollDeltaY = 0.0d;
        scrollScale = 1.0d;
@@ -100,7 +100,7 @@ public class GestureManager {
      *
      * @return The current Scrolling Sensitivity setting
      */
-    public ScrollingSensitivity getScrollingSensitivity() {
+    public com.mhschmieder.jgraphics.input.ScrollingSensitivity getScrollingSensitivity() {
         return scrollingSensitivity;
     }
 
@@ -110,7 +110,7 @@ public class GestureManager {
      * @param pScrollingSensitivity
      *            The sensitivity of the mouse scroll wheel
      */
-    public void setScrollingSensitivity( final ScrollingSensitivity pScrollingSensitivity ) {
+    public void setScrollingSensitivity( final com.mhschmieder.jgraphics.input.ScrollingSensitivity pScrollingSensitivity ) {
         // Cache the new Scrolling Sensitivity preference.
         scrollingSensitivity = pScrollingSensitivity;
     }
@@ -118,7 +118,7 @@ public class GestureManager {
     // NOTE: This is a more traditional scroll wheel handler, but it can also
     //  cover gestures on a touch screen.
     public void scrollZoom( final ScrollEvent event,
-                            final MouseToolMode mouseMode ) {
+                            final com.mhschmieder.jgraphics.input.MouseToolMode mouseMode ) {
         // Ignore inertia events that happen past scrolling's end.
         if ( event.isInertia() ) {
             return;
@@ -131,14 +131,14 @@ public class GestureManager {
 
         // If Scrolling Sensitivity is off, then we are supposed to ignore
         // traditional mouse scroll wheel events.
-        if ( ScrollingSensitivity.OFF.equals( scrollingSensitivity ) ) {
+        if ( com.mhschmieder.jgraphics.input.ScrollingSensitivity.OFF.equals( scrollingSensitivity ) ) {
             return;
         }
 
         // Transitory Cut, Copy, Paste, should ignore Zoom due to side effects.
         //if ( MouseToolMode.COPY.equals( mouseMode ) 
         //        || MouseToolMode.PASTE.equals( mouseMode ) ) {
-        if ( MouseToolMode.COPY.equals( mouseMode ) ) {
+        if ( com.mhschmieder.jgraphics.input.MouseToolMode.COPY.equals( mouseMode ) ) {
             return;
         }
 
@@ -196,7 +196,7 @@ public class GestureManager {
 
     // NOTE: This is a new gesture, not supported by some devices.
     public void pinchZoom( final ZoomEvent event,
-                           final MouseToolMode mouseMode ) {
+                           final com.mhschmieder.jgraphics.input.MouseToolMode mouseMode ) {
         // If Mouse Gestures are disabled, ignore this gesture event.
         if ( !isGesturesEnabled() ) {
             return;
@@ -204,14 +204,14 @@ public class GestureManager {
 
         // If Scrolling Sensitivity is off, then we are supposed to ignore
         // new zoom gestures (whether from a mouse or a trackpad).
-        if ( ScrollingSensitivity.OFF.equals( scrollingSensitivity ) ) {
+        if ( com.mhschmieder.jgraphics.input.ScrollingSensitivity.OFF.equals( scrollingSensitivity ) ) {
             return;
         }
 
         // Transitory Cut, Copy, Paste, should ignore Zoom due to side effects.
         //if ( MouseToolMode.COPY.equals( mouseMode ) 
         //        || MouseToolMode.PASTE.equals( mouseMode ) ) {
-        if ( MouseToolMode.COPY.equals( mouseMode ) ) {
+        if ( com.mhschmieder.jgraphics.input.MouseToolMode.COPY.equals( mouseMode ) ) {
             return;
         }
 

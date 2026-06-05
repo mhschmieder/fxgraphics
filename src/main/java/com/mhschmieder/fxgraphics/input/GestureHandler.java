@@ -48,7 +48,7 @@ public interface GestureHandler {
      */
     Node getClickableContentNode();
     
-    MouseToolMode getMouseMode();
+    com.mhschmieder.jgraphics.input.MouseToolMode getMouseMode();
 
     void zoom( final double zoomFactor,
                final double xPixels,
