@@ -30,8 +30,8 @@
  */
 package com.mhschmieder.fxgraphics.input;
 
-import com.mhschmieder.jphysics.DistanceUnit;
-import com.mhschmieder.jphysics.UnitConversion;
+import com.mhschmieder.jphysics.measure.DistanceUnit;
+import com.mhschmieder.jphysics.measure.UnitConversion;
 import javafx.geometry.Point2D;
 import javafx.scene.chart.ValueAxis;
 import org.apache.commons.math3.util.FastMath;

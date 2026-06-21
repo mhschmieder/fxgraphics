@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxgraphics.shape;
 
-import com.mhschmieder.jphysics.DistanceUnit;
+import com.mhschmieder.jphysics.measure.DistanceUnit;
 import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
