@@ -48,7 +48,7 @@ public class CartesianRotationManager extends RotationManager {
     public Point2D _centerOfRotationMeters;
     
     /** Cache a local copy of the Mouse Tool Manager to check Rotation context. */
-    public com.mhschmieder.jgraphics.input.MouseToolManager _mouseToolManager;
+    public MouseToolManager _mouseToolManager;
 
     /** Cache a local copy of the x axis so we can apply proper scaling. */
     protected ValueAxis< Number > _xAxis;
@@ -56,7 +56,7 @@ public class CartesianRotationManager extends RotationManager {
     /** Cache a local copy of the y axis so we can apply proper scaling. */
     protected ValueAxis< Number > _yAxis;
 
-    public CartesianRotationManager( final com.mhschmieder.jgraphics.input.MouseToolManager mouseToolManager,
+    public CartesianRotationManager( final MouseToolManager mouseToolManager,
                                      final ValueAxis< Number > xAxis,
                                      final ValueAxis< Number > yAxis ) {
         // Always call the superclass constructor first!
