@@ -52,7 +52,6 @@ public class RenderedGraphicsExportOptions {
     protected final BooleanProperty exportOptionalItem;
 
     // Default constructor when nothing is known.
-    @SuppressWarnings("nls")
     public RenderedGraphicsExportOptions() {
         this( "",
               EXPORT_AUXILIARY_PANEL_DEFAULT,
