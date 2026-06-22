@@ -24,44 +24,44 @@
  * This file is part of the fxgraphics Library
  *
  * You should have received a copy of the MIT License along with the fxgraphics
- * GuiToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
+ * Library. If not, see <https://opensource.org/licenses/MIT>.
  *
  * Project: https://github.com/mhschmieder/fxgraphics
  */
-package com.mhschmieder.fxgraphics.render;
+package com.mhschmieder.fxgraphics.canvas;
 
-import javafx.collections.ObservableList;
-import javafx.scene.Node;
-import javafx.scene.shape.Shape;
+import javafx.scene.canvas.Canvas;
 
-import java.util.ArrayList;
-import java.util.List;
+public class ResizableCanvas extends Canvas {
 
-/**
- * This is a utility class for highlighting utilities and methods.
- */
-public class HighlightUtilities {
-
-    public static final void applyHighlight( final Node node,
-                                             final boolean highlightOn,
-                                             final List< Double > highlightDashPattern ) {
-        final Shape shape = ( Shape ) node;
-        final ObservableList< Double > strokeDashArray = shape.getStrokeDashArray();
-        if ( highlightOn ) {
-            strokeDashArray.setAll( highlightDashPattern );
-        }
-        else {
-            strokeDashArray.clear();
-        }
+    @Override
+    public boolean isResizable() {
+        return true;
     }
 
-    public static final List< Double > getHighlightDashPattern( final double scaleFactor ) {
-        // Define and return the dash pattern to use for highlighting.
-        final List< Double > highlightDashPattern = new ArrayList<>();
-        highlightDashPattern.add( Double.valueOf( 2.0d * scaleFactor ) );
-        highlightDashPattern.add( Double.valueOf( 4.0d * scaleFactor ) );
-
-        return highlightDashPattern;
+    @Override
+    public double maxHeight(double width) {
+        return Double.POSITIVE_INFINITY;
     }
 
+    @Override
+    public double maxWidth(double height) {
+        return Double.POSITIVE_INFINITY;
+    }
+
+    @Override
+    public double minWidth(double height) {
+        return 1D;
+    }
+
+    @Override
+    public double minHeight(double width) {
+        return 1D;
+    }
+
+    @Override
+    public void resize(double width, double height) {
+        this.setWidth(width);
+        this.setHeight(height);
+    }
 }

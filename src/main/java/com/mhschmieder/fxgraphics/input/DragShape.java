@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020, 2026 Mark Schmieder. All rights reserved.
+ * Copyright (c) 2025, 2026 Mark Schmieder. All rights reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,40 +28,11 @@
  *
  * Project: https://github.com/mhschmieder/fxgraphics
  */
-package com.mhschmieder.fxgraphics.render;
+package com.mhschmieder.fxgraphics.input;
 
-import javafx.collections.ObservableList;
-import javafx.scene.Node;
-import javafx.scene.shape.Shape;
-
-import java.util.ArrayList;
-import java.util.List;
-
-/**
- * This is a utility class for highlighting utilities and methods.
- */
-public class HighlightUtilities {
-
-    public static final void applyHighlight( final Node node,
-                                             final boolean highlightOn,
-                                             final List< Double > highlightDashPattern ) {
-        final Shape shape = ( Shape ) node;
-        final ObservableList< Double > strokeDashArray = shape.getStrokeDashArray();
-        if ( highlightOn ) {
-            strokeDashArray.setAll( highlightDashPattern );
-        }
-        else {
-            strokeDashArray.clear();
-        }
-    }
-
-    public static final List< Double > getHighlightDashPattern( final double scaleFactor ) {
-        // Define and return the dash pattern to use for highlighting.
-        final List< Double > highlightDashPattern = new ArrayList<>();
-        highlightDashPattern.add( Double.valueOf( 2.0d * scaleFactor ) );
-        highlightDashPattern.add( Double.valueOf( 4.0d * scaleFactor ) );
-
-        return highlightDashPattern;
-    }
-
+// NOTE: There is an older enum that includes click-point mode and drag for
+//  polygon, but the latter would likely include multiple click points so this
+//  enum is just about the drag shapes that are practical in Drag Mode.
+public enum DragShape {
+    RECTANGLE, CIRCLE
 }
