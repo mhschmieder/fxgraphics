@@ -28,7 +28,7 @@
  *
  * Project: https://github.com/mhschmieder/fxgraphicstoolkit
  */
-package com.mhschmieder.fxgraphics.shape;
+package com.mhschmieder.fxgraphics.svg;
 
 import javafx.scene.Group;
 import javafx.scene.Node;
