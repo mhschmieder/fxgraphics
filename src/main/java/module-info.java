@@ -34,6 +34,7 @@ module fxgraphics {
     exports com.mhschmieder.fxgraphics.canvas;
     exports com.mhschmieder.fxgraphics.collections;
     exports com.mhschmieder.fxgraphics.geometry;
+    exports com.mhschmieder.fxgraphics.group;
     exports com.mhschmieder.fxgraphics.image;
     exports com.mhschmieder.fxgraphics.input;
     exports com.mhschmieder.fxgraphics.io;

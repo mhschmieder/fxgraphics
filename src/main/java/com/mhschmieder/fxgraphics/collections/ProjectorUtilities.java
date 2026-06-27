@@ -47,8 +47,7 @@ public final class ProjectorUtilities {
 
     public static Collection< CartesianLine > getSelectedCartesianProjectors(
             final GraphicalObjectCollection< CartesianLine > cartesianLineCollection ) {
-        // Get all of the selected Cartesian Lines that are marked as
-        // Projectors.
+        // Get all the selected Cartesian Lines that are marked as Projectors.
         final Collection< CartesianLine > selectedCartesianProjectors = new HashSet<>( 20 );
         final Collection< CartesianLine > selectedCartesianLines = cartesianLineCollection
                 .getSelection();
