@@ -31,7 +31,7 @@
 package com.mhschmieder.fxgraphics.geometry;
 
 import com.mhschmieder.fxgraphics.layers.Layer;
-import com.mhschmieder.fxgraphics.layers.LayerManager;
+import com.mhschmieder.fxgraphics.layers.LayerManagement;
 import com.mhschmieder.fxgraphics.shape.CogMarkable;
 import com.mhschmieder.fxgraphics.shape.ShapeUtilities;
 import com.mhschmieder.jmath.geometry.euclidean.FacingDirection;
@@ -66,7 +66,7 @@ public abstract class PhysicsObject extends SolidObject
     // we cannot just invoke the super-constructor from each constructor, but
     // need to invoke incrementally more complex local constructors instead.
     public PhysicsObject() {
-        this( LayerManager.makeDefaultLayer(),
+        this( LayerManagement.makeDefaultLayer(),
               GC_IN_VENUE_COORDINATES_DEFAULT,
               ANGLE_DEGREES_DEFAULT,
               ORIENTATION_DEFAULT,

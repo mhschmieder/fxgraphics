@@ -32,7 +32,7 @@ package com.mhschmieder.fxgraphics.geometry;
 
 import com.mhschmieder.fxgraphics.layers.Layer;
 import com.mhschmieder.fxgraphics.layers.LayerAssignable;
-import com.mhschmieder.fxgraphics.layers.LayerManager;
+import com.mhschmieder.fxgraphics.layers.LayerManagement;
 import com.mhschmieder.fxgraphics.paint.ColorConstants;
 import com.mhschmieder.fxgraphics.paint.ColorUtilities;
 import com.mhschmieder.fxgraphics.shape.ShapeGroup;
@@ -105,7 +105,7 @@ public abstract class GraphicalObject implements Comparable< GraphicalObject >,
 
     // Default constructor (disabled since this is an abstract class)
     protected GraphicalObject() {
-        this( LayerManager.makeDefaultLayer(), X_DEFAULT, Y_DEFAULT, ANGLE_DEGREES_DEFAULT );
+        this( LayerManagement.makeDefaultLayer(), X_DEFAULT, Y_DEFAULT, ANGLE_DEGREES_DEFAULT );
     }
 
     // Fully qualified constructor
@@ -355,7 +355,7 @@ public abstract class GraphicalObject implements Comparable< GraphicalObject >,
     }
 
     public final Color getLayerColor() {
-        return ( _layer == null ) ? LayerManager.LAYER_COLOR_DEFAULT : _layer.getLayerColor();
+        return ( _layer == null ) ? LayerManagement.LAYER_COLOR_DEFAULT : _layer.getLayerColor();
     }
 
     public final double getLocationX() {

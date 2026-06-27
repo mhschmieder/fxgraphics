@@ -32,7 +32,7 @@ package com.mhschmieder.fxgraphics.collections;
 
 import com.mhschmieder.fxgraphics.geometry.GeometryUtilities;
 import com.mhschmieder.fxgraphics.layers.Layer;
-import com.mhschmieder.fxgraphics.layers.LayerManager;
+import com.mhschmieder.fxgraphics.layers.LayerManagement;
 import com.mhschmieder.fxgraphics.shape.ShapeGroup;
 import com.mhschmieder.jcommons.lang.LabeledObject;
 import com.mhschmieder.jcommons.text.TextUtilities;
@@ -352,7 +352,7 @@ public final class GraphicalObjectCollection< T extends com.mhschmieder.fxgraphi
 
     public String getCurrentLayerNameFromSelection( final String currentLayerName ) {
         String currentLayerNameCandidate = currentLayerName;
-        if ( LayerManager.VARIOUS_LAYER_NAME.equals( currentLayerNameCandidate ) ) {
+        if ( LayerManagement.VARIOUS_LAYER_NAME.equals( currentLayerNameCandidate ) ) {
             return currentLayerNameCandidate;
         }
 
@@ -363,7 +363,7 @@ public final class GraphicalObjectCollection< T extends com.mhschmieder.fxgraphi
                 currentLayerNameCandidate = layerName;
             }
             else if ( !layerName.equals( currentLayerNameCandidate ) ) {
-                currentLayerNameCandidate = LayerManager.VARIOUS_LAYER_NAME;
+                currentLayerNameCandidate = LayerManagement.VARIOUS_LAYER_NAME;
                 break;
             }
         }
@@ -630,7 +630,7 @@ public final class GraphicalObjectCollection< T extends com.mhschmieder.fxgraphi
             final List< Layer > layerCollection ) {
         // NOTE: The context of invocation isn't thread-safe and is highly
         //  re-entrant, so avoid parallel streams here to avoid freeze-ups.
-        _collection.stream().forEach( graphicalObject -> LayerManager
+        _collection.stream().forEach( graphicalObject -> LayerManagement
                 .reassignObjectOnDeletedLayer(
                         graphicalObject, layerCollection, activeLayer ) );
     }

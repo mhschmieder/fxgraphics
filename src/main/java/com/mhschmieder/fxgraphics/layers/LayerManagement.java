@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxgraphics.layers;
 
-import com.mhschmieder.jcommons.lang.LabeledObjectManager;
+import com.mhschmieder.jcommons.lang.LabeledObjectManagement;
 import javafx.scene.paint.Color;
 
 import java.text.NumberFormat;
@@ -40,7 +40,7 @@ import java.util.List;
 /**
  * Utility class to manage non-observable layers.
  */
-public final class LayerManager {
+public final class LayerManagement {
 
     // Declare default values for all the Layer Properties.
     public static final String  LAYER_NAME_DEFAULT    = "Layer";    //$NON-NLS-1$
@@ -79,7 +79,7 @@ public final class LayerManager {
             // none of them are unadorned (even the first).
             layerCandidateName = LAYER_NAME_DEFAULT;
             final int uniquefierNumber = 1;
-            layerCandidateName = LabeledObjectManager.getUniqueLabel(
+            layerCandidateName = LabeledObjectManagement.getUniqueLabel(
                     layerCollection,
                     layerCandidateName,
                     labelToExclude,
@@ -89,7 +89,7 @@ public final class LayerManager {
         else {
             // Recursively search for (and enforce) name-uniqueness of the
             // Layer candidate, leaving unadorned if possible.
-            layerCandidateName = LabeledObjectManager.getUniqueLabel( 
+            layerCandidateName = LabeledObjectManagement.getUniqueLabel(
                     layerCollection,
                     layerCandidateName,
                     labelToExclude,
@@ -148,8 +148,7 @@ public final class LayerManager {
                     currentLayer.setLayerActive( false );
                 }
 
-                final Layer activeLayer = getActiveLayer( layerCollection );
-                return activeLayer;
+                return getActiveLayer( layerCollection );
             }
         }
 
@@ -309,11 +308,9 @@ public final class LayerManager {
             }
         }
 
-        final Layer defaultLayer = ( layerCollection != null )
+        return ( layerCollection != null )
             ? getDefaultLayer( layerCollection )
             : makeDefaultLayer();
-
-        return defaultLayer;
     }
 
     // Get a cloned Layer; accounting for uniqueness and business logic.
@@ -377,7 +374,7 @@ public final class LayerManager {
             final List< Layer > layerCollection ) {
         // Bump beyond the current count -- as the new Layer hasn't been added
         // to the collection yet -- but account for numbering starting at 0.
-        return LabeledObjectManager.getNewLabelDefault( layerCollection, 
+        return LabeledObjectManagement.getNewLabelDefault( layerCollection,
                                                         layerNameDefault, 
                                                         " ",
                                                         true );
@@ -545,7 +542,7 @@ public final class LayerManager {
         final String oldLayerName = layer.getLayerName();
         final String newLayerName = ( DEFAULT_LAYER_NAME == labelToExclude )
             ? DEFAULT_LAYER_NAME
-            : LabeledObjectManager.getUniqueLabel( layerCollection,
+            : LabeledObjectManagement.getUniqueLabel( layerCollection,
                                                    layerNameCandidate,
                                                    labelToExclude,
                                                    uniquefierNumberFormat );
@@ -566,5 +563,5 @@ public final class LayerManager {
     }
 
     // NOTE: The constructor is disabled, as this is a static class.
-    private LayerManager() {}
+    private LayerManagement() {}
 }

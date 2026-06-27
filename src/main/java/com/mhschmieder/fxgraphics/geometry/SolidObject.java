@@ -31,7 +31,7 @@
 package com.mhschmieder.fxgraphics.geometry;
 
 import com.mhschmieder.fxgraphics.layers.Layer;
-import com.mhschmieder.fxgraphics.layers.LayerManager;
+import com.mhschmieder.fxgraphics.layers.LayerManagement;
 import com.mhschmieder.jmath.geometry.euclidean.Axis;
 import com.mhschmieder.jmath.geometry.euclidean.FacingDirection;
 import com.mhschmieder.jmath.geometry.euclidean.Orientation;
@@ -109,7 +109,7 @@ public abstract class SolidObject extends GraphicalObject {
                            final Orientation orientation,
                            final FacingDirection facingDirection,
                            final boolean inverted ) {
-        this( LayerManager.makeDefaultLayer(),
+        this( LayerManagement.makeDefaultLayer(),
               locationX,
               locationY,
               angleDegrees,

@@ -64,13 +64,13 @@ public class Layer implements Comparable< Layer >, LabeledObject {
     public int compareTo( final Layer otherLayerProperties ) {
         // If this Layer is the Default Layer, it is "less than" the other.
         final String thisLayerName = getLayerName();
-        if ( LayerManager.DEFAULT_LAYER_NAME.equals( thisLayerName ) ) {
+        if ( LayerManagement.DEFAULT_LAYER_NAME.equals( thisLayerName ) ) {
             return -1;
         }
 
         // If the other Layer is the Default Layer, it is "more than" this.
         final String otherLayerName = otherLayerProperties.getLayerName();
-        if ( LayerManager.DEFAULT_LAYER_NAME.equals( otherLayerName ) ) {
+        if ( LayerManagement.DEFAULT_LAYER_NAME.equals( otherLayerName ) ) {
             return 1;
         }
 

@@ -31,7 +31,7 @@
 package com.mhschmieder.fxgraphics.geometry;
 
 import com.mhschmieder.fxgraphics.layers.Layer;
-import com.mhschmieder.fxgraphics.layers.LayerManager;
+import com.mhschmieder.fxgraphics.layers.LayerManagement;
 import javafx.geometry.Point2D;
 import javafx.scene.shape.Line;
 import org.apache.commons.math3.util.FastMath;
@@ -82,7 +82,7 @@ public class PolarLine extends LinearObject {
               END_ANGLE_DEGREES_DEFAULT,
               END_DISTANCE_DEFAULT,
               POLAR_LINE_LABEL_DEFAULT,
-              LayerManager.makeDefaultLayer(),
+              LayerManagement.makeDefaultLayer(),
               USE_AS_PROJECTOR_DEFAULT,
               NUMBER_OF_PROJECTION_ZONES_DEFAULT );
     }

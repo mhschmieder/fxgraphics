@@ -31,7 +31,7 @@
 package com.mhschmieder.fxgraphics.geometry;
 
 import com.mhschmieder.fxgraphics.layers.Layer;
-import com.mhschmieder.fxgraphics.layers.LayerManager;
+import com.mhschmieder.fxgraphics.layers.LayerManagement;
 import javafx.geometry.Point2D;
 import javafx.scene.shape.Line;
 import org.apache.commons.math3.util.FastMath;
@@ -73,7 +73,7 @@ public class CartesianLine extends LinearObject {
               X2_DEFAULT,
               Y2_DEFAULT,
               CARTESIAN_LINE_LABEL_DEFAULT,
-              LayerManager.makeDefaultLayer(),
+              LayerManagement.makeDefaultLayer(),
               USE_AS_PROJECTOR_DEFAULT,
               NUMBER_OF_PROJECTION_ZONES_DEFAULT );
     }
