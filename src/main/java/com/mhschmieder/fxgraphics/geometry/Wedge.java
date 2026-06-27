@@ -458,12 +458,12 @@ public class Wedge {
     }
 
     protected void drawTopViewHzAwt( final java.awt.geom.GeneralPath wedge ) {
-        final double xPts[] = {
+        final double[] xPts = {
                                 _cornerPointArray[ 1 ][ 1 ][ 1 ].getX(),
                                 _cornerPointArray[ 1 ][ 0 ][ 1 ].getX(),
                                 _cornerPointArray[ 0 ][ 0 ][ 1 ].getX(),
                                 _cornerPointArray[ 0 ][ 1 ][ 1 ].getX() };
-        final double yPts[] = {
+        final double[] yPts = {
                                 _cornerPointArray[ 1 ][ 1 ][ 1 ].getY(),
                                 _cornerPointArray[ 1 ][ 0 ][ 1 ].getY(),
                                 _cornerPointArray[ 0 ][ 0 ][ 1 ].getY(),
@@ -477,12 +477,12 @@ public class Wedge {
     }
 
     protected void drawBottomViewHzAwt( final java.awt.geom.GeneralPath wedge ) {
-        final double xPts[] = {
+        final double[] xPts = {
                                 _cornerPointArray[ 1 ][ 1 ][ 0 ].getX(),
                                 _cornerPointArray[ 1 ][ 0 ][ 0 ].getX(),
                                 _cornerPointArray[ 0 ][ 0 ][ 0 ].getX(),
                                 _cornerPointArray[ 0 ][ 1 ][ 0 ].getX() };
-        final double yPts[] = {
+        final double[] yPts = {
                                 _cornerPointArray[ 1 ][ 1 ][ 0 ].getY(),
                                 _cornerPointArray[ 1 ][ 0 ][ 0 ].getY(),
                                 _cornerPointArray[ 0 ][ 0 ][ 0 ].getY(),
@@ -496,12 +496,12 @@ public class Wedge {
     }
 
     protected void drawLeftViewVtAwt( final java.awt.geom.GeneralPath wedge ) {
-        final double xPts[] = {
+        final double[] xPts = {
                                 _cornerPointArray[ 1 ][ 1 ][ 1 ].getX(),
                                 _cornerPointArray[ 0 ][ 1 ][ 1 ].getX(),
                                 _cornerPointArray[ 0 ][ 1 ][ 0 ].getX(),
                                 _cornerPointArray[ 1 ][ 1 ][ 0 ].getX() };
-        final double yPts[] = {
+        final double[] yPts = {
                                 _cornerPointArray[ 1 ][ 1 ][ 1 ].getZ(),
                                 _cornerPointArray[ 0 ][ 1 ][ 1 ].getZ(),
                                 _cornerPointArray[ 0 ][ 1 ][ 0 ].getZ(),
@@ -515,12 +515,12 @@ public class Wedge {
     }
 
     protected void drawRightViewVtAwt( final java.awt.geom.GeneralPath wedge ) {
-        final double xPts[] = {
+        final double[] xPts = {
                                 _cornerPointArray[ 1 ][ 0 ][ 1 ].getX(),
                                 _cornerPointArray[ 0 ][ 0 ][ 1 ].getX(),
                                 _cornerPointArray[ 0 ][ 0 ][ 0 ].getX(),
                                 _cornerPointArray[ 1 ][ 0 ][ 0 ].getX() };
-        final double yPts[] = {
+        final double[] yPts = {
                                 _cornerPointArray[ 1 ][ 0 ][ 1 ].getZ(),
                                 _cornerPointArray[ 0 ][ 0 ][ 1 ].getZ(),
                                 _cornerPointArray[ 0 ][ 0 ][ 0 ].getZ(),
