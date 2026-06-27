@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the jgraphics Library
+ * This file is part of the fxgraphics Library
  *
- * You should have received a copy of the MIT License along with the jgraphics
+ * You should have received a copy of the MIT License along with the fxgraphics
  * Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/jgraphics
+ * Project: https://github.com/mhschmieder/fxgraphics
  */
 package com.mhschmieder.fxgraphics.input;
 

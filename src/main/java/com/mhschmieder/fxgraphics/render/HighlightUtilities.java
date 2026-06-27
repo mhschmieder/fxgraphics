@@ -42,9 +42,9 @@ import java.util.List;
  */
 public class HighlightUtilities {
 
-    public static final void applyHighlight( final Node node,
-                                             final boolean highlightOn,
-                                             final List< Double > highlightDashPattern ) {
+    public static void applyHighlight(final Node node,
+                                      final boolean highlightOn,
+                                      final List<Double> highlightDashPattern) {
         final Shape shape = ( Shape ) node;
         final ObservableList< Double > strokeDashArray = shape.getStrokeDashArray();
         if ( highlightOn ) {
@@ -55,7 +55,8 @@ public class HighlightUtilities {
         }
     }
 
-    public static final List< Double > getHighlightDashPattern( final double scaleFactor ) {
+    public static List< Double > getHighlightDashPattern(
+            final double scaleFactor ) {
         // Define and return the dash pattern to use for highlighting.
         final List< Double > highlightDashPattern = new ArrayList<>();
         highlightDashPattern.add( Double.valueOf( 2.0d * scaleFactor ) );

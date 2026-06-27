@@ -21,18 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the FxGraphicsToolkit Library
+ * This file is part of the fxgraphics Library
  *
- * You should have received a copy of the MIT License along with the
- * FxGraphicsToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
+ * You should have received a copy of the MIT License along with the fxgraphics
+ * Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/fxgraphicstoolkit
+ * Project: https://github.com/mhschmieder/fxgraphics
  */
 package com.mhschmieder.fxgraphics.geometry;
 
 import com.mhschmieder.jmath.MathUtilities;
-import com.mhschmieder.jmath.geometry.euclidian.Axis;
-import com.mhschmieder.jmath.geometry.euclidian.OrthogonalAxes;
+import com.mhschmieder.jmath.geometry.euclidean.Axis;
+import com.mhschmieder.jmath.geometry.euclidean.OrthogonalAxes;
 import com.mhschmieder.jphysics.measure.DistanceUnit;
 import com.mhschmieder.jphysics.measure.UnitConversion;
 import javafx.geometry.BoundingBox;

@@ -21,21 +21,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the FxCadGraphics Library
+ * This file is part of the fxgraphics Library
  *
- * You should have received a copy of the MIT License along with the
- * FxCadGraphics Library. If not, see <https://opensource.org/licenses/MIT>.
+ * You should have received a copy of the MIT License along with the fxgraphics
+ * Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/fxcadgraphics
+ * Project: https://github.com/mhschmieder/fxgraphics
  */
 package com.mhschmieder.fxgraphics.geometry;
 
-import com.mhschmieder.fxgraphics.paint.ColorConstants;
-import com.mhschmieder.fxgraphics.paint.ColorUtilities;
-import com.mhschmieder.fxgraphics.shape.ShapeGroup;
 import com.mhschmieder.fxgraphics.layers.Layer;
 import com.mhschmieder.fxgraphics.layers.LayerAssignable;
 import com.mhschmieder.fxgraphics.layers.LayerManager;
+import com.mhschmieder.fxgraphics.paint.ColorConstants;
+import com.mhschmieder.fxgraphics.paint.ColorUtilities;
+import com.mhschmieder.fxgraphics.shape.ShapeGroup;
 import javafx.collections.ObservableList;
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;

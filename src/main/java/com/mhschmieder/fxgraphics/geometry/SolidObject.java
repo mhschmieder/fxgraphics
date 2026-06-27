@@ -21,22 +21,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the FxCadGraphics Library
+ * This file is part of the fxgraphics Library
  *
- * You should have received a copy of the MIT License along with the
- * FxCadGraphics Library. If not, see <https://opensource.org/licenses/MIT>.
+ * You should have received a copy of the MIT License along with the fxgraphics
+ * Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/fxcadgraphics
+ * Project: https://github.com/mhschmieder/fxgraphics
  */
 package com.mhschmieder.fxgraphics.geometry;
 
 import com.mhschmieder.fxgraphics.layers.Layer;
 import com.mhschmieder.fxgraphics.layers.LayerManager;
-import com.mhschmieder.jmath.geometry.euclidian.FacingDirection;
-import com.mhschmieder.jmath.geometry.euclidian.Orientation;
-import com.mhschmieder.jmath.geometry.euclidian.Axis;
-import com.mhschmieder.jmath.geometry.euclidian.OrthogonalAxes;
-import com.mhschmieder.jmath.geometry.euclidian.VectorUtilities;
+import com.mhschmieder.jmath.geometry.euclidean.Axis;
+import com.mhschmieder.jmath.geometry.euclidean.FacingDirection;
+import com.mhschmieder.jmath.geometry.euclidean.Orientation;
+import com.mhschmieder.jmath.geometry.euclidean.OrthogonalAxes;
+import com.mhschmieder.jmath.geometry.euclidean.VectorUtilities;
 import javafx.scene.transform.Affine;
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;

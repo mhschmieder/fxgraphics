@@ -21,17 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the FxCadGraphics Library
+ * This file is part of the fxgraphics Library
  *
- * You should have received a copy of the MIT License along with the
- * FxCadGraphics Library. If not, see <https://opensource.org/licenses/MIT>.
+ * You should have received a copy of the MIT License along with the fxgraphics
+ * Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/fxcadgraphics
+ * Project: https://github.com/mhschmieder/fxgraphics
  */
 package com.mhschmieder.fxgraphics.geometry;
 
-import com.mhschmieder.jmath.geometry.euclidian.Orientation;
-import com.mhschmieder.jmath.geometry.euclidian.VectorUtilities;
+import com.mhschmieder.jmath.geometry.euclidean.Orientation;
+import com.mhschmieder.jmath.geometry.euclidean.VectorUtilities;
 import javafx.collections.ObservableList;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
@@ -44,7 +44,7 @@ import java.awt.geom.GeneralPath;
 import java.awt.geom.Path2D;
 
 /**
- * <code>Wedge</code> stores the three dimensional locations of the corner
+ * <code>Wedge</code> stores the three-dimensional locations of the corner
  * points (when relevant) of a <code>PhysicsObject</code>. It mostly has
  * methods for drawing a wedge from the corner points. This is used to
  * generate an outline of a generic wedge, in a way that the returned shape (as

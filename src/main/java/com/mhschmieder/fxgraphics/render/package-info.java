@@ -21,15 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the FxGraphicsToolkit Library
+ * This file is part of the fxgraphics Library
  *
- * You should have received a copy of the MIT License along with the
- * FxGraphicsToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
+ * You should have received a copy of the MIT License along with the fxgraphics
+ * Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/fxgraphicstoolkit
+ * Project: https://github.com/mhschmieder/fxgraphics
  */
 /**
- * This package contains the FxGraphicsToolkit Library's utilities for graphics
+ * This package contains the fxgraphics Library's utilities for graphics
  * rendering facilities.
  *
  * @version 0.1

@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.fxgraphics.image;
 
-import com.mhschmieder.jgraphics.image.LightSourceDirection;
+import com.mhschmieder.jmath.geometry.euclidean.LightSourceDirection;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.effect.ImageInput;
 import javafx.scene.effect.Light;

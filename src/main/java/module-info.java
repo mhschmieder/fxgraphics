@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020, 2026 Mark Schmieder. All rights reserved.
+ * Copyright (c) 2026 Mark Schmieder. All rights reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,29 +28,28 @@
  *
  * Project: https://github.com/mhschmieder/fxgraphics
  */
-package com.mhschmieder.fxgraphics.input;
-
-import javafx.scene.Node;
-
-/**
- * A contract for methods that an implementer must provide to a 
- * {@link GestureManager}.
- */
-public interface GestureHandler {
-
-    /**
-     * Returns the {@link Node} that serves as the clickable Content Pane
-     * for a Cartesian Chart or other primary graphical display canvas.
-     *
-     * @return The {@link Node} to listen on for mouse events or gestures
-     *         regarding interactive graphical objects, such as those that
-     *         are contained in a Chart Overlay Group
-     */
-    Node getClickableContentNode();
-    
-    com.mhschmieder.jgraphics.input.MouseToolMode getMouseMode();
-
-    void zoom( final double zoomFactor,
-               final double xPixels,
-               final double yPixels );
+module fxgraphics {
+    exports com.mhschmieder.fxgraphics;
+    exports com.mhschmieder.fxgraphics.beans;
+    exports com.mhschmieder.fxgraphics.canvas;
+    exports com.mhschmieder.fxgraphics.collections;
+    exports com.mhschmieder.fxgraphics.geometry;
+    exports com.mhschmieder.fxgraphics.image;
+    exports com.mhschmieder.fxgraphics.input;
+    exports com.mhschmieder.fxgraphics.io;
+    exports com.mhschmieder.fxgraphics.layers;
+    exports com.mhschmieder.fxgraphics.paint;
+    exports com.mhschmieder.fxgraphics.render;
+    exports com.mhschmieder.fxgraphics.shape;
+    exports com.mhschmieder.fxgraphics.svg;
+    requires commons.math3;
+    requires java.desktop;
+    requires javafx.base;
+    requires javafx.graphics;
+    requires javafx.swing;
+    requires jcommons;
+    requires jgraphics;
+    requires jmath;
+    requires jphysics;
+    requires org.jsoup;
 }

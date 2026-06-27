@@ -21,23 +21,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the FxCadGraphics Library
+ * This file is part of the fxgraphics Library
  *
- * You should have received a copy of the MIT License along with the
- * FxCadGraphics Library. If not, see <https://opensource.org/licenses/MIT>.
+ * You should have received a copy of the MIT License along with the fxgraphics
+ * Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/fxcadgraphics
+ * Project: https://github.com/mhschmieder/fxgraphics
  */
 package com.mhschmieder.fxgraphics.geometry;
 
-import com.mhschmieder.fxcadgraphics.CogMarkable;
-import com.mhschmieder.fxgraphics.shape.ShapeUtilities;
 import com.mhschmieder.fxgraphics.layers.Layer;
 import com.mhschmieder.fxgraphics.layers.LayerManager;
-import com.mhschmieder.jmath.geometry.euclidian.FacingDirection;
-import com.mhschmieder.jmath.geometry.euclidian.Orientation;
-import com.mhschmieder.jmath.geometry.euclidian.OrthogonalAxes;
-import com.mhschmieder.jmath.geometry.euclidian.VectorUtilities;
+import com.mhschmieder.fxgraphics.shape.CogMarkable;
+import com.mhschmieder.fxgraphics.shape.ShapeUtilities;
+import com.mhschmieder.jmath.geometry.euclidean.FacingDirection;
+import com.mhschmieder.jmath.geometry.euclidean.Orientation;
+import com.mhschmieder.jmath.geometry.euclidean.OrthogonalAxes;
+import com.mhschmieder.jmath.geometry.euclidean.VectorUtilities;
 import com.mhschmieder.jphysics.classical.MassComputable;
 import com.mhschmieder.jphysics.classical.MassProperties;
 import javafx.geometry.Point2D;
@@ -84,7 +84,13 @@ public abstract class PhysicsObject extends SolidObject
                              final boolean inverted,
                              final MassProperties massProperties ) {
         // Always call the super-constructor first!
-        super( layer, gcInVenueCoordinates, angleDegrees, orientation, facingDirection, inverted );
+        super(
+                layer,
+                gcInVenueCoordinates,
+                angleDegrees,
+                orientation,
+                facingDirection,
+                inverted );
 
         // Set the initial mass Properties reference for COG and Weight.
         _massProperties = massProperties;

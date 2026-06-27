@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the FxGraphicsToolkit Library
+ * This file is part of the fxgraphics Library
  *
- * You should have received a copy of the MIT License along with the
- * FxGraphicsToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
+ * You should have received a copy of the MIT License along with the fxgraphics
+ * Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/fxgraphicstoolkit
+ * Project: https://github.com/mhschmieder/fxgraphics
  */
 package com.mhschmieder.fxgraphics.image;
 
@@ -69,9 +69,12 @@ public final class ImageUtilities {
 
     public static byte[] convertImageToByteArray( final Image image,
                                                   final String imageFormatName ) {
-        try ( final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream() ) {
-            final BufferedImage bufferedImage = SwingFXUtils.fromFXImage( image, null );
-            if ( ( bufferedImage == null ) || !ImageIO.write( bufferedImage, imageFormatName, byteArrayOutputStream ) ) {
+        try ( final ByteArrayOutputStream byteArrayOutputStream
+                      = new ByteArrayOutputStream() ) {
+            final BufferedImage bufferedImage = SwingFXUtils.fromFXImage(
+                    image, null );
+            if ( ( bufferedImage == null ) || !ImageIO.write(
+                    bufferedImage, imageFormatName, byteArrayOutputStream ) ) {
                 return null;
             }
             return byteArrayOutputStream.toByteArray();
@@ -199,8 +202,9 @@ public final class ImageUtilities {
         // Convert to an AWT-based BufferedImage until something equivalent
         // exists in JavaFX.
         // TODO: Use a PixelReader and PixelWriter to write to file? Or is this
-        // utility method doing that anyway?
-        final BufferedImage bufferedImage = SwingFXUtils.fromFXImage( snapshot, null );
+        //  utility method doing that anyway?
+        final BufferedImage bufferedImage = SwingFXUtils.fromFXImage(
+                snapshot, null );
 
         return bufferedImage;
     }
