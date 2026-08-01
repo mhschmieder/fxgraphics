@@ -59,7 +59,7 @@ public final class BumpMapUtilities {
             final double maxValue ) {
         if ( shadingActive ) {
             double norm = ( value - minValue ) / ( maxValue - minValue );
-            norm = FastMath.min( 1.0d, FastMath.max( 0.0d, norm ) );
+            norm = Math.clamp( norm, 0.0d, 1.0d );
             writer.setColor( x, y, new Color( norm, norm, norm, 1.0d ) );
         }
     }

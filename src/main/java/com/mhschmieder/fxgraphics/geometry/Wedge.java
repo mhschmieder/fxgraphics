@@ -287,8 +287,7 @@ public class Wedge {
                 - _cornerPointArray[ 0 ][ 0 ][ 1 ].getY();
         final double frontWidth = _cornerPointArray[ 1 ][ 1 ][ 1 ].getY()
                 - _cornerPointArray[ 1 ][ 0 ][ 1 ].getY();
-        final double maxWidth = FastMath.max( rearWidth, frontWidth );
-        return maxWidth;
+        return FastMath.max( rearWidth, frontWidth );
     }
 
     public final double getMaximumHeight() {
@@ -296,8 +295,7 @@ public class Wedge {
                 - _cornerPointArray[ 0 ][ 1 ][ 0 ].getZ();
         final double frontHeight = _cornerPointArray[ 1 ][ 1 ][ 1 ].getZ()
                 - _cornerPointArray[ 1 ][ 1 ][ 0 ].getZ();
-        final double maxHeight = FastMath.max( rearHeight, frontHeight );
-        return maxHeight;
+        return FastMath.max( rearHeight, frontHeight );
     }
 
     public final double getMaximumDepth() {
@@ -305,8 +303,7 @@ public class Wedge {
                 - _cornerPointArray[ 0 ][ 1 ][ 1 ].getX();
         final double rightSideDepth = _cornerPointArray[ 1 ][ 1 ][ 1 ].getX()
                 - _cornerPointArray[ 0 ][ 1 ][ 1 ].getX();
-        final double maxDepth = FastMath.max( leftSideDepth, rightSideDepth );
-        return maxDepth;
+        return FastMath.max( leftSideDepth, rightSideDepth );
     }
 
     public Path getTopSideVectorGraphics() {
@@ -550,8 +547,9 @@ public class Wedge {
         final float approximateHeight = ( float ) ( _cornerPointArray[ 1 ][ 1 ][ 1 ].getZ()
                 - _cornerPointArray[ 1 ][ 1 ][ 0 ].getZ() );
 
-        final float crosshairsDimension = 0.5f * FastMath
-                .min( approximateHeight, FastMath.min( approximateDepth, approximateWidth ) );
+        final float crosshairsDimension = 0.5f * FastMath.min(
+                approximateHeight,
+                FastMath.min( approximateDepth, approximateWidth ) );
 
         // Draw the cross-hair as two separate lines, to represent the geometric
         // center of the object.
