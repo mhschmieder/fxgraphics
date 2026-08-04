@@ -33,10 +33,10 @@ package com.mhschmieder.fxgraphics;
 import javafx.beans.property.StringProperty;
 
 /**
- * An interface for JavaFX objects that contracts an implementing class to add 
+ * An interface for JavaFX objects that contracts an implementing class to add
  * and expose an observable label property. Not to be confused with the more
- * generic enum-oriented {@code Labeled} interface in jcommons, or the
- * general purpose non-observable non-JavaFX {@code LabeledObject} interface.
+ * generic enum-oriented {@code Labeled} interface in jcommons, or the general
+ * purpose non-observable non-JavaFX {@code LabeledObject} interface.
  */
 public interface LabelAssignable {
 
@@ -45,5 +45,4 @@ public interface LabelAssignable {
     String getLabel();
 
     void setLabel( final String pLabel );
-
 }

@@ -38,9 +38,8 @@ import javafx.scene.input.MouseEvent;
 /**
  * Immutable class holding data for where a user clicked.
  *
- * @version 1.0
- *
  * @author Mark Schmieder
+ * @version 1.0
  */
 public final class ClickLocation {
 
@@ -56,11 +55,10 @@ public final class ClickLocation {
 
     /**
      * This is the copy constructor, for when the source click location might be
-     * an ongoing reference whose values could change but don't
-     * necessarily desire to be propagated to all usage contexts.
+     * an ongoing reference whose values could change but don't necessarily
+     * desire to be propagated to all usage contexts.
      *
-     * @param clickLocation
-     *            The source Click Location to be copied
+     * @param clickLocation The source Click Location to be copied
      */
     public ClickLocation( final ClickLocation clickLocation ) {
         this( clickLocation.x,
@@ -74,25 +72,7 @@ public final class ClickLocation {
               clickLocation.sourceBoundsInParent );
     }
 
-    /**
-     * Requires a JavaFX {@link Node}.
-     *
-     * @param contextMenuEvent
-     *            whose source is a Node
-     */
-    public ClickLocation( final ContextMenuEvent contextMenuEvent ) {
-        this( contextMenuEvent.getX(),
-              contextMenuEvent.getY(),
-              contextMenuEvent.getSceneX(),
-              contextMenuEvent.getSceneY(),
-              contextMenuEvent.getScreenX(),
-              contextMenuEvent.getScreenY(),
-              ( ( Node ) contextMenuEvent.getSource() ).getLayoutBounds(),
-              ( ( Node ) contextMenuEvent.getSource() ).getBoundsInLocal(),
-              ( ( Node ) contextMenuEvent.getSource() ).getBoundsInParent() );
-    }
-
-    @SuppressWarnings("hiding")
+    @SuppressWarnings( "hiding" )
     public ClickLocation( final double x,
                           final double y,
                           final double sceneX,
@@ -116,8 +96,24 @@ public final class ClickLocation {
     /**
      * Requires a JavaFX {@link Node}.
      *
-     * @param mouseEvent
-     *            whose source is a Node
+     * @param contextMenuEvent whose source is a Node
+     */
+    public ClickLocation( final ContextMenuEvent contextMenuEvent ) {
+        this( contextMenuEvent.getX(),
+              contextMenuEvent.getY(),
+              contextMenuEvent.getSceneX(),
+              contextMenuEvent.getSceneY(),
+              contextMenuEvent.getScreenX(),
+              contextMenuEvent.getScreenY(),
+              ( ( Node ) contextMenuEvent.getSource() ).getLayoutBounds(),
+              ( ( Node ) contextMenuEvent.getSource() ).getBoundsInLocal(),
+              ( ( Node ) contextMenuEvent.getSource() ).getBoundsInParent() );
+    }
+
+    /**
+     * Requires a JavaFX {@link Node}.
+     *
+     * @param mouseEvent whose source is a Node
      */
     public ClickLocation( final MouseEvent mouseEvent ) {
         this( mouseEvent.getX(),
@@ -130,5 +126,4 @@ public final class ClickLocation {
               ( ( Node ) mouseEvent.getSource() ).getBoundsInLocal(),
               ( ( Node ) mouseEvent.getSource() ).getBoundsInParent() );
     }
-
 }

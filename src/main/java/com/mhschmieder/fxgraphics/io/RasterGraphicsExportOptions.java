@@ -44,7 +44,9 @@ public final class RasterGraphicsExportOptions extends GraphicsExportOptions {
 
     // Default constructor when nothing is known.
     public RasterGraphicsExportOptions() {
-        this( EXPORT_ALL_DEFAULT, EXPORT_CHART_DEFAULT, EXPORT_AUXILIARY_DEFAULT );
+        this( EXPORT_ALL_DEFAULT,
+              EXPORT_CHART_DEFAULT,
+              EXPORT_AUXILIARY_DEFAULT );
     }
 
     // Partially specified constructor when everything but Image Size is known.
@@ -61,7 +63,9 @@ public final class RasterGraphicsExportOptions extends GraphicsExportOptions {
                                         final ImageSize pImageSize ) {
         super( pExportAll, pExportChart, pExportAuxiliary );
 
-        imageSize = ( pImageSize != null ) ? new ImageSize( pImageSize ) : new ImageSize();
+        imageSize = ( pImageSize != null )
+                    ? new ImageSize( pImageSize )
+                    : new ImageSize();
     }
 
     // Copy constructor.
@@ -76,6 +80,10 @@ public final class RasterGraphicsExportOptions extends GraphicsExportOptions {
         return imageSize;
     }
 
+    public void setImageSize( final ImageSize pImageSize ) {
+        imageSize.setImageSize( pImageSize );
+    }
+
     public double getPixelHeight() {
         return imageSize.getPixelHeight();
     }
@@ -88,12 +96,24 @@ public final class RasterGraphicsExportOptions extends GraphicsExportOptions {
         return imageSize.isAutoSize();
     }
 
+    public void setUseOnScreenImageSize( final boolean useOnScreenImageSize ) {
+        imageSize.setAutoSize( useOnScreenImageSize );
+    }
+
     // Default pseudo-constructor.
     @Override
     public void reset() {
         super.reset();
 
         imageSize.reset();
+    }
+
+    // Pseudo-copy constructor.
+    public void setRasterGraphicsExportOptions( final RasterGraphicsExportOptions pRasterGraphicsExportOptions ) {
+        setRasterGraphicsExportOptions( pRasterGraphicsExportOptions.isExportAll(),
+                                        pRasterGraphicsExportOptions.isExportChart(),
+                                        pRasterGraphicsExportOptions.isExportAuxiliary(),
+                                        pRasterGraphicsExportOptions.getImageSize() );
     }
 
     // Fully specified pseudo-constructor.
@@ -106,24 +126,8 @@ public final class RasterGraphicsExportOptions extends GraphicsExportOptions {
         imageSize.setImageSize( pImageSize );
     }
 
-    // Pseudo-copy constructor.
-    public void setRasterGraphicsExportOptions( final RasterGraphicsExportOptions pRasterGraphicsExportOptions ) {
-        setRasterGraphicsExportOptions( pRasterGraphicsExportOptions.isExportAll(),
-                                        pRasterGraphicsExportOptions.isExportChart(),
-                                        pRasterGraphicsExportOptions.isExportAuxiliary(),
-                                        pRasterGraphicsExportOptions.getImageSize() );
-    }
-
-    public void setImageSize( final ImageSize pImageSize ) {
-        imageSize.setImageSize( pImageSize );
-    }
-
-    public void setPixelDimensions( final double pPixelWidth, final double pPixelHeight ) {
+    public void setPixelDimensions( final double pPixelWidth,
+                                    final double pPixelHeight ) {
         imageSize.setPixelDimensions( pPixelWidth, pPixelHeight );
     }
-
-    public void setUseOnScreenImageSize( final boolean useOnScreenImageSize ) {
-        imageSize.setAutoSize( useOnScreenImageSize );
-    }
-
 }

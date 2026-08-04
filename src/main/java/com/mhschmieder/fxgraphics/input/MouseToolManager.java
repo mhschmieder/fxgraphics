@@ -31,10 +31,11 @@
 package com.mhschmieder.fxgraphics.input;
 
 import com.mhschmieder.jgraphics.input.MouseToolMode;
+
 import javafx.scene.input.MouseEvent;
 
 /**
- * A wrapper for variables and state associated with managing both the Active 
+ * A wrapper for variables and state associated with managing both the Active
  * Mouse Tool and transitive intramodal changes that don't affect the selected
  * tool but take precedence until conditions and actions release the transitive
  * state. Considerations for undo/redo support are also included here.
@@ -101,8 +102,9 @@ public class MouseToolManager {
         // If multiple accelerators/shortcuts are engaged, ignore them all.
         // NOTE: A cascaded logical XOR gets the wrong result when all three
         //  accelerators are engaged!
-        if ( ( _shiftKeyDown && _altKeyDown ) || ( _altKeyDown && _shortcutKeyDown )
-                || ( _shiftKeyDown && _shortcutKeyDown ) ) {
+        if ( ( _shiftKeyDown && _altKeyDown ) || ( _altKeyDown
+                                                   && _shortcutKeyDown ) || (
+                     _shiftKeyDown && _shortcutKeyDown ) ) {
             _shiftKeyDown = false;
             _altKeyDown = false;
             _shortcutKeyDown = false;

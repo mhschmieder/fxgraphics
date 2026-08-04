@@ -30,48 +30,93 @@
  */
 package com.mhschmieder.fxgraphics.image;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.geometry.Dimension2D;
 import org.apache.commons.math3.util.FastMath;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Locale;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.geometry.Dimension2D;
+
 public class ImageSize {
 
     // Declare default constants, where appropriate, for all fields.
-    public static final boolean                         AUTO_SIZE_DEFAULT               = true;
+    public static final boolean AUTO_SIZE_DEFAULT = true;
 
-    public static final double                          PIXEL_DIMENSIONS_WIDTH_DEFAULT  = 1440;
-    public static final double                          PIXEL_DIMENSIONS_HEIGHT_DEFAULT = 900;
+    public static final double PIXEL_DIMENSIONS_WIDTH_DEFAULT = 1440;
+    public static final double PIXEL_DIMENSIONS_HEIGHT_DEFAULT = 900;
 
-    public static final double                          PIXEL_DIMENSIONS_MINIMUM        = 64;
-    public static final double                          PIXEL_DIMENSIONS_MAXIMUM        = 10000;
+    public static final double PIXEL_DIMENSIONS_MINIMUM = 64;
+    public static final double PIXEL_DIMENSIONS_MAXIMUM = 10000;
 
-    public static final double[]                        PIXEL_WIDTH_PRESETS             =
-                                                                            new double[] {
-                                                                                           800,
-                                                                                           1024,
-                                                                                           1280,
-                                                                                           1440 };
+    public static final double[] PIXEL_WIDTH_PRESETS = new double[] {
+            800,
+            1024,
+            1280,
+            1440
+    };
 
-    public static final double[]                        PIXEL_HEIGHT_PRESETS            =
-                                                                             new double[] {
-                                                                                            600,
-                                                                                            768,
-                                                                                            900,
-                                                                                            1024 };
+    public static final double[] PIXEL_HEIGHT_PRESETS = new double[] {
+            600,
+            768,
+            900,
+            1024
+    };
 
     // Declare an abbreviated string representation of pixel units.
-    @SuppressWarnings("nls") public static final String PIXEL_UNITS_ABBREVIATED         = " px";
+    @SuppressWarnings( "nls" )
+    public static final String PIXEL_UNITS_ABBREVIATED = " px";
 
     // As pixels are now floating-point, make sure to use User Locale.
-    protected static final NumberFormat                 DOUBLE_FORMATTER                =
-                                                                         NumberFormat
-                                                                                 .getNumberInstance( Locale
-                                                                                         .getDefault() );
+    protected static final NumberFormat DOUBLE_FORMATTER
+            = NumberFormat.getNumberInstance( Locale.getDefault() );
+    // Cached observable copy of most recent auto-size setting.
+    private final BooleanProperty autoSize;
+    // Declare an observable dimension that forms our Pixel Dimensions.
+    private Dimension2D pixelDimensions;
+
+    // Default constructor when nothing is known.
+    public ImageSize() {
+        this( AUTO_SIZE_DEFAULT,
+              PIXEL_DIMENSIONS_WIDTH_DEFAULT,
+              PIXEL_DIMENSIONS_HEIGHT_DEFAULT );
+    }
+
+    // Fully specified constructor when everything is known.
+    public ImageSize( final boolean pAutoSize,
+                      final double pPixelWidth,
+                      final double pPixelHeight ) {
+        autoSize = new SimpleBooleanProperty( pAutoSize );
+
+        pixelDimensions = new Dimension2D( pPixelWidth, pPixelHeight );
+    }
+
+    // Copy constructor.
+    public ImageSize( final ImageSize pImageSize ) {
+        this( pImageSize.isAutoSize(), pImageSize.getPixelDimensions() );
+    }
+
+    // Fully specified constructor when everything is known.
+    public ImageSize( final boolean pAutoSize,
+                      final Dimension2D pPixelDimensions ) {
+        this( pAutoSize,
+              pPixelDimensions.getWidth(),
+              pPixelDimensions.getHeight() );
+    }
+
+    public final Dimension2D getPixelDimensions() {
+        return pixelDimensions;
+    }
+
+    public final boolean isAutoSize() {
+        return autoSize.get();
+    }
+
+    public final void setAutoSize( final boolean pAutoSize ) {
+        autoSize.set( pAutoSize );
+    }
 
     // Utility method to enforce size limits and return as modified.
     public static final double adjustDimensionForLimits( final double pixelDimensionCandidate ) {
@@ -126,8 +171,9 @@ public class ImageSize {
     // TODO: Use Apache Commons I/O library to strip the units instead?
     public static final double getPixelDimensionAsDouble( final String pixelDimensionString ) {
         try {
-            final Number pixelDimension = DOUBLE_FORMATTER
-                    .parse( pixelDimensionString.replaceAll( PIXEL_UNITS_ABBREVIATED, "" ) ); //$NON-NLS-1$
+            final Number pixelDimension = DOUBLE_FORMATTER.parse(
+                    pixelDimensionString.replaceAll( PIXEL_UNITS_ABBREVIATED,
+                                                     "" ) ); //$NON-NLS-1$
             return pixelDimension.doubleValue();
         }
         catch ( final ParseException pe ) {
@@ -135,7 +181,12 @@ public class ImageSize {
         }
 
         // NOTE: This is a fail-safe in case of any uncaught exceptions.
-        return FastMath.min( PIXEL_DIMENSIONS_HEIGHT_DEFAULT, PIXEL_DIMENSIONS_WIDTH_DEFAULT );
+        return FastMath.min( PIXEL_DIMENSIONS_HEIGHT_DEFAULT,
+                             PIXEL_DIMENSIONS_WIDTH_DEFAULT );
+    }
+
+    public static final String getPixelHeightDefaultAsString() {
+        return getPixelDimensionAsString( PIXEL_DIMENSIONS_HEIGHT_DEFAULT );
     }
 
     // Utility method to convert a pixel dimension from a double
@@ -143,27 +194,25 @@ public class ImageSize {
     // TODO: Move this to a utility class or a units class?
     public static final String getPixelDimensionAsString( final double pPixelDimension ) {
         final String pixelDimensionString = Double.toString( pPixelDimension )
-                + PIXEL_UNITS_ABBREVIATED;
+                                            + PIXEL_UNITS_ABBREVIATED;
         return pixelDimensionString;
+    }
+
+    public static final String[] getPixelHeightPresetsAsStrings() {
+        final String[] pixelHeightPresetsStrings = getPixelDimensionsAsStrings(
+                PIXEL_HEIGHT_PRESETS );
+        return pixelHeightPresetsStrings;
     }
 
     public static final String[] getPixelDimensionsAsStrings( final double[] pPixelDimensions ) {
         final int numberOfPixelDimensions = pPixelDimensions.length;
-        final String[] pixelDimensionsStrings = new String[ numberOfPixelDimensions ];
+        final String[] pixelDimensionsStrings
+                = new String[ numberOfPixelDimensions ];
         for ( int i = 0; i < numberOfPixelDimensions; i++ ) {
-            pixelDimensionsStrings[ i ] = getPixelDimensionAsString( pPixelDimensions[ i ] );
+            pixelDimensionsStrings[ i ] = getPixelDimensionAsString(
+                    pPixelDimensions[ i ] );
         }
         return pixelDimensionsStrings;
-    }
-
-    public static final String getPixelHeightDefaultAsString() {
-        return getPixelDimensionAsString( PIXEL_DIMENSIONS_HEIGHT_DEFAULT );
-    }
-
-    public static final String[] getPixelHeightPresetsAsStrings() {
-        final String[] pixelHeightPresetsStrings =
-                                                 getPixelDimensionsAsStrings( PIXEL_HEIGHT_PRESETS );
-        return pixelHeightPresetsStrings;
     }
 
     public static final String getPixelWidthDefaultAsString() {
@@ -171,67 +220,29 @@ public class ImageSize {
     }
 
     public static final String[] getPixelWidthPresetsAsStrings() {
-        final String[] pixelWidthPresetsStrings =
-                                                getPixelDimensionsAsStrings( PIXEL_WIDTH_PRESETS );
+        final String[] pixelWidthPresetsStrings = getPixelDimensionsAsStrings(
+                PIXEL_WIDTH_PRESETS );
         return pixelWidthPresetsStrings;
-    }
-
-    // Cached observable copy of most recent auto-size setting.
-    private final BooleanProperty autoSize;
-
-    // Declare an observable dimension that forms our Pixel Dimensions.
-    private Dimension2D           pixelDimensions;
-
-    // Default constructor when nothing is known.
-    public ImageSize() {
-        this( AUTO_SIZE_DEFAULT, PIXEL_DIMENSIONS_WIDTH_DEFAULT, PIXEL_DIMENSIONS_HEIGHT_DEFAULT );
-    }
-
-    // Fully specified constructor when everything is known.
-    public ImageSize( final boolean pAutoSize, final Dimension2D pPixelDimensions ) {
-        this( pAutoSize, pPixelDimensions.getWidth(), pPixelDimensions.getHeight() );
-    }
-
-    // Fully specified constructor when everything is known.
-    public ImageSize( final boolean pAutoSize,
-                      final double pPixelWidth,
-                      final double pPixelHeight ) {
-        autoSize = new SimpleBooleanProperty( pAutoSize );
-
-        pixelDimensions = new Dimension2D( pPixelWidth, pPixelHeight );
-    }
-
-    // Copy constructor.
-    public ImageSize( final ImageSize pImageSize ) {
-        this( pImageSize.isAutoSize(), pImageSize.getPixelDimensions() );
     }
 
     public final BooleanProperty autoSizeProperty() {
         return autoSize;
     }
 
-    public final Dimension2D getPixelDimensions() {
-        return pixelDimensions;
+    public final String getPixelHeightAsString() {
+        return getPixelDimensionAsString( getPixelHeight() );
     }
 
     public final double getPixelHeight() {
         return pixelDimensions.getHeight();
     }
 
-    public final String getPixelHeightAsString() {
-        return getPixelDimensionAsString( getPixelHeight() );
-    }
-
-    public final double getPixelWidth() {
-        return pixelDimensions.getWidth();
-    }
-
     public final String getPixelWidthAsString() {
         return getPixelDimensionAsString( getPixelWidth() );
     }
 
-    public final boolean isAutoSize() {
-        return autoSize.get();
+    public final double getPixelWidth() {
+        return pixelDimensions.getWidth();
     }
 
     // Default pseudo-constructor.
@@ -239,10 +250,6 @@ public class ImageSize {
         setImageSize( AUTO_SIZE_DEFAULT,
                       PIXEL_DIMENSIONS_WIDTH_DEFAULT,
                       PIXEL_DIMENSIONS_HEIGHT_DEFAULT );
-    }
-
-    public final void setAutoSize( final boolean pAutoSize ) {
-        autoSize.set( pAutoSize );
     }
 
     // Fully specified pseudo-constructor.
@@ -254,15 +261,15 @@ public class ImageSize {
         setPixelDimensions( pPixelWidth, pPixelHeight );
     }
 
+    public final void setPixelDimensions( final double pPixelWidth,
+                                          final double pPixelHeight ) {
+        pixelDimensions = new Dimension2D( pPixelWidth, pPixelHeight );
+    }
+
     // Pseudo-copy constructors
     public final void setImageSize( final ImageSize pImageSize ) {
         setImageSize( pImageSize.isAutoSize(),
                       pImageSize.getPixelWidth(),
                       pImageSize.getPixelHeight() );
     }
-
-    public final void setPixelDimensions( final double pPixelWidth, final double pPixelHeight ) {
-        pixelDimensions = new Dimension2D( pPixelWidth, pPixelHeight );
-    }
-
 }

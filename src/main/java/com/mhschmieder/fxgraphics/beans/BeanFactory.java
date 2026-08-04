@@ -41,33 +41,39 @@ public final class BeanFactory {
     /**
      * The default constructor is disabled, as this is a static factory class.
      */
-    private BeanFactory() {}
+    private BeanFactory() {
+    }
 
     /**
-     * Returns a {@link BooleanBinding} object with its binding dependencies set.
+     * Returns a {@link BooleanBinding} object with its binding dependencies
+     * set.
      * <p>
-     * This starts observing the dependencies for changes. If the value of one of
-     * the supplied dependencies changes, the binding is marked as invalid.
+     * This starts observing the dependencies for changes. If the value of one
+     * of the supplied dependencies changes, the binding is marked as invalid.
      * <p>
-     * Call this method in the owning class for the returned {@link BooleanBinding}
-     * instead of directly invoking the {@link BooleanBinding} constructor, to 
-     * avoid otherwise identical boilerplate code that is verbose and that 
-     * increases the distance in code between the observable properties being
-     * constructed and their being passed as binding dependencies.
+     * Call this method in the owning class for the returned
+     * {@link BooleanBinding} instead of directly invoking the
+     * {@link BooleanBinding} constructor, to avoid otherwise identical
+     * boilerplate code that is verbose and that increases the distance in code
+     * between the observable properties being constructed and their being
+     * passed as binding dependencies.
      *
-     * @param dependencies
-     *            the dependencies to observe on the {@link BooleanBinding}
-     * @return a {@link BooleanBinding} object with its binding dependencies set
+     * @param dependencies the dependencies to observe on the
+     *                     {@link BooleanBinding}
+     * @return a {@link BooleanBinding} object with its binding dependencies
+     *         set
      */
-   public static BooleanBinding makeBooleanBinding( final Observable... dependencies ) {
-        // Establish the dirty flag criteria as a change to any listed dependency.
+    public static BooleanBinding makeBooleanBinding( final Observable... dependencies ) {
+        // Establish the dirty flag criteria as a change to any listed
+        // dependency.
         return new BooleanBinding() {
             {
-                // When any of these assignable values change, the Boolean Binding
+                // When any of these assignable values change, the Boolean
+                // Binding
                 // is invalidated and notifies its listeners.
                 super.bind( dependencies );
             }
-            
+
             /**
              * If any of the dependencies is also a {@link BooleanBinding}, this
              * forces an evaluation so that it doesn't prematurely exit. In most
@@ -77,9 +83,10 @@ public final class BeanFactory {
              * <p>
              * NOTE: Overriding this method to invoke {@code get()} should also
              *  eliminate the need for an {@link InvalidationListener} to invoke
-             *  {@code get()} on the {@link BooleanBinding} in its callback code.
+             *  {@code get()} on the {@link BooleanBinding} in its callback
+             *  code.
              */
-           @Override
+            @Override
             protected void onInvalidating() {
                 get();
             }
@@ -96,5 +103,4 @@ public final class BeanFactory {
             }
         };
     }
-    
 }

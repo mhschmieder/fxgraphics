@@ -35,17 +35,20 @@ import javafx.scene.Group;
 public final class GroupUtilities {
 
     /**
-     * The default constructor is disabled, as this is a static utilities class.
+     * The default constructor is disabled, as this is a static utilities
+     * class.
      */
-    private GroupUtilities() {}
+    private GroupUtilities() {
+    }
 
     /**
      * This method initializes the persistent shared attributes of decorator
-     * node groups, which generally are application managed and non-interactive.
+     * node groups, which generally are application managed and
+     * non-interactive.
      *
-     * @param decoratorNodeGroup
-     *            The decorator node group whose persistent shared attributes
-     *            are to be set at initialization time
+     * @param decoratorNodeGroup The decorator node group whose persistent
+     *                           shared attributes are to be set at
+     *                           initialization time
      */
     public static void initDecoratorNodeGroup( final Group decoratorNodeGroup ) {
         // Mark the decorator node group as unmanaged, as its preferred size

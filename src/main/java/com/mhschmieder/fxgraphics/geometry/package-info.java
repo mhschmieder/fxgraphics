@@ -30,9 +30,5 @@
  */
 /**
  * This package contains the fxgraphics Library's utilities for core geometry.
- *
- * @version 0.1
- *
- * @author Mark Schmieder
  */
 package com.mhschmieder.fxgraphics.geometry;

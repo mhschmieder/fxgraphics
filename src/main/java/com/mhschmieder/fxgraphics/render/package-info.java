@@ -31,9 +31,5 @@
 /**
  * This package contains the fxgraphics Library's utilities for graphics
  * rendering facilities.
- *
- * @version 0.1
- *
- * @author Mark Schmieder
  */
 package com.mhschmieder.fxgraphics.render;

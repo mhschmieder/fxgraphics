@@ -30,7 +30,9 @@
  */
 package com.mhschmieder.fxgraphics.group;
 
-import com.mhschmieder.fxgraphics.shape.ShapeGroup;import javafx.collections.ObservableList;
+import com.mhschmieder.fxgraphics.shape.ShapeGroup;
+
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 
@@ -40,8 +42,8 @@ import javafx.scene.paint.Color;
  * representing interactive application domain objects.
  * <p>
  * It is important to manage any connection the associated shapes (generally
- * added as ShapeGroup wrappers) have with application domain objects. This is
- * a Group container, so it is only appropriate (and scalable) to have it store
+ * added as ShapeGroup wrappers) have with application domain objects. This is a
+ * Group container, so it is only appropriate (and scalable) to have it store
  * the generated graphics for such objects. The application must maintain the
  * mouse interaction, contextual scaling updates, etc. This is just a container
  * and is here for convenience so that such graphics can be handled similarly to
@@ -62,15 +64,6 @@ public class GraphicalElementsOverlayGroup extends ChartContentGroup {
         catch ( final Exception e ) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * Returns the children of the Graphical Elements Overlay Group.
-     *
-     * @return The children of the Graphical Elements Overlay Group.
-     */
-    public final ObservableList< Node > getGraphicalElements() {
-        return getChildren();
     }
 
     /**
@@ -95,5 +88,14 @@ public class GraphicalElementsOverlayGroup extends ChartContentGroup {
                 ( ( ShapeGroup ) node ).setForeground( foreColor, false );
             }
         } );
+    }
+
+    /**
+     * Returns the children of the Graphical Elements Overlay Group.
+     *
+     * @return The children of the Graphical Elements Overlay Group.
+     */
+    public final ObservableList< Node > getGraphicalElements() {
+        return getChildren();
     }
 }

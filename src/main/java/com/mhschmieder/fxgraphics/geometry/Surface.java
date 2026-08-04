@@ -31,6 +31,7 @@
 package com.mhschmieder.fxgraphics.geometry;
 
 import com.mhschmieder.fxgraphics.layers.LayerManagement;
+
 import javafx.scene.shape.Line;
 
 /**
@@ -40,16 +41,13 @@ import javafx.scene.shape.Line;
  */
 public class Surface extends CartesianLine {
 
-    // Declare an identifier number for this surface
-    protected static final int SURFACE_NUMBER_DEFAULT = 1;
-
     // Surfaces are bypassed by default as they are only approximate.
     public static final boolean SURFACE_BYPASSED_DEFAULT = true;
-
     // Declare the default Surface Material.
     public static final SurfaceMaterial SURFACE_MATERIAL_DEFAULT
             = SurfaceMaterial.RIGID;
-
+    // Declare an identifier number for this surface
+    protected static final int SURFACE_NUMBER_DEFAULT = 1;
     protected boolean surfaceBypassed;
     protected int surfaceNumber;
     protected SurfaceMaterial surfaceMaterial;
@@ -65,11 +63,10 @@ public class Surface extends CartesianLine {
 
     // This is the preferred default constructor using a unique Surface ID.
     public Surface( final int pSurfaceNumber ) {
-        this(
-                pSurfaceNumber,
-                SURFACE_BYPASSED_DEFAULT,
-                SURFACE_MATERIAL_DEFAULT,
-                "Surface " + pSurfaceNumber );
+        this( pSurfaceNumber,
+              SURFACE_BYPASSED_DEFAULT,
+              SURFACE_MATERIAL_DEFAULT,
+              "Surface " + pSurfaceNumber );
     }
 
     // This is the partially qualified constructor, when all but extents are
@@ -78,15 +75,14 @@ public class Surface extends CartesianLine {
                     final boolean pSurfaceBypassed,
                     final SurfaceMaterial pSurfaceMaterial,
                     final String pSurfaceLabel ) {
-        this(
-                pSurfaceNumber,
-                pSurfaceBypassed,
-                pSurfaceMaterial,
-                CartesianLine.X1_DEFAULT,
-                CartesianLine.Y1_DEFAULT,
-                CartesianLine.X2_DEFAULT,
-                CartesianLine.Y2_DEFAULT,
-                pSurfaceLabel );
+        this( pSurfaceNumber,
+              pSurfaceBypassed,
+              pSurfaceMaterial,
+              CartesianLine.X1_DEFAULT,
+              CartesianLine.Y1_DEFAULT,
+              CartesianLine.X2_DEFAULT,
+              CartesianLine.Y2_DEFAULT,
+              pSurfaceLabel );
     }
 
     // This is the fully qualified constructor, using separate coordinates.
@@ -100,13 +96,13 @@ public class Surface extends CartesianLine {
                     final double y2,
                     final String pSurfaceLabel ) {
         super( x1,
-                y1,
-                x2,
-                y2,
-                pSurfaceLabel,
-                LayerManagement.makeDefaultLayer(),
-                false,
-                1 );
+               y1,
+               x2,
+               y2,
+               pSurfaceLabel,
+               LayerManagement.makeDefaultLayer(),
+               false,
+               1 );
 
         setSurfaceNumber( pSurfaceNumber );
         setSurfaceBypassed( pSurfaceBypassed );
@@ -119,11 +115,7 @@ public class Surface extends CartesianLine {
                     final boolean pSurfaceBypassed,
                     final SurfaceMaterial pSurfaceMaterial,
                     final Line pLine ) {
-        super( pLine,
-                "",
-                LayerManagement.makeDefaultLayer(),
-                false,
-                1 );
+        super( pLine, "", LayerManagement.makeDefaultLayer(), false, 1 );
 
         setSurfaceNumber( pSurfaceNumber );
         setSurfaceBypassed( pSurfaceBypassed );
@@ -139,11 +131,13 @@ public class Surface extends CartesianLine {
         setSurface( pSurface );
     }
 
-    // NOTE: Cloning is disabled as it is dangerous; use the copy constructor
-    //  instead.
-    @Override
-    protected Object clone() throws CloneNotSupportedException {
-        throw new CloneNotSupportedException();
+    // Pseudo-copy constructor.
+    // TODO: Pass in and use a unique Surface Name.
+    protected void setSurface( final Surface pSurface ) {
+        setSurface( pSurface.getLine(),
+                    pSurface.getSurfaceNumber(),
+                    pSurface.isSurfaceBypassed(),
+                    pSurface.getSurfaceMaterial() );
     }
 
     public int getSurfaceNumber() {
@@ -176,25 +170,21 @@ public class Surface extends CartesianLine {
                                final int pSurfaceNumber,
                                final boolean pSurfaceBypassed,
                                final SurfaceMaterial pSurfaceMaterial ) {
-        setCartesianLine(
-                pLine,
-                "",
-                LayerManagement.makeDefaultLayer(),
-                false,
-                1 );
+        setCartesianLine( pLine,
+                          "",
+                          LayerManagement.makeDefaultLayer(),
+                          false,
+                          1 );
         setSurfaceNumber( pSurfaceNumber );
         setSurfaceBypassed( pSurfaceBypassed );
         setSurfaceMaterial( pSurfaceMaterial );
     }
 
-    // Pseudo-copy constructor.
-    // TODO: Pass in and use a unique Surface Name.
-    protected void setSurface( final Surface pSurface ) {
-        setSurface(
-                pSurface.getLine(),
-                pSurface.getSurfaceNumber(),
-                pSurface.isSurfaceBypassed(),
-                pSurface.getSurfaceMaterial() );
+    // NOTE: Cloning is disabled as it is dangerous; use the copy constructor
+    //  instead.
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        throw new CloneNotSupportedException();
     }
 
     @Override
@@ -207,10 +197,10 @@ public class Surface extends CartesianLine {
         //  members, so that derived classes produce the correct results when
         //  comparing two objects.
         final Surface other = ( Surface ) obj;
-        if ( !super.equals( obj ) 
-                || ( getSurfaceNumber() != other.getSurfaceNumber() ) 
-                || ( isSurfaceBypassed() != other.isSurfaceBypassed() )
-                || ( getSurfaceMaterial() != other.getSurfaceMaterial() ) ) {
+        if ( !super.equals( obj ) || ( getSurfaceNumber()
+                                       != other.getSurfaceNumber() ) || (
+                     isSurfaceBypassed() != other.isSurfaceBypassed() ) || (
+                     getSurfaceMaterial() != other.getSurfaceMaterial() ) ) {
             return false;
         }
 

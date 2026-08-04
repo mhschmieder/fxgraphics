@@ -30,9 +30,5 @@
  */
 /**
  * This package contains classes and utilities for JavaFX Observable Beans.
- *
- * @version 1.0
- *
- * @author Mark Schmieder
  */
 package com.mhschmieder.fxgraphics.beans;

@@ -32,12 +32,14 @@ package com.mhschmieder.fxgraphics.layers;
 
 public interface LayerAssignable {
 
+    default String getLayerName() {
+        final Layer layer = getLayer();
+        return ( layer == null )
+               ? ""
+               : layer.getLayerName();
+    }
+
     Layer getLayer();
 
     void setLayer( final Layer layer );
-
-    default String getLayerName() {
-        final Layer layer = getLayer();
-        return ( layer == null ) ? "" : layer.getLayerName();
-    }
 }

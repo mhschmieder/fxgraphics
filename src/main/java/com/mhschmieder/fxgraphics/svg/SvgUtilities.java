@@ -30,11 +30,6 @@
  */
 package com.mhschmieder.fxgraphics.svg;
 
-import javafx.scene.Group;
-import javafx.scene.Node;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.FillRule;
-import javafx.scene.shape.SVGPath;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -42,16 +37,23 @@ import org.jsoup.select.Elements;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.FillRule;
+import javafx.scene.shape.SVGPath;
+
 /**
  * Utilities for working with SVG Shapes and Groups.
  */
 public class SvgUtilities {
 
     /**
-     * The default constructor is disabled, as this is a static utilities class.
+     * The default constructor is disabled, as this is a static utilities
+     * class.
      */
-    private SvgUtilities() {}
-
+    private SvgUtilities() {
+    }
 
     // Load the entire SVG file into a Group of JavaFX SVGPath nodes.
     // NOTE: The SVG is delivered as an HTML-based document.

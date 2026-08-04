@@ -44,9 +44,12 @@ public final class VectorGraphicsExportOptions extends GraphicsExportOptions {
     protected final StringProperty title;
 
     // Default constructor when nothing is known.
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public VectorGraphicsExportOptions() {
-        this( "", EXPORT_ALL_DEFAULT, EXPORT_CHART_DEFAULT, EXPORT_AUXILIARY_DEFAULT );
+        this( "",
+              EXPORT_ALL_DEFAULT,
+              EXPORT_CHART_DEFAULT,
+              EXPORT_AUXILIARY_DEFAULT );
     }
 
     // Fully specified constructor when everything is known.
@@ -71,8 +74,12 @@ public final class VectorGraphicsExportOptions extends GraphicsExportOptions {
         return title.get();
     }
 
+    public void setTitle( final String pTitle ) {
+        title.set( pTitle );
+    }
+
     // Default pseudo-constructor.
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     @Override
     public void reset() {
         super.reset();
@@ -80,8 +87,12 @@ public final class VectorGraphicsExportOptions extends GraphicsExportOptions {
         setTitle( "" );
     }
 
-    public void setTitle( final String pTitle ) {
-        title.set( pTitle );
+    // Pseudo-copy constructor.
+    public void setVectorGraphicsExportOptions( final VectorGraphicsExportOptions pVectorGraphicsExportOptions ) {
+        setVectorGraphicsExportOptions( pVectorGraphicsExportOptions.getTitle(),
+                                        pVectorGraphicsExportOptions.isExportAll(),
+                                        pVectorGraphicsExportOptions.isExportChart(),
+                                        pVectorGraphicsExportOptions.isExportAuxiliary() );
     }
 
     // Fully specified pseudo-constructor.
@@ -94,16 +105,7 @@ public final class VectorGraphicsExportOptions extends GraphicsExportOptions {
         setTitle( pTitle );
     }
 
-    // Pseudo-copy constructor.
-    public void setVectorGraphicsExportOptions( final VectorGraphicsExportOptions pVectorGraphicsExportOptions ) {
-        setVectorGraphicsExportOptions( pVectorGraphicsExportOptions.getTitle(),
-                                        pVectorGraphicsExportOptions.isExportAll(),
-                                        pVectorGraphicsExportOptions.isExportChart(),
-                                        pVectorGraphicsExportOptions.isExportAuxiliary() );
-    }
-
     public StringProperty titleProperty() {
         return title;
     }
-
 }

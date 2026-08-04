@@ -31,6 +31,7 @@
 package com.mhschmieder.fxgraphics.image;
 
 import com.mhschmieder.jmath.geometry.euclidean.LightSourceDirection;
+
 import javafx.scene.SnapshotParameters;
 import javafx.scene.effect.ImageInput;
 import javafx.scene.effect.Light;
@@ -40,23 +41,23 @@ import javafx.scene.image.PixelReader;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
-import org.apache.commons.math3.util.FastMath;
 
 public final class BumpMapUtilities {
 
     /**
-     * The default constructor is disabled, as this is a static utilities class.
+     * The default constructor is disabled, as this is a static utilities
+     * class.
      */
-    private BumpMapUtilities() {}
+    private BumpMapUtilities() {
+    }
 
-    public static void updateBumpMap(
-            final PixelWriter writer,
-            final int x,
-            final int y,
-            final boolean shadingActive,
-            final double value,
-            final double minValue,
-            final double maxValue ) {
+    public static void updateBumpMap( final PixelWriter writer,
+                                      final int x,
+                                      final int y,
+                                      final boolean shadingActive,
+                                      final double value,
+                                      final double minValue,
+                                      final double maxValue ) {
         if ( shadingActive ) {
             double norm = ( value - minValue ) / ( maxValue - minValue );
             norm = Math.clamp( norm, 0.0d, 1.0d );
@@ -64,12 +65,11 @@ public final class BumpMapUtilities {
         }
     }
 
-    public static void addBumpMapToImage(
-            final boolean shadingActive,
-            final WritableImage image,
-            final WritableImage greyImage,
-            final LightSourceDirection lightSourceDirection,
-            final int heightScale) {
+    public static void addBumpMapToImage( final boolean shadingActive,
+                                          final WritableImage image,
+                                          final WritableImage greyImage,
+                                          final LightSourceDirection lightSourceDirection,
+                                          final int heightScale ) {
         if ( !shadingActive ) {
             return;
         }
@@ -86,28 +86,27 @@ public final class BumpMapUtilities {
         light.setElevation( 45.0d );
 
         Lighting lighting = new Lighting();
-        lighting.setLight(light);
-        lighting.setSurfaceScale(heightScale);
-        lighting.setBumpInput(new ImageInput( image ) );
+        lighting.setLight( light );
+        lighting.setSurfaceScale( heightScale );
+        lighting.setBumpInput( new ImageInput( image ) );
 
         ImageView iv = new ImageView( image );
-        iv.setEffect(lighting);
+        iv.setEffect( lighting );
 
-        final WritableImage result = new WritableImage(
-                (int) image.getWidth(),
-                (int) image.getHeight()
-        );
+        final WritableImage result
+                = new WritableImage( ( int ) image.getWidth(),
+                                     ( int ) image.getHeight() );
         iv.snapshot( new SnapshotParameters(), result );
 
         final PixelReader reader = result.getPixelReader();
         final PixelWriter writer = image.getPixelWriter();
 
         writer.setPixels( 0,
-                0,
-                (int) image.getWidth(),
-                (int) image.getHeight(),
-                reader,
-                0,
-                0);
+                          0,
+                          ( int ) image.getWidth(),
+                          ( int ) image.getHeight(),
+                          reader,
+                          0,
+                          0 );
     }
 }

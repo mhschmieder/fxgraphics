@@ -31,6 +31,7 @@
 package com.mhschmieder.fxgraphics.shape;
 
 import com.mhschmieder.jphysics.measure.DistanceUnit;
+
 import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -47,53 +48,52 @@ public interface ShapeContainer {
     ObservableList< Transform > getShapeTransforms();
 
     /**
-     * Sets the scale transform on the overall {@link ShapeContainer shape
-     * container} to a uniform scale in this Node's frame of reference.
+     * Sets the scale transform on the overall
+     * {@link ShapeContainer shape container} to a uniform scale in this Node's
+     * frame of reference.
+     * <p>
+     * See javafx.scene.transform.Transform.scale() similar method on
+     * Transform.
      *
-     * See javafx.scene.transform.Transform.scale() similar method on Transform.
-     *
-     * @param distanceUnitOld
-     *            The old or reference {@link DistanceUnit} to scale from
-     * @param distanceUnitNew
-     *            The new {@link DistanceUnit} to scale to
+     * @param distanceUnitOld The old or reference {@link DistanceUnit} to scale
+     *                        from
+     * @param distanceUnitNew The new {@link DistanceUnit} to scale to
      */
-    void scale( final DistanceUnit distanceUnitOld, final DistanceUnit distanceUnitNew );
+    void scale( final DistanceUnit distanceUnitOld,
+                final DistanceUnit distanceUnitNew );
 
     /**
-     * This methods conditionally sets a new foreground color for the
-     * graphics.
+     * This methods conditionally sets a new foreground color for the graphics.
      *
-     * @param foreColor
-     *            The desired new foreground stroke color
-     * @param forceOverride
-     *            Flag for whether to override the current foreground stroke
-     *            color even if neither white nor black
+     * @param foreColor     The desired new foreground stroke color
+     * @param forceOverride Flag for whether to override the current foreground
+     *                      stroke color even if neither white nor black
      */
-    void setForeground( final Color foreColor, final boolean forceOverride );
+    void setForeground( final Color foreColor,
+                        final boolean forceOverride );
 
     /**
      * Sets the stroke on child {@link javafx.scene.shape.Shape shapes} to a
      * uniform color in this node's frame of reference.
-     *
+     * <p>
      * See javafx.scene.shape.Shape.setStroke(paint) similar method on Shape.
      *
-     * @param paint
-     *            The color of the stroke
+     * @param paint The color of the stroke
      */
     void setStroke( final Paint paint );
 
     /**
-     * Update the Stroke Width on the overall {@link ShapeContainer shape
-     * container} to a recalculated scale in this Node's frame of reference.
+     * Update the Stroke Width on the overall
+     * {@link ShapeContainer shape container} to a recalculated scale in this
+     * Node's frame of reference.
      *
-     * @param distanceUnitReference
-     *            The reference Distance Unit to re-scale to
-     * @param distanceUnitCurrent
-     *            The current Distance Unit to scale Stroke Width from
-     * @param strokeWidthBasis
-     *            The Stroke Width basis, in current Distance Unit
-     * @param strokeWidthRatio
-     *            The ratio to apply to the basic Stroke Width
+     * @param distanceUnitReference The reference Distance Unit to re-scale to
+     * @param distanceUnitCurrent   The current Distance Unit to scale Stroke
+     *                              Width from
+     * @param strokeWidthBasis      The Stroke Width basis, in current Distance
+     *                              Unit
+     * @param strokeWidthRatio      The ratio to apply to the basic Stroke
+     *                              Width
      */
     void updateStrokeWidth( final DistanceUnit distanceUnitReference,
                             final DistanceUnit distanceUnitCurrent,
@@ -103,13 +103,11 @@ public interface ShapeContainer {
     /**
      * Updates the stroke on child {@link javafx.scene.shape.Shape shapes} to a
      * uniform scale in this node's frame of reference.
-     *
+     * <p>
      * See javafx.scene.shape.Shape.setStrokeWidth(double) similar method on
      * Shape.
      *
-     * @param pStrokeWidth
-     *            The width of the stroke, roughly in pixels
+     * @param pStrokeWidth The width of the stroke, roughly in pixels
      */
     void updateStrokeWidth( final double pStrokeWidth );
-
 }

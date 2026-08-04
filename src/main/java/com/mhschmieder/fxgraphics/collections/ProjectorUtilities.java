@@ -41,16 +41,17 @@ import java.util.HashSet;
  * This is a utility class for Projectors -- especially actions on collections
  * that otherwise would require class derivation of GraphicalObjectCollection.
  * <p>
- * Projectors are specialized versions of Linear Objects and are marked as such.
+ * Projectors are specialized versions of Linear Objects and are marked as
+ * such.
  */
 public final class ProjectorUtilities {
 
-    public static Collection< CartesianLine > getSelectedCartesianProjectors(
-            final GraphicalObjectCollection< CartesianLine > cartesianLineCollection ) {
+    public static Collection< CartesianLine > getSelectedCartesianProjectors( final GraphicalObjectCollection< CartesianLine > cartesianLineCollection ) {
         // Get all the selected Cartesian Lines that are marked as Projectors.
-        final Collection< CartesianLine > selectedCartesianProjectors = new HashSet<>( 20 );
-        final Collection< CartesianLine > selectedCartesianLines = cartesianLineCollection
-                .getSelection();
+        final Collection< CartesianLine > selectedCartesianProjectors
+                = new HashSet<>( 20 );
+        final Collection< CartesianLine > selectedCartesianLines
+                = cartesianLineCollection.getSelection();
         selectedCartesianLines.forEach( cartesianLine -> {
             if ( cartesianLine.isUseAsProjector() ) {
                 selectedCartesianProjectors.add( cartesianLine );
@@ -59,11 +60,12 @@ public final class ProjectorUtilities {
         return selectedCartesianProjectors;
     }
 
-    public static Collection< PolarLine > getSelectedPolarProjectors(
-            final GraphicalObjectCollection< PolarLine > polarLineCollection ) {
+    public static Collection< PolarLine > getSelectedPolarProjectors( final GraphicalObjectCollection< PolarLine > polarLineCollection ) {
         // Get all of the selected Polar Lines that are marked as Projectors.
-        final Collection< PolarLine > selectedPolarProjectors = new HashSet<>( 20 );
-        final Collection< PolarLine > selectedPolarLines = polarLineCollection.getSelection();
+        final Collection< PolarLine > selectedPolarProjectors = new HashSet<>(
+                20 );
+        final Collection< PolarLine > selectedPolarLines
+                = polarLineCollection.getSelection();
         selectedPolarLines.forEach( polarLine -> {
             if ( polarLine.isUseAsProjector() ) {
                 selectedPolarProjectors.add( polarLine );
@@ -77,18 +79,23 @@ public final class ProjectorUtilities {
     public static void selectAllCartesianProjectors( final GraphicalObjectCollection< CartesianLine > cartesianLineCollection ) {
         // Fill the Linear Objects selection set with all of the Linear Objects
         // that are marked as Projectors.
-        final Collection< CartesianLine > collection = cartesianLineCollection.getCollection();
-        final Collection< CartesianLine > deselection = cartesianLineCollection.getDeselection();
+        final Collection< CartesianLine > collection
+                = cartesianLineCollection.getCollection();
+        final Collection< CartesianLine > deselection
+                = cartesianLineCollection.getDeselection();
 
         // Fill the Linear Objects selection set with all of the Projectors.
         // NOTE: It is safer to avoid parallel streams right after clearing one
         //  of the collections as a bulk action.
-        collection.stream().filter( GraphicalObject::isEditable ).forEach(cartesianLine -> {
-            if ( cartesianLine.isEditable() && cartesianLine.isUseAsProjector() ) {
-                cartesianLineCollection.addToSelection( cartesianLine );
-                deselection.add( cartesianLine );
-            }
-        } );
+        collection.stream()
+                  .filter( GraphicalObject::isEditable )
+                  .forEach( cartesianLine -> {
+                      if ( cartesianLine.isEditable()
+                           && cartesianLine.isUseAsProjector() ) {
+                          cartesianLineCollection.addToSelection( cartesianLine );
+                          deselection.add( cartesianLine );
+                      }
+                  } );
     }
 
     // TODO: Continue to try to genericize to just one combined method for all
@@ -96,17 +103,22 @@ public final class ProjectorUtilities {
     public static void selectAllPolarProjectors( final GraphicalObjectCollection< PolarLine > polarLineCollection ) {
         // Fill the Linear Objects selection set with all of the Linear Objects
         // that are marked as Projectors.
-        final Collection< PolarLine > collection = polarLineCollection.getCollection();
-        final Collection< PolarLine > deselection = polarLineCollection.getDeselection();
+        final Collection< PolarLine > collection
+                = polarLineCollection.getCollection();
+        final Collection< PolarLine > deselection
+                = polarLineCollection.getDeselection();
 
         // Fill the Linear Objects selection set with all of the Projectors.
         // NOTE: It is safer to avoid parallel streams right after clearing one
         //  of the collections as a bulk action.
-        collection.stream().filter( GraphicalObject::isEditable ).forEach( polarLine -> {
-            if ( polarLine.isEditable() && polarLine.isUseAsProjector() ) {
-                polarLineCollection.addToSelection( polarLine );
-                deselection.add( polarLine );
-            }
-        } );
+        collection.stream()
+                  .filter( GraphicalObject::isEditable )
+                  .forEach( polarLine -> {
+                      if ( polarLine.isEditable()
+                           && polarLine.isUseAsProjector() ) {
+                          polarLineCollection.addToSelection( polarLine );
+                          deselection.add( polarLine );
+                      }
+                  } );
     }
 }

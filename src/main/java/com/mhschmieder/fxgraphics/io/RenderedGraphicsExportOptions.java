@@ -36,17 +36,17 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 /**
- * This class contains the options for Rendered Graphics Export actions,
- * which refer to standard Vector Graphics Exports done via Java 2D Rendering.
+ * This class contains the options for Rendered Graphics Export actions, which
+ * refer to standard Vector Graphics Exports done via Java 2D Rendering.
  */
 public class RenderedGraphicsExportOptions {
 
-    private static final boolean    EXPORT_AUXILIARY_PANEL_DEFAULT    = true;
-    private static final boolean    EXPORT_INFORMATION_TABLES_DEFAULT = true;
-    private static final boolean    EXPORT_OPTIONAL_ITEM_DEFAULT      = true;
+    private static final boolean EXPORT_AUXILIARY_PANEL_DEFAULT = true;
+    private static final boolean EXPORT_INFORMATION_TABLES_DEFAULT = true;
+    private static final boolean EXPORT_OPTIONAL_ITEM_DEFAULT = true;
 
     // Cached observable copy of most recent export options.
-    protected final StringProperty  title;
+    protected final StringProperty title;
     protected final BooleanProperty exportAuxiliaryPanel;
     protected final BooleanProperty exportInformationTables;
     protected final BooleanProperty exportOptionalItem;
@@ -59,14 +59,6 @@ public class RenderedGraphicsExportOptions {
               EXPORT_OPTIONAL_ITEM_DEFAULT );
     }
 
-    // Copy constructor.
-    public RenderedGraphicsExportOptions( final RenderedGraphicsExportOptions pRenderedGraphicsExportOptions ) {
-        this( pRenderedGraphicsExportOptions.getTitle(),
-              pRenderedGraphicsExportOptions.isExportAuxiliaryPanel(),
-              pRenderedGraphicsExportOptions.isExportInformationTables(),
-              pRenderedGraphicsExportOptions.isExportOptionalItem() );
-    }
-
     // Fully specified constructor when everything is known.
     public RenderedGraphicsExportOptions( final String pTitle,
                                           final boolean pExportAuxiliary,
@@ -75,8 +67,49 @@ public class RenderedGraphicsExportOptions {
         title = new SimpleStringProperty( pTitle );
 
         exportAuxiliaryPanel = new SimpleBooleanProperty( pExportAuxiliary );
-        exportInformationTables = new SimpleBooleanProperty( pExportInformationTables );
+        exportInformationTables = new SimpleBooleanProperty(
+                pExportInformationTables );
         exportOptionalItem = new SimpleBooleanProperty( pExportOptionalItem );
+    }
+
+    // Copy constructor.
+    public RenderedGraphicsExportOptions( final RenderedGraphicsExportOptions pRenderedGraphicsExportOptions ) {
+        this( pRenderedGraphicsExportOptions.getTitle(),
+              pRenderedGraphicsExportOptions.isExportAuxiliaryPanel(),
+              pRenderedGraphicsExportOptions.isExportInformationTables(),
+              pRenderedGraphicsExportOptions.isExportOptionalItem() );
+    }
+
+    public final String getTitle() {
+        return title.get();
+    }
+
+    public final void setTitle( final String pTitle ) {
+        title.set( pTitle );
+    }
+
+    public final boolean isExportAuxiliaryPanel() {
+        return exportAuxiliaryPanel.get();
+    }
+
+    public final void setExportAuxiliaryPanel( final boolean pExportAuxiliaryPanel ) {
+        exportAuxiliaryPanel.set( pExportAuxiliaryPanel );
+    }
+
+    public final boolean isExportInformationTables() {
+        return exportInformationTables.get();
+    }
+
+    public final void setExportInformationTables( final boolean pExportInformationTables ) {
+        exportInformationTables.set( pExportInformationTables );
+    }
+
+    public final boolean isExportOptionalItem() {
+        return exportOptionalItem.get();
+    }
+
+    public final void setExportOptionalItem( final boolean pExportOptionalItem ) {
+        exportOptionalItem.set( pExportOptionalItem );
     }
 
     public final BooleanProperty exportAuxiliaryPanelProperty() {
@@ -91,22 +124,6 @@ public class RenderedGraphicsExportOptions {
         return exportOptionalItem;
     }
 
-    public final String getTitle() {
-        return title.get();
-    }
-
-    public final boolean isExportAuxiliaryPanel() {
-        return exportAuxiliaryPanel.get();
-    }
-
-    public final boolean isExportInformationTables() {
-        return exportInformationTables.get();
-    }
-
-    public final boolean isExportOptionalItem() {
-        return exportOptionalItem.get();
-    }
-
     // Default pseudo-constructor.
     public final void reset() {
         setTitle( "" ); //$NON-NLS-1$
@@ -116,24 +133,11 @@ public class RenderedGraphicsExportOptions {
         setExportOptionalItem( EXPORT_OPTIONAL_ITEM_DEFAULT );
     }
 
-    public final void setExportAuxiliaryPanel( final boolean pExportAuxiliaryPanel ) {
-        exportAuxiliaryPanel.set( pExportAuxiliaryPanel );
-    }
-
-    public final void setExportInformationTables( final boolean pExportInformationTables ) {
-        exportInformationTables.set( pExportInformationTables );
-    }
-
-    public final void setExportOptionalItem( final boolean pExportOptionalItem ) {
-        exportOptionalItem.set( pExportOptionalItem );
-    }
-
     // Pseudo-copy constructor.
     public final void setRenderedGraphicsExportOptions( final RenderedGraphicsExportOptions pRenderedGraphicsExportOptions ) {
         setRenderedGraphicsExportOptions( pRenderedGraphicsExportOptions.getTitle(),
                                           pRenderedGraphicsExportOptions.isExportAuxiliaryPanel(),
-                                          pRenderedGraphicsExportOptions
-                                                  .isExportInformationTables(),
+                                          pRenderedGraphicsExportOptions.isExportInformationTables(),
                                           pRenderedGraphicsExportOptions.isExportOptionalItem() );
     }
 
@@ -147,10 +151,6 @@ public class RenderedGraphicsExportOptions {
         setExportAuxiliaryPanel( pExportAuxiliaryPanel );
         setExportInformationTables( pExportInformationTables );
         setExportOptionalItem( pExportOptionalItem );
-    }
-
-    public final void setTitle( final String pTitle ) {
-        title.set( pTitle );
     }
 
     public final StringProperty titleProperty() {

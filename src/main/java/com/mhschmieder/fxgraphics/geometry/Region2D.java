@@ -30,10 +30,10 @@
  */
 package com.mhschmieder.fxgraphics.geometry;
 
-import javafx.scene.shape.Rectangle;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import javafx.scene.shape.Rectangle;
 
 /**
  * The <code>Region2D</code> class is the implementation class for a Region as
@@ -57,7 +57,9 @@ public final class Region2D extends Extents2D {
     public static final double SIZE_METERS_MINIMUM = 3.0d;
     public static final double SIZE_METERS_MAXIMUM = 1000.0d;
 
-    /** A list of Surfaces. */
+    /**
+     * A list of Surfaces.
+     */
     private final List< Surface > surfaceList;
 
     /*
@@ -65,9 +67,9 @@ public final class Region2D extends Extents2D {
      */
     public Region2D() {
         this( X_METERS_DEFAULT,
-                Y_METERS_DEFAULT,
-                WIDTH_METERS_DEFAULT,
-                HEIGHT_METERS_DEFAULT );
+              Y_METERS_DEFAULT,
+              WIDTH_METERS_DEFAULT,
+              HEIGHT_METERS_DEFAULT );
     }
 
     /*
@@ -77,49 +79,22 @@ public final class Region2D extends Extents2D {
                       final double pBoundaryY,
                       final double pBoundaryWidth,
                       final double pBoundaryHeight ) {
-        this(
-                pBoundaryX,
-                pBoundaryY,
-                pBoundaryWidth,
-                pBoundaryHeight,
-                SurfaceNameManager.getSurfaceNameDefault( 1 ),
-                Surface.SURFACE_BYPASSED_DEFAULT,
-                Surface.SURFACE_MATERIAL_DEFAULT,
-                SurfaceNameManager.getSurfaceNameDefault( 2 ),
-                Surface.SURFACE_BYPASSED_DEFAULT,
-                Surface.SURFACE_MATERIAL_DEFAULT,
-                SurfaceNameManager.getSurfaceNameDefault( 3 ),
-                Surface.SURFACE_BYPASSED_DEFAULT,
-                Surface.SURFACE_MATERIAL_DEFAULT,
-                SurfaceNameManager.getSurfaceNameDefault( 4 ),
-                Surface.SURFACE_BYPASSED_DEFAULT,
-                Surface.SURFACE_MATERIAL_DEFAULT);
-    }
-
-    /*
-     * Default constructor when surfaces are selectively enabled.
-     */
-    public Region2D( final double pBoundaryX,
-                     final double pBoundaryY,
-                     final double pBoundaryWidth,
-                     final double pBoundaryHeight,
-                     final List< Surface > pSurfaces ) {
         this( pBoundaryX,
-                pBoundaryY,
-                pBoundaryWidth,
-                pBoundaryHeight,
-                pSurfaces.get( 0 ).getLabel(),
-                pSurfaces.get( 0 ).isSurfaceBypassed(),
-                pSurfaces.get( 0 ).getSurfaceMaterial(),
-                pSurfaces.get( 1 ).getLabel(),
-                pSurfaces.get( 1 ).isSurfaceBypassed(),
-                pSurfaces.get( 1 ).getSurfaceMaterial(),
-                pSurfaces.get( 2 ).getLabel(),
-                pSurfaces.get( 2 ).isSurfaceBypassed(),
-                pSurfaces.get( 2 ).getSurfaceMaterial(),
-                pSurfaces.get( 3 ).getLabel(),
-                pSurfaces.get( 3 ).isSurfaceBypassed(),
-                pSurfaces.get( 3 ).getSurfaceMaterial() );
+              pBoundaryY,
+              pBoundaryWidth,
+              pBoundaryHeight,
+              SurfaceNameManager.getSurfaceNameDefault( 1 ),
+              Surface.SURFACE_BYPASSED_DEFAULT,
+              Surface.SURFACE_MATERIAL_DEFAULT,
+              SurfaceNameManager.getSurfaceNameDefault( 2 ),
+              Surface.SURFACE_BYPASSED_DEFAULT,
+              Surface.SURFACE_MATERIAL_DEFAULT,
+              SurfaceNameManager.getSurfaceNameDefault( 3 ),
+              Surface.SURFACE_BYPASSED_DEFAULT,
+              Surface.SURFACE_MATERIAL_DEFAULT,
+              SurfaceNameManager.getSurfaceNameDefault( 4 ),
+              Surface.SURFACE_BYPASSED_DEFAULT,
+              Surface.SURFACE_MATERIAL_DEFAULT );
     }
 
     /*
@@ -146,32 +121,28 @@ public final class Region2D extends Extents2D {
 
         surfaceList = new ArrayList<>();
 
-        final Surface surface1Properties = new Surface(
-                1,
-                pSurface1Bypassed,
-                pSurface1Material,
-                pSurface1Name );
+        final Surface surface1Properties = new Surface( 1,
+                                                        pSurface1Bypassed,
+                                                        pSurface1Material,
+                                                        pSurface1Name );
         surfaceList.add( surface1Properties );
 
-        final Surface surface2Properties = new Surface(
-                2,
-                pSurface2Bypassed,
-                pSurface2Material,
-                pSurface2Name );
+        final Surface surface2Properties = new Surface( 2,
+                                                        pSurface2Bypassed,
+                                                        pSurface2Material,
+                                                        pSurface2Name );
         surfaceList.add( surface2Properties );
 
-        final Surface surface3Properties = new Surface(
-                3,
-                pSurface3Bypassed,
-                pSurface3Material,
-                pSurface3Name );
+        final Surface surface3Properties = new Surface( 3,
+                                                        pSurface3Bypassed,
+                                                        pSurface3Material,
+                                                        pSurface3Name );
         surfaceList.add( surface3Properties );
 
-        final Surface surface4Properties = new Surface(
-                4,
-                pSurface4Bypassed,
-                pSurface4Material,
-                pSurface4Name );
+        final Surface surface4Properties = new Surface( 4,
+                                                        pSurface4Bypassed,
+                                                        pSurface4Material,
+                                                        pSurface4Name );
         surfaceList.add( surface4Properties );
     }
 
@@ -181,10 +152,36 @@ public final class Region2D extends Extents2D {
     public Region2D( final Rectangle pBoundary,
                      final List< Surface > pSurfaceProperties ) {
         this( pBoundary.getX(),
-                pBoundary.getY(),
-                pBoundary.getWidth(),
-                pBoundary.getHeight(),
-                pSurfaceProperties );
+              pBoundary.getY(),
+              pBoundary.getWidth(),
+              pBoundary.getHeight(),
+              pSurfaceProperties );
+    }
+
+    /*
+     * Default constructor when surfaces are selectively enabled.
+     */
+    public Region2D( final double pBoundaryX,
+                     final double pBoundaryY,
+                     final double pBoundaryWidth,
+                     final double pBoundaryHeight,
+                     final List< Surface > pSurfaces ) {
+        this( pBoundaryX,
+              pBoundaryY,
+              pBoundaryWidth,
+              pBoundaryHeight,
+              pSurfaces.get( 0 ).getLabel(),
+              pSurfaces.get( 0 ).isSurfaceBypassed(),
+              pSurfaces.get( 0 ).getSurfaceMaterial(),
+              pSurfaces.get( 1 ).getLabel(),
+              pSurfaces.get( 1 ).isSurfaceBypassed(),
+              pSurfaces.get( 1 ).getSurfaceMaterial(),
+              pSurfaces.get( 2 ).getLabel(),
+              pSurfaces.get( 2 ).isSurfaceBypassed(),
+              pSurfaces.get( 2 ).getSurfaceMaterial(),
+              pSurfaces.get( 3 ).getLabel(),
+              pSurfaces.get( 3 ).isSurfaceBypassed(),
+              pSurfaces.get( 3 ).getSurfaceMaterial() );
     }
 
     /*
@@ -192,10 +189,26 @@ public final class Region2D extends Extents2D {
      */
     public Region2D( final Region2D pRegion2D ) {
         this( pRegion2D.getX(),
-                pRegion2D.getY(),
-                pRegion2D.getWidth(),
-                pRegion2D.getHeight(),
-                pRegion2D.getSurfaces() );
+              pRegion2D.getY(),
+              pRegion2D.getWidth(),
+              pRegion2D.getHeight(),
+              pRegion2D.getSurfaces() );
+    }
+
+    public List< Surface > getSurfaces() {
+        return surfaceList;
+    }
+
+    private void setSurfaces( final List< Surface > surfaces ) {
+        for ( int surfaceIndex = 0;
+              surfaceIndex < NUMBER_OF_SURFACES;
+              surfaceIndex++ ) {
+            final Surface surface = surfaces.get( surfaceIndex );
+            setSurfaces( surfaceIndex,
+                         surface.getLabel(),
+                         surface.isSurfaceBypassed(),
+                         surface.getSurfaceMaterial() );
+        }
     }
 
     // NOTE: Cloning is disabled as it is dangerous; use the copy constructor
@@ -205,45 +218,27 @@ public final class Region2D extends Extents2D {
         throw new CloneNotSupportedException();
     }
 
-    public List< Surface > getSurfaces() {
-        return surfaceList;
-    }
-
     /*
      * Default pseudo-constructor.
      */
     public void reset() {
         // NOTE: Do not reset the Surface Names.
-        setRegion2D(
-                X_METERS_DEFAULT,
-                Y_METERS_DEFAULT,
-                WIDTH_METERS_DEFAULT,
-                HEIGHT_METERS_DEFAULT,
-                surfaceList.get( 0 ).getLabel(),
-                Surface.SURFACE_BYPASSED_DEFAULT,
-                Surface.SURFACE_MATERIAL_DEFAULT,
-                surfaceList.get( 1 ).getLabel(),
-                Surface.SURFACE_BYPASSED_DEFAULT,
-                Surface.SURFACE_MATERIAL_DEFAULT,
-                surfaceList.get( 2 ).getLabel(),
-                Surface.SURFACE_BYPASSED_DEFAULT,
-                Surface.SURFACE_MATERIAL_DEFAULT,
-                surfaceList.get( 3 ).getLabel(),
-                Surface.SURFACE_BYPASSED_DEFAULT,
-                Surface.SURFACE_MATERIAL_DEFAULT);
-    }
-
-    /*
-     * Pseudo-constructor. Private, so does not notify listeners.
-     */
-    public void setRegion2D( final double pBoundaryX,
-                             final double pBoundaryY,
-                             final double pBoundaryWidth,
-                             final double pBoundaryHeight,
-                             final List< Surface > pSurfaceProperties ) {
-        setExtents( pBoundaryX, pBoundaryY, pBoundaryWidth, pBoundaryHeight );
-
-        setSurfaces( pSurfaceProperties );
+        setRegion2D( X_METERS_DEFAULT,
+                     Y_METERS_DEFAULT,
+                     WIDTH_METERS_DEFAULT,
+                     HEIGHT_METERS_DEFAULT,
+                     surfaceList.get( 0 ).getLabel(),
+                     Surface.SURFACE_BYPASSED_DEFAULT,
+                     Surface.SURFACE_MATERIAL_DEFAULT,
+                     surfaceList.get( 1 ).getLabel(),
+                     Surface.SURFACE_BYPASSED_DEFAULT,
+                     Surface.SURFACE_MATERIAL_DEFAULT,
+                     surfaceList.get( 2 ).getLabel(),
+                     Surface.SURFACE_BYPASSED_DEFAULT,
+                     Surface.SURFACE_MATERIAL_DEFAULT,
+                     surfaceList.get( 3 ).getLabel(),
+                     Surface.SURFACE_BYPASSED_DEFAULT,
+                     Surface.SURFACE_MATERIAL_DEFAULT );
     }
 
     /*
@@ -268,66 +263,17 @@ public final class Region2D extends Extents2D {
         setExtents( pBoundaryX, pBoundaryY, pBoundaryWidth, pBoundaryHeight );
 
         setSurfaces( pSurface1Name,
-                pSurface1Bypassed,
-                pSurface1Material,
-                pSurface2Name,
-                pSurface2Bypassed,
-                pSurface2Material,
-                pSurface3Name,
-                pSurface3Bypassed,
-                pSurface3Material,
-                pSurface4Name,
-                pSurface4Bypassed,
-                pSurface4Material );
-    }
-
-    /*
-     * Pseudo-constructor. Private, so does not notify listeners.
-     */
-    public void setRegion2D( final Rectangle pBoundary,
-                             final List< Surface > pSurfaceProperties ) {
-        setRegion2D( pBoundary.getX(),
-                pBoundary.getY(),
-                pBoundary.getWidth(),
-                pBoundary.getHeight(),
-                pSurfaceProperties );
-    }
-
-    /*
-     * Copy pseudo-constructor.
-     */
-    public void setRegion2D( final Region2D pRegion2D ) {
-        setRegion2D(
-                pRegion2D.getX(),
-                pRegion2D.getY(),
-                pRegion2D.getWidth(),
-                pRegion2D.getHeight(),
-                pRegion2D.getSurfaces() );
-    }
-
-    public void setSurfaces(final int pSurfaceIndex,
-                            final String pSurfaceName,
-                            final boolean pSurfaceBypassed,
-                            final SurfaceMaterial pSurfaceMaterial ) {
-        final Surface surfaceProperties = surfaceList.get(
-                pSurfaceIndex );
-        surfaceProperties.setSurfaceNumber( pSurfaceIndex + 1 );
-        surfaceProperties.setLabel( pSurfaceName );
-        surfaceProperties.setSurfaceBypassed( pSurfaceBypassed );
-        surfaceProperties.setSurfaceMaterial( pSurfaceMaterial );
-    }
-
-    private void setSurfaces( final List< Surface > surfaces ) {
-        for ( int surfaceIndex = 0;
-              surfaceIndex < NUMBER_OF_SURFACES;
-              surfaceIndex++ ) {
-            final Surface surface = surfaces.get( surfaceIndex );
-            setSurfaces(
-                    surfaceIndex,
-                    surface.getLabel(),
-                    surface.isSurfaceBypassed(),
-                    surface.getSurfaceMaterial() );
-        }
+                     pSurface1Bypassed,
+                     pSurface1Material,
+                     pSurface2Name,
+                     pSurface2Bypassed,
+                     pSurface2Material,
+                     pSurface3Name,
+                     pSurface3Bypassed,
+                     pSurface3Material,
+                     pSurface4Name,
+                     pSurface4Bypassed,
+                     pSurface4Material );
     }
 
     public void setSurfaces( final String pSurface1Name,
@@ -342,25 +288,56 @@ public final class Region2D extends Extents2D {
                              final String pSurface4Name,
                              final boolean pSurface4Bypassed,
                              final SurfaceMaterial pSurface4Material ) {
-        setSurfaces(
-                0,
-                pSurface1Name,
-                pSurface1Bypassed,
-                pSurface1Material );
-        setSurfaces(
-                1,
-                pSurface2Name,
-                pSurface2Bypassed,
-                pSurface2Material );
-        setSurfaces(
-                2,
-                pSurface3Name,
-                pSurface3Bypassed,
-                pSurface3Material );
-        setSurfaces(
-                3,
-                pSurface4Name,
-                pSurface4Bypassed,
-                pSurface4Material );
+        setSurfaces( 0, pSurface1Name, pSurface1Bypassed, pSurface1Material );
+        setSurfaces( 1, pSurface2Name, pSurface2Bypassed, pSurface2Material );
+        setSurfaces( 2, pSurface3Name, pSurface3Bypassed, pSurface3Material );
+        setSurfaces( 3, pSurface4Name, pSurface4Bypassed, pSurface4Material );
+    }
+
+    public void setSurfaces( final int pSurfaceIndex,
+                             final String pSurfaceName,
+                             final boolean pSurfaceBypassed,
+                             final SurfaceMaterial pSurfaceMaterial ) {
+        final Surface surfaceProperties = surfaceList.get( pSurfaceIndex );
+        surfaceProperties.setSurfaceNumber( pSurfaceIndex + 1 );
+        surfaceProperties.setLabel( pSurfaceName );
+        surfaceProperties.setSurfaceBypassed( pSurfaceBypassed );
+        surfaceProperties.setSurfaceMaterial( pSurfaceMaterial );
+    }
+
+    /*
+     * Pseudo-constructor. Private, so does not notify listeners.
+     */
+    public void setRegion2D( final Rectangle pBoundary,
+                             final List< Surface > pSurfaceProperties ) {
+        setRegion2D( pBoundary.getX(),
+                     pBoundary.getY(),
+                     pBoundary.getWidth(),
+                     pBoundary.getHeight(),
+                     pSurfaceProperties );
+    }
+
+    /*
+     * Pseudo-constructor. Private, so does not notify listeners.
+     */
+    public void setRegion2D( final double pBoundaryX,
+                             final double pBoundaryY,
+                             final double pBoundaryWidth,
+                             final double pBoundaryHeight,
+                             final List< Surface > pSurfaceProperties ) {
+        setExtents( pBoundaryX, pBoundaryY, pBoundaryWidth, pBoundaryHeight );
+
+        setSurfaces( pSurfaceProperties );
+    }
+
+    /*
+     * Copy pseudo-constructor.
+     */
+    public void setRegion2D( final Region2D pRegion2D ) {
+        setRegion2D( pRegion2D.getX(),
+                     pRegion2D.getY(),
+                     pRegion2D.getWidth(),
+                     pRegion2D.getHeight(),
+                     pRegion2D.getSurfaces() );
     }
 }

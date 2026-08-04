@@ -35,6 +35,9 @@ import com.mhschmieder.fxgraphics.paint.ColorUtilities;
 import com.mhschmieder.fxgraphics.render.HighlightUtilities;
 import com.mhschmieder.jphysics.measure.DistanceUnit;
 import com.mhschmieder.jphysics.measure.UnitConversion;
+
+import java.util.List;
+
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.ObservableList;
@@ -46,8 +49,6 @@ import javafx.scene.shape.StrokeType;
 import javafx.scene.transform.Scale;
 import javafx.scene.transform.Transform;
 
-import java.util.List;
-
 /**
  * This container allows for encapsulation of multiple JavaFX Shapes for a
  * {@link Group}, for nested grouping and to avoid passing multiple JavaFX
@@ -55,7 +56,9 @@ import java.util.List;
  */
 public class ShapeGroup extends Group implements ShapeContainer {
 
-    /** Stroke width, to be applied to the entire JavaFX Shapes group. */
+    /**
+     * Stroke width, to be applied to the entire JavaFX Shapes group.
+     */
     protected final DoubleProperty strokeWidth;
 
     public ShapeGroup() {
@@ -65,7 +68,8 @@ public class ShapeGroup extends Group implements ShapeContainer {
         strokeWidth = new SimpleDoubleProperty( 1.0d );
     }
 
-    public final void addShape( final double strokeScale, final Shape newChild ) {
+    public final void addShape( final double strokeScale,
+                                final Shape newChild ) {
         addShape( newChild );
 
         // NOTE: Centered stroke is default, but better safe than sorry, as
@@ -80,6 +84,15 @@ public class ShapeGroup extends Group implements ShapeContainer {
         newChild.strokeWidthProperty().bind( strokeWidthProperty() );
     }
 
+    /**
+     * It is sometimes necessary to bind one stroke width with another.
+     *
+     * @return The Stroke Width Property
+     */
+    public final DoubleProperty strokeWidthProperty() {
+        return strokeWidth;
+    }
+
     public final void addShapeGroup( final ShapeGroup newChild ) {
         getChildren().add( newChild );
 
@@ -87,12 +100,14 @@ public class ShapeGroup extends Group implements ShapeContainer {
         newChild.strokeWidthProperty().bind( strokeWidthProperty() );
     }
 
-    public final void addShapes( final double strokeScale, final List< Shape > newChildren ) {
+    public final void addShapes( final double strokeScale,
+                                 final List< Shape > newChildren ) {
         getChildren().addAll( newChildren );
 
         newChildren.forEach( newChild -> {
             // Make sure that any changes to stroke width are inherited.
-            newChild.strokeWidthProperty().bind( strokeWidthProperty().multiply( strokeScale ) );
+            newChild.strokeWidthProperty()
+                    .bind( strokeWidthProperty().multiply( strokeScale ) );
 
             // NOTE: Centered stroke is default, but better safe than sorry, as
             // outside stroke can crash the application.
@@ -104,30 +119,39 @@ public class ShapeGroup extends Group implements ShapeContainer {
         getChildren().addAll( newChildren );
 
         newChildren.forEach( newChild -> newChild.strokeWidthProperty()
-                .bind( strokeWidthProperty() ) );
-    }
-
-    public final void clearShapes() {
-        getChildren().clear();
-    }
-
-    @Override
-    public final ObservableList< Transform > getShapeTransforms() {
-        return getTransforms();
+                                                 .bind( strokeWidthProperty() ) );
     }
 
     public final double getStrokeWidth() {
         return strokeWidth.get();
+    }    @Override
+    public final ObservableList< Transform > getShapeTransforms() {
+        return getTransforms();
+    }
+
+    /**
+     * Sets the stroke on child {@link javafx.scene.shape.Shape shapes} to a
+     * uniform scale in this node's frame of reference.
+     * <p>
+     * This is similar to the setStrokeWidth() method on the Shape object.
+     *
+     * @param pStrokeWidth The width of the stroke, roughly in pixels
+     */
+    public final void setStrokeWidth( final double pStrokeWidth ) {
+        strokeWidth.set( pStrokeWidth );
     }
 
     public void highlight( final boolean highlightOn ) {
         // Grab the dash pattern to use for highlighting.
-        final List< Double > highlightDashPattern = HighlightUtilities
-                .getHighlightDashPattern( getStrokeWidth() );
+        final List< Double > highlightDashPattern
+                =
+                HighlightUtilities.getHighlightDashPattern( getStrokeWidth() );
 
         getChildren().forEach( child -> {
             if ( child instanceof Shape ) {
-                HighlightUtilities.applyHighlight( child, highlightOn, highlightDashPattern );
+                HighlightUtilities.applyHighlight( child,
+                                                   highlightOn,
+                                                   highlightDashPattern );
             }
             else if ( child instanceof ShapeGroup ) {
                 ( ( ShapeGroup ) child ).highlight( highlightOn );
@@ -140,16 +164,18 @@ public class ShapeGroup extends Group implements ShapeContainer {
         clearShapes();
     }
 
-    /**
-     * Sets the scale transform on the overall {@link ShapeContainer shape
-     * container} to a uniform scale in this Node's frame of reference.
+    public final void clearShapes() {
+        getChildren().clear();
+    }    /**
+     * Sets the scale transform on the overall
+     * {@link ShapeContainer shape container} to a uniform scale in this Node's
+     * frame of reference.
      * <p>
      * This is similar to the scale() method on the Transform object.
      *
-     * @param distanceUnitOld
-     *            The old or reference {@link DistanceUnit} to scale from
-     * @param distanceUnitNew
-     *            The new {@link DistanceUnit} to scale to
+     * @param distanceUnitOld The old or reference {@link DistanceUnit} to scale
+     *                        from
+     * @param distanceUnitNew The new {@link DistanceUnit} to scale to
      */
     @Override
     public final void scale( final DistanceUnit distanceUnitOld,
@@ -159,10 +185,12 @@ public class ShapeGroup extends Group implements ShapeContainer {
         // TODO: Verify it is safe to remove existing Transforms, but if we
         // don't, then we get no results if converting old to new and get
         // cumulative scaling if using Meters as the Distance Unit basis.
-        final double distanceScaleFactor = UnitConversion
-                .convertDistance( 1.0d, distanceUnitOld, distanceUnitNew );
+        final double distanceScaleFactor = UnitConversion.convertDistance( 1.0d,
+                                                                           distanceUnitOld,
+                                                                           distanceUnitNew );
         final ObservableList< Transform > transforms = getShapeTransforms();
-        final Scale scaleTransform = Transform.scale( distanceScaleFactor, distanceScaleFactor );
+        final Scale scaleTransform = Transform.scale( distanceScaleFactor,
+                                                      distanceScaleFactor );
         transforms.setAll( scaleTransform );
     }
 
@@ -172,15 +200,15 @@ public class ShapeGroup extends Group implements ShapeContainer {
      * <p>
      * This is similar to the scale() method on the Transform object.
      *
-     * @param distanceUnitOld
-     *            The old or reference {@link DistanceUnit} to scale from
-     * @param distanceUnitNew
-     *            The new {@link DistanceUnit} to scale to
+     * @param distanceUnitOld The old or reference {@link DistanceUnit} to scale
+     *                        from
+     * @param distanceUnitNew The new {@link DistanceUnit} to scale to
      */
     public final void scaleShapes( final DistanceUnit distanceUnitOld,
                                    final DistanceUnit distanceUnitNew ) {
-        final double distanceScaleFactor = UnitConversion
-                .convertDistance( 1.0d, distanceUnitOld, distanceUnitNew );
+        final double distanceScaleFactor = UnitConversion.convertDistance( 1.0d,
+                                                                           distanceUnitOld,
+                                                                           distanceUnitNew );
         scaleShapes( distanceScaleFactor );
     }
 
@@ -190,15 +218,17 @@ public class ShapeGroup extends Group implements ShapeContainer {
      * <p>
      * This is similar to the scale() method on the Transform object.
      *
-     * @param scaleFactor
-     *            The scale factor to be applied uniformly along all axes
+     * @param scaleFactor The scale factor to be applied uniformly along all
+     *                    axes
      */
     public final void scaleShapes( final double scaleFactor ) {
         getChildren().forEach( child -> {
             if ( child instanceof Shape ) {
                 final Shape shape = ( Shape ) child;
-                final ObservableList< Transform > transforms = shape.getTransforms();
-                final Scale scaleTransform = Transform.scale( scaleFactor, scaleFactor );
+                final ObservableList< Transform > transforms
+                        = shape.getTransforms();
+                final Scale scaleTransform = Transform.scale( scaleFactor,
+                                                              scaleFactor );
                 transforms.setAll( scaleTransform );
             }
             else if ( child instanceof ShapeGroup ) {
@@ -208,17 +238,15 @@ public class ShapeGroup extends Group implements ShapeContainer {
     }
 
     /**
-     * This methods conditionally sets a new foreground color for the
-     * graphics.
+     * This methods conditionally sets a new foreground color for the graphics.
      *
-     * @param foreColor
-     *            The desired new foreground stroke color
-     * @param forceOverride
-     *            Flag for whether to override the current foreground stroke
-     *            color even if neither white nor black
+     * @param foreColor     The desired new foreground stroke color
+     * @param forceOverride Flag for whether to override the current foreground
+     *                      stroke color even if neither white nor black
      */
     @Override
-    public final void setForeground( final Color foreColor, final boolean forceOverride ) {
+    public final void setForeground( final Color foreColor,
+                                     final boolean forceOverride ) {
         // Make sure the contained Shapes are visible against the Background
         // using the supplied Foreground Color, but only change Black and White
         // vs. other Colors so that we don't mess up custom cues.
@@ -241,15 +269,16 @@ public class ShapeGroup extends Group implements ShapeContainer {
                         // Only Shapes can set Stroke (used as Foreground
                         // Color).
                         final Shape shape = ( Shape ) grandchildNode;
-                        ColorUtilities
-                                .adjustStrokeForContrast( shape,
-                                                          foreColor,
-                                                          forceOverride,
-                                                          ColorConstants.TARGET_HIGHLIGHTED_COLOR );
+                        ColorUtilities.adjustStrokeForContrast( shape,
+                                                                foreColor,
+                                                                forceOverride,
+                                                                ColorConstants.TARGET_HIGHLIGHTED_COLOR );
                     }
                     else if ( grandchildNode instanceof ShapeGroup ) {
-                        final ShapeGroup shapeContainer = ( ShapeGroup ) grandchildNode;
-                        shapeContainer.setForeground( foreColor, forceOverride );
+                        final ShapeGroup shapeContainer
+                                = ( ShapeGroup ) grandchildNode;
+                        shapeContainer.setForeground( foreColor,
+                                                      forceOverride );
                     }
                 } );
             }
@@ -262,8 +291,7 @@ public class ShapeGroup extends Group implements ShapeContainer {
      * <p>
      * This is similar to the setStroke() method on the Shape object.
      *
-     * @param paint
-     *            The color of the stroke
+     * @param paint The color of the stroke
      */
     @Override
     public final void setStroke( final Paint paint ) {
@@ -277,40 +305,22 @@ public class ShapeGroup extends Group implements ShapeContainer {
         } );
     }
 
-    /**
-     * Sets the stroke on child {@link javafx.scene.shape.Shape shapes} to a
-     * uniform scale in this node's frame of reference.
-     * <p>
-     * This is similar to the setStrokeWidth() method on the Shape object.
-     *
-     * @param pStrokeWidth
-     *            The width of the stroke, roughly in pixels
-     */
-    public final void setStrokeWidth( final double pStrokeWidth ) {
-        strokeWidth.set( pStrokeWidth );
-    }
+
+
+
 
     /**
-     * It is sometimes necessary to bind one stroke width with another.
+     * Update the Stroke Width on the overall
+     * {@link ShapeContainer shape container} to a recalculated scale in this
+     * Node's frame of reference.
      *
-     * @return The Stroke Width Property
-     */
-    public final DoubleProperty strokeWidthProperty() {
-        return strokeWidth;
-    }
-
-    /**
-     * Update the Stroke Width on the overall {@link ShapeContainer shape
-     * container} to a recalculated scale in this Node's frame of reference.
-     *
-     * @param distanceUnitReference
-     *            The reference Distance Unit to re-scale to
-     * @param distanceUnitCurrent
-     *            The current Distance Unit to scale Stroke Width from
-     * @param strokeWidthBasis
-     *            The Stroke Width basis, in current Distance Unit
-     * @param strokeWidthRatio
-     *            The ratio to apply to the basic Stroke Width
+     * @param distanceUnitReference The reference Distance Unit to re-scale to
+     * @param distanceUnitCurrent   The current Distance Unit to scale Stroke
+     *                              Width from
+     * @param strokeWidthBasis      The Stroke Width basis, in current Distance
+     *                              Unit
+     * @param strokeWidthRatio      The ratio to apply to the basic Stroke
+     *                              Width
      */
     @Override
     public final void updateStrokeWidth( final DistanceUnit distanceUnitReference,
@@ -320,9 +330,12 @@ public class ShapeGroup extends Group implements ShapeContainer {
         // Modify Stroke Width resolution to be appropriate for the new scale.
         // NOTE: If default basis is used, no need to scale to Distance Unit,
         // but the zoom factor can then cause overly thick strokes.
-        final double strokeWidthReference = UnitConversion
-                .convertDistance( strokeWidthBasis, distanceUnitCurrent, distanceUnitReference );
-        final double strokeWidthAdjusted = strokeWidthRatio * strokeWidthReference;
+        final double strokeWidthReference = UnitConversion.convertDistance(
+                strokeWidthBasis,
+                distanceUnitCurrent,
+                distanceUnitReference );
+        final double strokeWidthAdjusted = strokeWidthRatio
+                                           * strokeWidthReference;
 
         // Globally set a uniform Stroke Width on the entire shape container.
         updateStrokeWidth( strokeWidthAdjusted );
@@ -334,12 +347,10 @@ public class ShapeGroup extends Group implements ShapeContainer {
      * <p>
      * This is similar to the setStroke() method on the Shape object.
      *
-     * @param pStrokeWidth
-     *            The width of the stroke, roughly in pixels
+     * @param pStrokeWidth The width of the stroke, roughly in pixels
      */
     @Override
     public final void updateStrokeWidth( final double pStrokeWidth ) {
         setStrokeWidth( pStrokeWidth );
     }
-
 }

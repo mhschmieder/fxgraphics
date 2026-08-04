@@ -31,6 +31,10 @@
 package com.mhschmieder.fxgraphics.input;
 
 import com.mhschmieder.fxgraphics.render.HighlightUtilities;
+import org.apache.commons.math3.util.FastMath;
+
+import java.util.List;
+
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
@@ -41,9 +45,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.shape.StrokeType;
-import org.apache.commons.math3.util.FastMath;
-
-import java.util.List;
 
 /**
  * A stateful manager for drag-box handling via the mouse, now supporting both
@@ -51,20 +52,23 @@ import java.util.List;
  * when resizing, and for circles it acts as the center.
  * <p>
  * As not all applications are in Cartesian Space (e.g., some are in world
- * coordinates, whose distances change with latitude), this class works
- * strictly in pixels, for now. 
+ * coordinates, whose distances change with latitude), this class works strictly
+ * in pixels, for now.
  * <p>
- * If we can find a good way to abstract the handling of application-local
- * units via an interface and/or method overrides, we will do so.
+ * If we can find a good way to abstract the handling of application-local units
+ * via an interface and/or method overrides, we will do so.
  */
 public class DragBoxManager {
 
     /**
-     * Flag to keep track of whether we need to pre-process for drag operations.
+     * Flag to keep track of whether we need to pre-process for drag
+     * operations.
      */
     public boolean dragPreprocess;
 
-    /** Flag to keep track of whether to show the Drag Box (i.e., is active). */
+    /**
+     * Flag to keep track of whether to show the Drag Box (i.e., is active).
+     */
     public boolean dragBoxActive;
 
     /**
@@ -73,24 +77,22 @@ public class DragBoxManager {
     public Point2D dragBoxOriginPixels;
 
     /**
-     * Current Bounds (pixels) of the Drag Box, for efficient containment tests.
+     * Current Bounds (pixels) of the Drag Box, for efficient containment
+     * tests.
      */
     public Bounds dragBoxPixels;
-
-    /**
-     * Current Drag Shape type to use for representing the Drag Box.
-     */
-    private DragShape dragShape;
-
     /**
      * Visual representation of the Drag Box.
      */
     public Shape dragBoxShape;
-
     /**
      * Associated Group container for the Drag Box shape.
      */
     public Group dragBoxGroup;
+    /**
+     * Current Drag Shape type to use for representing the Drag Box.
+     */
+    private DragShape dragShape;
 
     public DragBoxManager() {
         dragPreprocess = true;
@@ -107,7 +109,8 @@ public class DragBoxManager {
 
     /**
      * Change the drag shape type and rebuild the graphics.
-     * @param shape target DragShape
+     *
+     * @param shape          target DragShape
      * @param mouseToolColor color for the outline/fill
      */
     public void setDragShape( final DragShape shape,
@@ -116,42 +119,24 @@ public class DragBoxManager {
         makeDragBoxGraphics( mouseToolColor );
     }
 
-    // TODO: Switch to JavaFX gesture-based Drag Boxes from this old AWT way?
-    public void initDragBox( final ClickLocation clickPointPixels ) {
-        dragBoxActive = true;
-
-        final double xPixels = clickPointPixels.x;
-        final double yPixels = clickPointPixels.y;
-
-        dragBoxOriginPixels = new Point2D( xPixels, yPixels );
-        dragBoxPixels = new BoundingBox( xPixels, yPixels, 0.0d, 0.0d );
-
-        // Build initial graphics at the origin.
-        if ( dragBoxShape != null ) {
-            makeDragBoxGraphics( ( Color ) dragBoxShape.getStroke() );
-        }
-
-        // Show the Drag Box in the Scene Graph.
-        dragBoxGroup.setVisible( true );
-    }
-
     /**
      * Create or recreate the visual shape at the drag origin.
+     *
      * @param mouseToolColor outline and fill color
      */
     public void makeDragBoxGraphics( final Color mouseToolColor ) {
         dragBoxGroup.getChildren().clear();
 
         switch ( dragShape ) {
-            case RECTANGLE -> dragBoxShape = new Rectangle(
-                    dragBoxOriginPixels.getX(),
-                    dragBoxOriginPixels.getY(),
-                    0.0d,
-                    0.0d );
-            case CIRCLE -> dragBoxShape = new Circle(
-                    dragBoxOriginPixels.getX(),
-                    dragBoxOriginPixels.getY(),
-                    0.0d );
+            case RECTANGLE ->
+                    dragBoxShape = new Rectangle( dragBoxOriginPixels.getX(),
+                                                  dragBoxOriginPixels.getY(),
+                                                  0.0d,
+                                                  0.0d );
+            case CIRCLE ->
+                    dragBoxShape = new Circle( dragBoxOriginPixels.getX(),
+                                               dragBoxOriginPixels.getY(),
+                                               0.0d );
         }
 
         // Make the Rectangle associated with the Drag Box.
@@ -188,14 +173,13 @@ public class DragBoxManager {
         dragBoxShape.setStrokeLineCap( StrokeLineCap.BUTT );
 
         // Grab the dash pattern to use for highlighting.
-        final List< Double > highlightDashPattern = HighlightUtilities
-                .getHighlightDashPattern( 1.25d );
+        final List< Double > highlightDashPattern
+                = HighlightUtilities.getHighlightDashPattern( 1.25d );
 
         // Apply the highlighting pattern, as the Drag Box is always selected.
-        HighlightUtilities.applyHighlight(
-                dragBoxShape,
-                true,
-                highlightDashPattern );
+        HighlightUtilities.applyHighlight( dragBoxShape,
+                                           true,
+                                           highlightDashPattern );
 
         dragBoxGroup.getChildren().add( dragBoxShape );
 
@@ -204,8 +188,29 @@ public class DragBoxManager {
         dragBoxGroup.setVisible( false );
     }
 
+    // TODO: Switch to JavaFX gesture-based Drag Boxes from this old AWT way?
+    public void initDragBox( final ClickLocation clickPointPixels ) {
+        dragBoxActive = true;
+
+        final double xPixels = clickPointPixels.x;
+        final double yPixels = clickPointPixels.y;
+
+        dragBoxOriginPixels = new Point2D( xPixels, yPixels );
+        dragBoxPixels = new BoundingBox( xPixels, yPixels, 0.0d, 0.0d );
+
+        // Build initial graphics at the origin.
+        if ( dragBoxShape != null ) {
+            makeDragBoxGraphics( ( Color ) dragBoxShape.getStroke() );
+        }
+
+        // Show the Drag Box in the Scene Graph.
+        dragBoxGroup.setVisible( true );
+    }
+
     /**
-     * Update the drag shape's size (and position for rectangle) as the mouse moves.
+     * Update the drag shape's size (and position for rectangle) as the mouse
+     * moves.
+     *
      * @param mouseLocationPixels current mouse coordinates
      */
     public void updateDragBoxSize( final ClickLocation mouseLocationPixels ) {
@@ -217,11 +222,11 @@ public class DragBoxManager {
                 double width = FastMath.abs( dx );
                 double height = FastMath.abs( dy );
                 double x = ( dx >= 0.0d )
-                        ? dragBoxOriginPixels.getX()
-                        : dragBoxOriginPixels.getX() - width;
+                           ? dragBoxOriginPixels.getX()
+                           : dragBoxOriginPixels.getX() - width;
                 double y = ( dy >= 0.0d )
-                        ? dragBoxOriginPixels.getY()
-                        : dragBoxOriginPixels.getY() - height;
+                           ? dragBoxOriginPixels.getY()
+                           : dragBoxOriginPixels.getY() - height;
                 dragBoxPixels = new BoundingBox( x, y, width, height );
             }
             case CIRCLE -> {

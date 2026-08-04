@@ -30,12 +30,13 @@
  */
 package com.mhschmieder.fxgraphics.input;
 
+import org.apache.commons.math3.util.FastMath;
+
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.input.ZoomEvent;
-import org.apache.commons.math3.util.FastMath;
 
 /**
  * This is a utility class for handling events from input devices, such as
@@ -43,17 +44,21 @@ import org.apache.commons.math3.util.FastMath;
  */
 public class InputEventUtilities {
 
+    public static final void zoom( final Node node,
+                                   final ScrollEvent event ) {
+        final double zoomFactor = FastMath.pow( 1.003d, event.getDeltaY() );
+        final Point2D zoomPosition = new Point2D( event.getSceneX(),
+                                                  event.getSceneY() );
+        zoom( node, zoomFactor, zoomPosition.getX(), zoomPosition.getY() );
+    }
+
     /**
      * Allow to zoom/scale any node with pivot at scene (x,y) coordinates.
      *
-     * @param node
-     *            The node to zoom/scale
-     * @param zoomFactor
-     *            The new zoom factor to apply to the old
-     * @param x
-     *            The new pre-scaled x-origin of the node
-     * @param y
-     *            The new pre-scaled y-origin of the node
+     * @param node       The node to zoom/scale
+     * @param zoomFactor The new zoom factor to apply to the old
+     * @param x          The new pre-scaled x-origin of the node
+     * @param y          The new pre-scaled y-origin of the node
      */
     public static final void zoom( final Node node,
                                    final double zoomFactor,
@@ -72,22 +77,20 @@ public class InputEventUtilities {
 
         final double scaleRatio = ( scale / oldScale ) - 1.0d;
         final Bounds bounds = node.localToScene( node.getBoundsInLocal() );
-        final double dx = ( x - ( ( 0.5d * bounds.getWidth() ) + bounds.getMinX() ) );
-        final double dy = ( y - ( ( 0.5d * bounds.getHeight() ) + bounds.getMinY() ) );
+        final double dx = ( x - ( ( 0.5d * bounds.getWidth() )
+                                  + bounds.getMinX() ) );
+        final double dy = ( y - ( ( 0.5d * bounds.getHeight() )
+                                  + bounds.getMinY() ) );
 
         node.setTranslateX( node.getTranslateX() - ( scaleRatio * dx ) );
         node.setTranslateY( node.getTranslateY() - ( scaleRatio * dy ) );
     }
 
-    public static final void zoom( final Node node, final ScrollEvent event ) {
-        final double zoomFactor = FastMath.pow( 1.003d, event.getDeltaY() );
-        final Point2D zoomPosition = new Point2D( event.getSceneX(), event.getSceneY() );
-        zoom( node, zoomFactor, zoomPosition.getX(), zoomPosition.getY() );
-    }
-
-    public static final void zoom( final Node node, final ZoomEvent event ) {
+    public static final void zoom( final Node node,
+                                   final ZoomEvent event ) {
         final double zoomFactor = event.getZoomFactor();
-        final Point2D zoomPosition = new Point2D( event.getSceneX(), event.getSceneY() );
+        final Point2D zoomPosition = new Point2D( event.getSceneX(),
+                                                  event.getSceneY() );
         zoom( node, zoomFactor, zoomPosition.getX(), zoomPosition.getY() );
     }
 }

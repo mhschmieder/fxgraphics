@@ -30,22 +30,22 @@
  */
 package com.mhschmieder.fxgraphics.geometry;
 
+import java.util.Objects;
+
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.shape.Rectangle;
-
-import java.util.Objects;
 
 /**
  * This is a simple class for describing extents in 2D Cartesian Space.
  */
 public class Extents2D {
 
-    public static final double     X_METERS_DEFAULT      = 0.0d;
-    public static final double     Y_METERS_DEFAULT      = 0.0d;
-    public static final double     WIDTH_METERS_DEFAULT  = 40.0d;
-    public static final double     HEIGHT_METERS_DEFAULT = 20.0d;
+    public static final double X_METERS_DEFAULT = 0.0d;
+    public static final double Y_METERS_DEFAULT = 0.0d;
+    public static final double WIDTH_METERS_DEFAULT = 40.0d;
+    public static final double HEIGHT_METERS_DEFAULT = 20.0d;
 
     protected double x;
     protected double y;
@@ -57,61 +57,18 @@ public class Extents2D {
      */
     public Extents2D() {
         this( X_METERS_DEFAULT,
-                Y_METERS_DEFAULT,
-                WIDTH_METERS_DEFAULT,
-                HEIGHT_METERS_DEFAULT );
-    }
-
-    /**
-     * Cross-constructor from {@link Rectangle} to {@link Extents2D}.
-     *
-     * @param pBoundary
-     *            The {@link Rectangle} to use for setting the fields
-     */
-    public Extents2D( final Rectangle pBoundary ) {
-        this( pBoundary.getX(),
-                pBoundary.getY(),
-                pBoundary.getWidth(),
-                pBoundary.getHeight() );
-    }
-
-    /**
-     * Cross-constructor from {@link Rectangle2D} to {@link Extents2D}.
-     *
-     * @param pBounds
-     *            The {@link Rectangle2D} to use for setting the fields
-     */
-    public Extents2D( final Rectangle2D pBounds ) {
-        this( pBounds.getMinX(),
-                pBounds.getMinY(),
-                pBounds.getWidth(),
-                pBounds.getHeight() );
-    }
-
-    /**
-     * Cross-constructor from {@link Bounds} to {@link Extents2D}.
-     *
-     * @param computedBounds
-     *            The {@link Bounds} to use for setting the fields
-     */
-    public Extents2D( final Bounds computedBounds ) {
-        this( computedBounds.getMinX(),
-                computedBounds.getMinY(),
-                computedBounds.getWidth(),
-                computedBounds.getHeight() );
+              Y_METERS_DEFAULT,
+              WIDTH_METERS_DEFAULT,
+              HEIGHT_METERS_DEFAULT );
     }
 
     /**
      * Fully qualified constructor.
      *
-     * @param pX
-     *            The x-origin to use for the new {@link Extents2D}
-     * @param pY
-     *            The y-origin to use for the new {@link Extents2D}
-     * @param pWidth
-     *            The width to use for the new {@link Extents2D}
-     * @param pHeight
-     *            The height to use for the new {@link Extents2D}
+     * @param pX      The x-origin to use for the new {@link Extents2D}
+     * @param pY      The y-origin to use for the new {@link Extents2D}
+     * @param pWidth  The width to use for the new {@link Extents2D}
+     * @param pHeight The height to use for the new {@link Extents2D}
      */
     public Extents2D( final double pX,
                       final double pY,
@@ -124,33 +81,51 @@ public class Extents2D {
     }
 
     /**
+     * Cross-constructor from {@link Rectangle} to {@link Extents2D}.
+     *
+     * @param pBoundary The {@link Rectangle} to use for setting the fields
+     */
+    public Extents2D( final Rectangle pBoundary ) {
+        this( pBoundary.getX(),
+              pBoundary.getY(),
+              pBoundary.getWidth(),
+              pBoundary.getHeight() );
+    }
+
+    /**
+     * Cross-constructor from {@link Rectangle2D} to {@link Extents2D}.
+     *
+     * @param pBounds The {@link Rectangle2D} to use for setting the fields
+     */
+    public Extents2D( final Rectangle2D pBounds ) {
+        this( pBounds.getMinX(),
+              pBounds.getMinY(),
+              pBounds.getWidth(),
+              pBounds.getHeight() );
+    }
+
+    /**
+     * Cross-constructor from {@link Bounds} to {@link Extents2D}.
+     *
+     * @param computedBounds The {@link Bounds} to use for setting the fields
+     */
+    public Extents2D( final Bounds computedBounds ) {
+        this( computedBounds.getMinX(),
+              computedBounds.getMinY(),
+              computedBounds.getWidth(),
+              computedBounds.getHeight() );
+    }
+
+    /**
      * Copy Constructor.
      *
-     * @param pExtents
-     *            The {@link Extents2D} to use for setting the fields
+     * @param pExtents The {@link Extents2D} to use for setting the fields
      */
-    public Extents2D(final Extents2D pExtents ) {
-        this( pExtents.getX(), pExtents.getY(), pExtents.getWidth(), pExtents.getHeight() );
-    }
-
-    @Override
-    public boolean equals( final Object other ) {
-        if ( this == other ) {
-            return true;
-        }
-        if ( ( other == null ) || ( getClass() != other.getClass() ) ) {
-            return false;
-        }
-        final Extents2D otherExtents2D = (Extents2D) other;
-        return Objects.equals( x, otherExtents2D.x )
-                && Objects.equals( y, otherExtents2D.y )
-                && Objects.equals( width, otherExtents2D.width )
-                && Objects.equals( height, otherExtents2D.height );
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash( x, y, width, height );
+    public Extents2D( final Extents2D pExtents ) {
+        this( pExtents.getX(),
+              pExtents.getY(),
+              pExtents.getWidth(),
+              pExtents.getHeight() );
     }
 
     public final double getX() {
@@ -185,15 +160,34 @@ public class Extents2D {
         height = pHeight;
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash( x, y, width, height );
+    }
+
+    @Override
+    public boolean equals( final Object other ) {
+        if ( this == other ) {
+            return true;
+        }
+        if ( ( other == null ) || ( getClass() != other.getClass() ) ) {
+            return false;
+        }
+        final Extents2D otherExtents2D = ( Extents2D ) other;
+        return Objects.equals( x, otherExtents2D.x ) && Objects.equals( y,
+                                                                        otherExtents2D.y )
+               && Objects.equals( width, otherExtents2D.width )
+               && Objects.equals( height, otherExtents2D.height );
+    }
+
     /*
      * Partially qualified copy pseudo-constructor.
      */
     public final void setExtents( final Bounds pBounds ) {
-        setExtents(
-                pBounds.getMinX(),
-                pBounds.getMinY(),
-                pBounds.getWidth(),
-                pBounds.getHeight() );
+        setExtents( pBounds.getMinX(),
+                    pBounds.getMinY(),
+                    pBounds.getWidth(),
+                    pBounds.getHeight() );
     }
 
     /* Partially qualified pseudo-constructor. */
@@ -211,11 +205,10 @@ public class Extents2D {
      * Partially qualified copy pseudo-constructor.
      */
     public final void setExtents( final Extents2D extents ) {
-        setExtents(
-                extents.getX(),
-                extents.getY(),
-                extents.getWidth(),
-                extents.getHeight() );
+        setExtents( extents.getX(),
+                    extents.getY(),
+                    extents.getWidth(),
+                    extents.getHeight() );
     }
 
     /*
@@ -226,9 +219,9 @@ public class Extents2D {
      */
     public final void setExtents( final Rectangle pRectangle ) {
         setExtents( pRectangle.getX(),
-                pRectangle.getY(),
-                pRectangle.getWidth(),
-                pRectangle.getHeight() );
+                    pRectangle.getY(),
+                    pRectangle.getWidth(),
+                    pRectangle.getHeight() );
     }
 
     /*
@@ -236,9 +229,9 @@ public class Extents2D {
      */
     public final void setExtents( final Rectangle2D pRectangle ) {
         setExtents( pRectangle.getMinX(),
-                pRectangle.getMinY(),
-                pRectangle.getWidth(),
-                pRectangle.getHeight() );
+                    pRectangle.getMinY(),
+                    pRectangle.getWidth(),
+                    pRectangle.getHeight() );
     }
 
     public final Point2D getMinimumPoint() {

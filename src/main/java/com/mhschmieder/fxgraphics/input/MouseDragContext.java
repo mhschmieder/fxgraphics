@@ -39,34 +39,35 @@ package com.mhschmieder.fxgraphics.input;
  */
 public class MouseDragContext {
 
-    public double  _dragOriginX;
-    public double  _dragOriginY;
+    public double _dragOriginX;
+    public double _dragOriginY;
 
-    public double  _dragDestinationX;
-    public double  _dragDestinationY;
+    public double _dragDestinationX;
+    public double _dragDestinationY;
 
-    public double  _dragDeltaX;
-    public double  _dragDeltaY;
+    public double _dragDeltaX;
+    public double _dragDeltaY;
 
     public boolean _valid;
 
     public MouseDragContext() {
         _dragOriginX = 0.0d;
         _dragOriginY = 0.0d;
-        
+
         _dragDestinationX = 0.0d;
         _dragDestinationY = 0.0d;
-        
+
         _dragDeltaX = 0.0d;
         _dragDeltaY = 0.0d;
-        
+
         _valid = false;
     }
 
     // This is the initializer when interacting with Drag events.
     // NOTE: The first Drag Event is thrown out, so we zero the destination.
     //  This ensures that the deltas stay scaled properly on each succession.
-    public void initializeDrag( final double firstX, final double firstY ) {
+    public void initializeDrag( final double firstX,
+                                final double firstY ) {
         _dragOriginX = firstX;
         _dragOriginY = firstY;
 
@@ -75,13 +76,13 @@ public class MouseDragContext {
 
         _valid = true;
     }
-    
+
     /**
      * Drags the contextual origin and destination by a computed delta and
      * caches that delta for the caller to use when converting to meters etc.
-     * 
-     * @param cursorCoordinatesPixels
-     *            The current coordinates of the cursor, in pixels
+     *
+     * @param cursorCoordinatesPixels The current coordinates of the cursor, in
+     *                                pixels
      */
     public void dragTo( final ClickLocation cursorCoordinatesPixels ) {
         // Update the x and y deltas for the drag and drop operation by 
@@ -109,12 +110,13 @@ public class MouseDragContext {
         // Keep track of the cumulative drag deltas calculated from the current
         // mouse cursor movement, to use for node placement.
         _dragDestinationX += _dragDeltaX;
-        _dragDestinationY += _dragDeltaY;       
+        _dragDestinationY += _dragDeltaY;
     }
 
     // This is the initializer when interacting with Move events.
     // NOTE: It is most likely the source will be set to the destination in
-    //  such cases, as the first Move Event is not thrown out as with Drag Events
+    //  such cases, as the first Move Event is not thrown out as with Drag
+    //  Events
     //  and otherwise would result in an overly large initial delta computation.
     public void initializeMove( final double firstX,
                                 final double firstY,
@@ -135,10 +137,8 @@ public class MouseDragContext {
 
     @Override
     public String toString() {
-        return "MouseDragContext[lastX:" + _dragDestinationX 
-                + ", lastY:" + _dragDestinationY
-                + ",\n\tfirstX:" + _dragOriginX 
-                + ", firstY:" + _dragOriginY
-                + ", valid:" + _valid + "]";
+        return "MouseDragContext[lastX:" + _dragDestinationX + ", lastY:"
+               + _dragDestinationY + ",\n\tfirstX:" + _dragOriginX + ", firstY:"
+               + _dragOriginY + ", valid:" + _valid + "]";
     }
 }

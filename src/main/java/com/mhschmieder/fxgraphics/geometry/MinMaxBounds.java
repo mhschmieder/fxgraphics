@@ -49,8 +49,12 @@ public final class MinMaxBounds extends BoundingBox {
               new Point2D( bounds.getMaxX(), bounds.getMaxY() ) );
     }
 
-    public MinMaxBounds( final Point2D min, final Point2D max ) {
-        super( min.getX(), min.getY(), max.getX() - min.getX(), max.getY() - min.getY() );
+    public MinMaxBounds( final Point2D min,
+                         final Point2D max ) {
+        super( min.getX(),
+               min.getY(),
+               max.getX() - min.getX(),
+               max.getY() - min.getY() );
 
         _min = min;
         _max = max;
@@ -88,9 +92,12 @@ public final class MinMaxBounds extends BoundingBox {
     public int hashCode() {
         final int prime = 31;
         int result = super.hashCode();
-        result = ( prime * result ) + ( ( _max == null ) ? 0 : _max.hashCode() );
-        result = ( prime * result ) + ( ( _min == null ) ? 0 : _min.hashCode() );
+        result = ( prime * result ) + ( ( _max == null )
+                                        ? 0
+                                        : _max.hashCode() );
+        result = ( prime * result ) + ( ( _min == null )
+                                        ? 0
+                                        : _min.hashCode() );
         return result;
     }
-
 }

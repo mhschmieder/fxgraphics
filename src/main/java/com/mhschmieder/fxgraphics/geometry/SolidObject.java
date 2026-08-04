@@ -37,10 +37,11 @@ import com.mhschmieder.jmath.geometry.euclidean.FacingDirection;
 import com.mhschmieder.jmath.geometry.euclidean.Orientation;
 import com.mhschmieder.jmath.geometry.euclidean.OrthogonalAxes;
 import com.mhschmieder.jmath.geometry.euclidean.VectorUtilities;
-import javafx.scene.transform.Affine;
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.apache.commons.math3.util.FastMath;
+
+import javafx.scene.transform.Affine;
 
 /**
  * The <code>SolidObject</code> class is the abstract base class for all solid
@@ -58,30 +59,33 @@ import org.apache.commons.math3.util.FastMath;
  * library, in which case we use simple Poin2D and Point3D immutable instances.
  * <p>
  * NOTE: All data should be private, in case of overrides on getter methods.
- *  Also, this means member variables should not be accessed directly, in case
- *  of overrides on getter methods in subclasses.
+ * Also, this means member variables should not be accessed directly, in case of
+ * overrides on getter methods in subclasses.
  */
 public abstract class SolidObject extends GraphicalObject {
 
-    public static final Vector3D           GC_IN_VENUE_COORDINATES_DEFAULT = Vector3D.ZERO;
+    public static final Vector3D GC_IN_VENUE_COORDINATES_DEFAULT
+            = Vector3D.ZERO;
 
-    protected static final Orientation     ORIENTATION_DEFAULT             = Orientation.VERTICAL;
-    protected static final FacingDirection FACING_DIRECTION_DEFAULT        = FacingDirection.RIGHT;
-    protected static final boolean         INVERTED_DEFAULT                = false;
+    protected static final Orientation ORIENTATION_DEFAULT
+            = Orientation.VERTICAL;
+    protected static final FacingDirection FACING_DIRECTION_DEFAULT
+            = FacingDirection.RIGHT;
+    protected static final boolean INVERTED_DEFAULT = false;
 
     // Declare a variable for Geometric Center in Venue coordinates.
     // NOTE: This naming is a bit redundant, as we enforce Venue coordinates.
-    private Vector3D                       _gcInVenueCoordinates;
+    private Vector3D _gcInVenueCoordinates;
 
     // Orientation is arbitrary in its reference, but distinguishes cases.
-    private Orientation                    _orientation;
+    private Orientation _orientation;
 
     // Facing Direction is not yet used by all sub-classes, constructors, or
     // pseudo-constructors. All geometry is Right-Facing by default.
-    private FacingDirection                _facingDirection;
+    private FacingDirection _facingDirection;
 
     // Inverted is absolute in its reference, and augments Orientation.
-    private boolean                        _inverted;
+    private boolean _inverted;
 
     // NOTE: Since this class declares additional fields to the parent class,
     //  we cannot just invoke the super-constructor from each constructor, but
@@ -148,7 +152,13 @@ public abstract class SolidObject extends GraphicalObject {
                            final Orientation orientation,
                            final FacingDirection facingDirection,
                            final boolean inverted ) {
-        this( layer, X_DEFAULT, Y_DEFAULT, angleDegrees, orientation, facingDirection, inverted );
+        this( layer,
+              X_DEFAULT,
+              Y_DEFAULT,
+              angleDegrees,
+              orientation,
+              facingDirection,
+              inverted );
 
         setGcInVenueCoordinates( gcInVenueCoordinates );
     }
@@ -169,16 +179,15 @@ public abstract class SolidObject extends GraphicalObject {
         //  which could become brittle if code changes elsewhere in the
         //  application. Pass in the allowed delta as a double, for simplicity.
         final SolidObject other = ( SolidObject ) obj;
-        
 
         // NOTE: We are forced to use a copy constructor on the GC field, and
         //  thus the address is different for equivalent objects created during
         //  candidate/current object syncing on the insert/edit dialog, causing
         //  the generic "equals()" method to return a false negative.
-        if ( !super.equals( obj ) 
-                || !getGcInVenueCoordinates().equals( other.getGcInVenueCoordinates() ) 
-                || !getOrientation().equals( other.getOrientation() ) 
-                || !getFacingDirection().equals( other.getFacingDirection() ) ) {
+        if ( !super.equals( obj )
+             || !getGcInVenueCoordinates().equals( other.getGcInVenueCoordinates() )
+             || !getOrientation().equals( other.getOrientation() )
+             || !getFacingDirection().equals( other.getFacingDirection() ) ) {
             return false;
         }
 
@@ -187,6 +196,64 @@ public abstract class SolidObject extends GraphicalObject {
         }
 
         return true;
+    }
+
+    public FacingDirection getFacingDirection() {
+        return _facingDirection;
+    }
+
+    public void setFacingDirection( final FacingDirection facingDirection ) {
+        _facingDirection = facingDirection;
+    }
+
+    public final Vector3D getGcInVenueCoordinates() {
+        return _gcInVenueCoordinates;
+    }
+
+    public final void setGcInVenueCoordinates( final Vector3D gcInVenueCoordinates ) {
+        _gcInVenueCoordinates = VectorUtilities.copyPoint3D(
+                gcInVenueCoordinates );
+
+        final Vector2D gcInVenueCoordinatesProjected
+                = VectorUtilities.projectToPlane( gcInVenueCoordinates,
+                                                  OrthogonalAxes.XY );
+
+        final double referencePointX = gcInVenueCoordinatesProjected.getX();
+        final double referencePointY = gcInVenueCoordinatesProjected.getY();
+        super.setReferencePoint2D( referencePointX, referencePointY );
+    }
+
+    public Orientation getOrientation() {
+        return _orientation;
+    }
+
+    public void setOrientation( final Orientation orientation ) {
+        _orientation = orientation;
+    }
+
+    @Override
+    public int hashCode() {
+        // TODO: Replace auto-generated method stub?
+        return super.hashCode();
+    }
+
+    // NOTE: Orientation must be set before calling setReferencePoint2D.
+    @Override
+    public void setReferencePoint2D( final double referencePointX,
+                                     final double referencePointY ) {
+        super.setReferencePoint2D( referencePointX, referencePointY );
+
+        _gcInVenueCoordinates = new Vector3D( referencePointX,
+                                              referencePointY,
+                                              0.0d );
+    }
+
+    public boolean isInverted() {
+        return _inverted;
+    }
+
+    public void setInverted( final boolean inverted ) {
+        _inverted = inverted;
     }
 
     // Get the transform from the ECS (element coordinate system) for theSolid,
@@ -198,8 +265,9 @@ public abstract class SolidObject extends GraphicalObject {
         // Move to the GC as the origin, so that reflections and rotations do
         // not move the object to a new location.
         final Vector3D gc = getGcInVenueCoordinates();
-        final java.awt.geom.AffineTransform affineTransform = java.awt.geom.AffineTransform
-                .getTranslateInstance( gc.getX(), gc.getY() );
+        final java.awt.geom.AffineTransform affineTransform
+                = java.awt.geom.AffineTransform.getTranslateInstance( gc.getX(),
+                                                                      gc.getY() );
 
         // NOTE: Transforms are applied in reverse order, so we set the
         //  rotation before the inversion in order to match the behavior of the
@@ -251,22 +319,23 @@ public abstract class SolidObject extends GraphicalObject {
         return affineTransform;
     }
 
-    public FacingDirection getFacingDirection() {
-        return _facingDirection;
-    }
-
     public final Vector2D getGcInPlanarCoordinates() {
-        final Vector2D gcInPlanarCoordinates = VectorUtilities
-                .projectToPlane( _gcInVenueCoordinates, OrthogonalAxes.XY );
+        final Vector2D gcInPlanarCoordinates = VectorUtilities.projectToPlane(
+                _gcInVenueCoordinates,
+                OrthogonalAxes.XY );
         return gcInPlanarCoordinates;
     }
 
-    public final Vector3D getGcInVenueCoordinates() {
-        return _gcInVenueCoordinates;
-    }
+    public final Vector3D getVectorInVenueCoordinatesFromObjectCoordinates( final Vector3D cogInObjectCoordinates ) {
+        final Vector3D vectorInProjectedObjectCoordinates
+                =
+                getVectorInProjectedObjectCoordinates( cogInObjectCoordinates );
 
-    public Orientation getOrientation() {
-        return _orientation;
+        final Vector3D vectorInVenueCoordinates
+                =
+                vectorInProjectedObjectCoordinates.add( _gcInVenueCoordinates );
+
+        return vectorInVenueCoordinates;
     }
 
     // This method takes a generic 3D vector and projects it into the
@@ -280,83 +349,38 @@ public abstract class SolidObject extends GraphicalObject {
         //  axial space, as we are in the coordinate system of the GC as soon as
         //  we conditionally rotate into its known 2D axial Projection Plane.
         Vector3D vectorInProjectedObjectCoordinates = isInverted()
-            ? VectorUtilities.negatePoint3D( offsetVector, Axis.Z )
-            : VectorUtilities.copyPoint3D( offsetVector );
+                                                      ?
+                                                      VectorUtilities.negatePoint3D(
+                offsetVector,
+                Axis.Z )
+                                                      :
+                                                      VectorUtilities.copyPoint3D(
+                                                              offsetVector );
 
         final Orientation orientation = getOrientation();
         switch ( orientation ) {
-        case HORIZONTAL:
-            break;
-        case VERTICAL:
-            // The 3D vertical axis "Z" becomes the 2D vertical axis "Y".
-            // NOTE: This is done to make it easier to trivially extract the
-            //  only two relevant axial offsets into a simple Point2D object.
-            vectorInProjectedObjectCoordinates = VectorUtilities
-                    .exchangeCoordinates( vectorInProjectedObjectCoordinates, 
-                                          OrthogonalAxes.YZ );
-            break;
-        default:
-            break;
+            case HORIZONTAL:
+                break;
+            case VERTICAL:
+                // The 3D vertical axis "Z" becomes the 2D vertical axis "Y".
+                // NOTE: This is done to make it easier to trivially extract the
+                //  only two relevant axial offsets into a simple Point2D
+                //  object.
+                vectorInProjectedObjectCoordinates
+                        = VectorUtilities.exchangeCoordinates(
+                        vectorInProjectedObjectCoordinates,
+                        OrthogonalAxes.YZ );
+                break;
+            default:
+                break;
         }
 
         // Rotate into the known 2D axial Projection Plane of the GC.
-        vectorInProjectedObjectCoordinates = VectorUtilities
-                .rotateInPlane( vectorInProjectedObjectCoordinates,
-                                OrthogonalAxes.XY,
-                                FastMath.toRadians( getAngleDegrees() ) );
+        vectorInProjectedObjectCoordinates = VectorUtilities.rotateInPlane(
+                vectorInProjectedObjectCoordinates,
+                OrthogonalAxes.XY,
+                FastMath.toRadians( getAngleDegrees() ) );
 
         return vectorInProjectedObjectCoordinates;
-    }
-
-    public final Vector3D getVectorInVenueCoordinatesFromObjectCoordinates( 
-            final Vector3D cogInObjectCoordinates ) {
-        final Vector3D vectorInProjectedObjectCoordinates 
-                = getVectorInProjectedObjectCoordinates( cogInObjectCoordinates );
-
-        final Vector3D vectorInVenueCoordinates = vectorInProjectedObjectCoordinates
-                .add( _gcInVenueCoordinates );
-
-        return vectorInVenueCoordinates;
-    }
-
-    @Override
-    public int hashCode() {
-        // TODO: Replace auto-generated method stub?
-        return super.hashCode();
-    }
-
-    public boolean isInverted() {
-        return _inverted;
-    }
-
-    public void setFacingDirection( final FacingDirection facingDirection ) {
-        _facingDirection = facingDirection;
-    }
-
-    public final void setGcInVenueCoordinates( final Vector3D gcInVenueCoordinates ) {
-        _gcInVenueCoordinates = VectorUtilities.copyPoint3D( gcInVenueCoordinates );
-
-        final Vector2D gcInVenueCoordinatesProjected = VectorUtilities
-                .projectToPlane( gcInVenueCoordinates, OrthogonalAxes.XY );
-
-        final double referencePointX = gcInVenueCoordinatesProjected.getX();
-        final double referencePointY = gcInVenueCoordinatesProjected.getY();
-        super.setReferencePoint2D( referencePointX, referencePointY );
-    }
-
-    public void setInverted( final boolean inverted ) {
-        _inverted = inverted;
-    }
-
-    public void setOrientation( final Orientation orientation ) {
-        _orientation = orientation;
-    }
-
-    // NOTE: Orientation must be set before calling setReferencePoint2D.
-    @Override
-    public void setReferencePoint2D( final double referencePointX, final double referencePointY ) {
-        super.setReferencePoint2D( referencePointX, referencePointY );
-
-        _gcInVenueCoordinates = new Vector3D( referencePointX, referencePointY, 0.0d );
     }
 }

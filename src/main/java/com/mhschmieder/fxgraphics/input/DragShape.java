@@ -34,5 +34,6 @@ package com.mhschmieder.fxgraphics.input;
 //  polygon, but the latter would likely include multiple click points so this
 //  enum is just about the drag shapes that are practical in Drag Mode.
 public enum DragShape {
-    RECTANGLE, CIRCLE
+    RECTANGLE,
+    CIRCLE
 }

@@ -30,23 +30,24 @@
  */
 package com.mhschmieder.fxgraphics.render;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.shape.Shape;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This is a utility class for highlighting utilities and methods.
  */
 public class HighlightUtilities {
 
-    public static void applyHighlight(final Node node,
-                                      final boolean highlightOn,
-                                      final List<Double> highlightDashPattern) {
+    public static void applyHighlight( final Node node,
+                                       final boolean highlightOn,
+                                       final List< Double > highlightDashPattern ) {
         final Shape shape = ( Shape ) node;
-        final ObservableList< Double > strokeDashArray = shape.getStrokeDashArray();
+        final ObservableList< Double > strokeDashArray
+                = shape.getStrokeDashArray();
         if ( highlightOn ) {
             strokeDashArray.setAll( highlightDashPattern );
         }
@@ -55,8 +56,7 @@ public class HighlightUtilities {
         }
     }
 
-    public static List< Double > getHighlightDashPattern(
-            final double scaleFactor ) {
+    public static List< Double > getHighlightDashPattern( final double scaleFactor ) {
         // Define and return the dash pattern to use for highlighting.
         final List< Double > highlightDashPattern = new ArrayList<>();
         highlightDashPattern.add( Double.valueOf( 2.0d * scaleFactor ) );
@@ -64,5 +64,4 @@ public class HighlightUtilities {
 
         return highlightDashPattern;
     }
-
 }

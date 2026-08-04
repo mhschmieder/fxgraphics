@@ -29,11 +29,6 @@
  * Project: https://github.com/mhschmieder/fxgraphics
  */
 /**
- * This package contains the fxgraphics Library's utilities for core
- * graphics.
- *
- * @version 0.1
- *
- * @author Mark Schmieder
+ * This package contains the fxgraphics Library's utilities for core graphics.
  */
 package com.mhschmieder.fxgraphics;

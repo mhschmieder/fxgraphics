@@ -33,21 +33,21 @@ package com.mhschmieder.fxgraphics.input;
 import javafx.scene.Node;
 
 /**
- * A contract for methods that an implementer must provide to a 
+ * A contract for methods that an implementer must provide to a
  * {@link GestureManager}.
  */
 public interface GestureHandler {
 
     /**
-     * Returns the {@link Node} that serves as the clickable Content Pane
-     * for a Cartesian Chart or other primary graphical display canvas.
+     * Returns the {@link Node} that serves as the clickable Content Pane for a
+     * Cartesian Chart or other primary graphical display canvas.
      *
      * @return The {@link Node} to listen on for mouse events or gestures
-     *         regarding interactive graphical objects, such as those that
-     *         are contained in a Chart Overlay Group
+     *         regarding interactive graphical objects, such as those that are
+     *         contained in a Chart Overlay Group
      */
     Node getClickableContentNode();
-    
+
     com.mhschmieder.jgraphics.input.MouseToolMode getMouseMode();
 
     void zoom( final double zoomFactor,

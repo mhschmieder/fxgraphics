@@ -35,6 +35,8 @@ import com.mhschmieder.jmath.geometry.euclidean.Axis;
 import com.mhschmieder.jmath.geometry.euclidean.OrthogonalAxes;
 import com.mhschmieder.jphysics.measure.DistanceUnit;
 import com.mhschmieder.jphysics.measure.UnitConversion;
+import org.apache.commons.math3.util.FastMath;
+
 import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
@@ -53,7 +55,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.VLineTo;
 import javafx.scene.transform.Affine;
 import javafx.util.Pair;
-import org.apache.commons.math3.util.FastMath;
 
 /**
  * This utility class is mostly for converting between JavaFX and AWT graphics
@@ -65,46 +66,46 @@ import org.apache.commons.math3.util.FastMath;
 public final class GeometryUtilities {
 
     /**
-     * The default constructor is disabled, as this is a static utilities class.
-     */
-    private GeometryUtilities() {}
-
-    /**
      * The bitmask that indicates that a point lies to the left of a
      * {@link Rectangle2D}.
      *
      * @since 1.2
      */
-    public static final int    OUT_LEFT            = 1;
-
+    public static final int OUT_LEFT = 1;
     /**
-     * The bitmask that indicates that a point lies above a {@link Rectangle2D}.
+     * The bitmask that indicates that a point lies above a
+     * {@link Rectangle2D}.
      *
      * @since 1.2
      */
-    public static final int    OUT_TOP             = 2;
-
+    public static final int OUT_TOP = 2;
     /**
      * The bitmask that indicates that a point lies to the right of a
      * {@link Rectangle2D}.
      *
      * @since 1.2
      */
-    public static final int    OUT_RIGHT           = 4;
-
+    public static final int OUT_RIGHT = 4;
     /**
-     * The bitmask that indicates that a point lies below a {@link Rectangle2D}.
+     * The bitmask that indicates that a point lies below a
+     * {@link Rectangle2D}.
      *
      * @since 1.2
      */
-    public static final int    OUT_BOTTOM          = 8;
-
+    public static final int OUT_BOTTOM = 8;
     /**
      * What <a href=
      * "https://encrypted.google.com/search?hl=en&q=1%20points%20in%20meters">
      * google said</a>.
      */
     public static final double ONE_POINT_IN_METERS = 0.000352778;
+
+    /**
+     * The default constructor is disabled, as this is a static utilities
+     * class.
+     */
+    private GeometryUtilities() {
+    }
 
     public static Point3D negatePoint3D( final Point3D point3D ) {
         final Point3D negatedPoint3D = new Point3D( -point3D.getX(),
@@ -113,45 +114,57 @@ public final class GeometryUtilities {
         return negatedPoint3D;
     }
 
-    public static Point3D negatePoint3D( final Point3D point3D, 
+    public static Point3D negatePoint3D( final Point3D point3D,
                                          final Axis axis ) {
         Point3D negatedPoint = Point3D.ZERO;
-        
+
         switch ( axis ) {
-        case X:
-            negatedPoint = new Point3D( -point3D.getX(), point3D.getY(), point3D.getZ() );
-            break;
-        case Y:
-            negatedPoint = new Point3D( point3D.getX(), -point3D.getY(), point3D.getZ() );
-            break;
-        case Z:
-            negatedPoint = new Point3D( point3D.getX(), point3D.getY(), -point3D.getZ() );
-            break;
-        default:
-            break;
+            case X:
+                negatedPoint = new Point3D( -point3D.getX(),
+                                            point3D.getY(),
+                                            point3D.getZ() );
+                break;
+            case Y:
+                negatedPoint = new Point3D( point3D.getX(),
+                                            -point3D.getY(),
+                                            point3D.getZ() );
+                break;
+            case Z:
+                negatedPoint = new Point3D( point3D.getX(),
+                                            point3D.getY(),
+                                            -point3D.getZ() );
+                break;
+            default:
+                break;
         }
-        
+
         return negatedPoint;
     }
 
     public static Point3D exchangeCoordinates( final Point3D point3D,
                                                final OrthogonalAxes orthogonalAxes ) {
         Point3D swappedPoint = Point3D.ZERO;
-        
+
         switch ( orthogonalAxes ) {
-        case XY:
-            swappedPoint = new Point3D( point3D.getY(), point3D.getX(), point3D.getZ() );
-            break;
-        case XZ:
-            swappedPoint = new Point3D( point3D.getZ(), point3D.getY(), point3D.getX() );
-            break;
-        case YZ:
-            swappedPoint = new Point3D( point3D.getX(), point3D.getZ(), point3D.getY() );
-            break;
-        default:
-            break; 
+            case XY:
+                swappedPoint = new Point3D( point3D.getY(),
+                                            point3D.getX(),
+                                            point3D.getZ() );
+                break;
+            case XZ:
+                swappedPoint = new Point3D( point3D.getZ(),
+                                            point3D.getY(),
+                                            point3D.getX() );
+                break;
+            case YZ:
+                swappedPoint = new Point3D( point3D.getX(),
+                                            point3D.getZ(),
+                                            point3D.getY() );
+                break;
+            default:
+                break;
         }
-        
+
         return swappedPoint;
     }
 
@@ -159,21 +172,21 @@ public final class GeometryUtilities {
                                           final OrthogonalAxes orthogonalAxes ) {
         // Project a 3D point to a plane defined by an orthogonal axis pair.
         Point2D projectedPoint = Point2D.ZERO;
-        
+
         switch ( orthogonalAxes ) {
-        case XY:
-            projectedPoint = new Point2D( point3D.getX(), point3D.getY() );
-            break;
-        case XZ:
-            projectedPoint = new Point2D( point3D.getX(), point3D.getZ() );
-            break;
-        case YZ:
-            projectedPoint = new Point2D( point3D.getY(), point3D.getZ() );
-            break;
-        default:
-            break;
+            case XY:
+                projectedPoint = new Point2D( point3D.getX(), point3D.getY() );
+                break;
+            case XZ:
+                projectedPoint = new Point2D( point3D.getX(), point3D.getZ() );
+                break;
+            case YZ:
+                projectedPoint = new Point2D( point3D.getY(), point3D.getZ() );
+                break;
+            default:
+                break;
         }
-        
+
         return projectedPoint;
     }
 
@@ -182,46 +195,56 @@ public final class GeometryUtilities {
                                          final double angleInRadians ) {
         double axis1Value = 0.0d;
         double axis2Value = 0.0d;
-    
+
         switch ( orthogonalAxes ) {
-        case XY:
-            axis1Value = point3D.getX();
-            axis2Value = point3D.getY();
-            break;
-        case XZ:
-            axis1Value = point3D.getX();
-            axis2Value = point3D.getZ();
-            break;
-        case YZ:
-            axis1Value = point3D.getY();
-            axis2Value = point3D.getZ();
-            break;
-        default:
-            break;
+            case XY:
+                axis1Value = point3D.getX();
+                axis2Value = point3D.getY();
+                break;
+            case XZ:
+                axis1Value = point3D.getX();
+                axis2Value = point3D.getZ();
+                break;
+            case YZ:
+                axis1Value = point3D.getY();
+                axis2Value = point3D.getZ();
+                break;
+            default:
+                break;
         }
-    
-        final double axis1ValueRotated = ( axis1Value * FastMath.cos( angleInRadians ) )
-                - ( axis2Value * FastMath.sin( angleInRadians ) );
-    
-        final double axis2ValueRotated = ( axis1Value * FastMath.sin( angleInRadians ) )
-                + ( axis2Value * FastMath.cos( angleInRadians ) );
-    
+
+        final double axis1ValueRotated =
+                ( axis1Value * FastMath.cos( angleInRadians ) ) - ( axis2Value
+                                                                    * FastMath.sin(
+                        angleInRadians ) );
+
+        final double axis2ValueRotated =
+                ( axis1Value * FastMath.sin( angleInRadians ) ) + ( axis2Value
+                                                                    * FastMath.cos(
+                        angleInRadians ) );
+
         Point3D rotatedPoint = Point3D.ZERO;
-        
+
         switch ( orthogonalAxes ) {
-        case XY:
-            rotatedPoint = new Point3D( axis1ValueRotated, axis2ValueRotated, 0.0d );
-            break;
-        case XZ:
-            rotatedPoint = new Point3D( axis1ValueRotated, 0.0d, axis2ValueRotated );
-            break;
-        case YZ:
-            rotatedPoint = new Point3D( 0.0d, axis1ValueRotated, axis2ValueRotated );
-            break;
-        default:
-            break;
+            case XY:
+                rotatedPoint = new Point3D( axis1ValueRotated,
+                                            axis2ValueRotated,
+                                            0.0d );
+                break;
+            case XZ:
+                rotatedPoint = new Point3D( axis1ValueRotated,
+                                            0.0d,
+                                            axis2ValueRotated );
+                break;
+            case YZ:
+                rotatedPoint = new Point3D( 0.0d,
+                                            axis1ValueRotated,
+                                            axis2ValueRotated );
+                break;
+            default:
+                break;
         }
-        
+
         return rotatedPoint;
     }
 
@@ -234,23 +257,17 @@ public final class GeometryUtilities {
                                     final boolean useFuzzyEq ) {
         if ( useFuzzyEq ) {
             // Add a fudge factor to account for floating point imprecision.
-            final double fudgeFactor =
-                                     0.02d * FastMath.max( bounds.getWidth(), bounds.getHeight() );
-            final Rectangle2D rect2 = new Rectangle2D( bounds.getMinX() - fudgeFactor,
-                                                       bounds.getMinY() - fudgeFactor,
-                                                       bounds.getWidth() + fudgeFactor,
-                                                       bounds.getHeight() + fudgeFactor );
+            final double fudgeFactor = 0.02d * FastMath.max( bounds.getWidth(),
+                                                             bounds.getHeight() );
+            final Rectangle2D rect2 = new Rectangle2D(
+                    bounds.getMinX() - fudgeFactor,
+                    bounds.getMinY() - fudgeFactor,
+                    bounds.getWidth() + fudgeFactor,
+                    bounds.getHeight() + fudgeFactor );
             return rect2.contains( point );
         }
 
         return bounds.contains( point );
-    }
-
-    public static boolean contains( final Rectangle2D area, final Line line ) {
-        final Point2D p1 = new Point2D( line.getStartX(), line.getStartY() );
-        final Point2D p2 = new Point2D( line.getEndX(), line.getEndY() );
-
-        return area.contains( p1 ) || area.contains( p2 );
     }
 
     public static Point2D copyPoint2D( final Point2D point2D ) {
@@ -267,13 +284,11 @@ public final class GeometryUtilities {
      * transformed coordinates for the target space. The latter is specified as
      * a point and angle.
      *
-     * @param path
-     *            The path to iterate for finding lowest point
-     * @param referencePoint
-     *            The reference point for translating coordinate spaces
-     * @param theta
-     *            The reference angle, in radians, for transforming coordinate
-     *            spaces
+     * @param path           The path to iterate for finding lowest point
+     * @param referencePoint The reference point for translating coordinate
+     *                       spaces
+     * @param theta          The reference angle, in radians, for transforming
+     *                       coordinate spaces
      * @return The lowest point as a pair of double-precision coordinates
      */
     public static Pair< Double, Double > findLowestPoint( final Path path,
@@ -297,8 +312,14 @@ public final class GeometryUtilities {
                 currentX = mt.getX();
                 currentY = mt.getY();
 
-                final double mtX = transformX( currentX, currentY, offsetX, theta );
-                final double mtY = transformY( currentX, currentY, offsetY, theta );
+                final double mtX = transformX( currentX,
+                                               currentY,
+                                               offsetX,
+                                               theta );
+                final double mtY = transformY( currentX,
+                                               currentY,
+                                               offsetY,
+                                               theta );
 
                 if ( mtY < lowestY ) {
                     lowestX = mtX;
@@ -311,8 +332,14 @@ public final class GeometryUtilities {
                 currentX = lt.getX();
                 currentY = lt.getY();
 
-                final double ltX = transformX( currentX, currentY, offsetX, theta );
-                final double ltY = transformY( currentX, currentY, offsetY, theta );
+                final double ltX = transformX( currentX,
+                                               currentY,
+                                               offsetX,
+                                               theta );
+                final double ltY = transformY( currentX,
+                                               currentY,
+                                               offsetY,
+                                               theta );
 
                 if ( ltY < lowestY ) {
                     lowestX = ltX;
@@ -325,8 +352,14 @@ public final class GeometryUtilities {
                 final double startX = currentX;
                 final double startY = currentY;
 
-                final double startXTransformed = transformX( startX, startY, offsetX, theta );
-                final double startYTransformed = transformY( startX, startY, offsetY, theta );
+                final double startXTransformed = transformX( startX,
+                                                             startY,
+                                                             offsetX,
+                                                             theta );
+                final double startYTransformed = transformY( startX,
+                                                             startY,
+                                                             offsetY,
+                                                             theta );
 
                 if ( startYTransformed < lowestY ) {
                     lowestX = startXTransformed;
@@ -345,8 +378,14 @@ public final class GeometryUtilities {
                 final double endX = currentX;
                 final double endY = currentY;
 
-                final double endXTransformed = transformX( endX, endY, offsetX, theta );
-                final double endYTransformed = transformY( endX, endY, offsetY, theta );
+                final double endXTransformed = transformX( endX,
+                                                           endY,
+                                                           offsetX,
+                                                           theta );
+                final double endYTransformed = transformY( endX,
+                                                           endY,
+                                                           offsetY,
+                                                           theta );
 
                 if ( endYTransformed < lowestY ) {
                     lowestX = endXTransformed;
@@ -374,8 +413,14 @@ public final class GeometryUtilities {
             else if ( pathElement instanceof QuadCurveTo ) {
                 final QuadCurveTo qct = ( QuadCurveTo ) pathElement;
 
-                final double startX = transformX( currentX, currentY, offsetX, theta );
-                final double startY = transformY( currentX, currentY, offsetY, theta );
+                final double startX = transformX( currentX,
+                                                  currentY,
+                                                  offsetX,
+                                                  theta );
+                final double startY = transformY( currentX,
+                                                  currentY,
+                                                  offsetY,
+                                                  theta );
 
                 if ( startY < lowestY ) {
                     lowestX = startX;
@@ -385,8 +430,14 @@ public final class GeometryUtilities {
                 currentX = qct.getX();
                 currentY = qct.getY();
 
-                final double endX = transformX( currentX, currentY, offsetX, theta );
-                final double endY = transformY( currentX, currentY, offsetY, theta );
+                final double endX = transformX( currentX,
+                                                currentY,
+                                                offsetX,
+                                                theta );
+                final double endY = transformY( currentX,
+                                                currentY,
+                                                offsetY,
+                                                theta );
 
                 if ( endY < lowestY ) {
                     lowestX = endX;
@@ -402,8 +453,14 @@ public final class GeometryUtilities {
                                                     offsetY,
                                                     theta );
 
-                final double midX = getQauadraticBezierValue( 0.5d, startX, controlX, endX );
-                final double midY = getQauadraticBezierValue( 0.5d, startY, controlY, endY );
+                final double midX = getQauadraticBezierValue( 0.5d,
+                                                              startX,
+                                                              controlX,
+                                                              endX );
+                final double midY = getQauadraticBezierValue( 0.5d,
+                                                              startY,
+                                                              controlY,
+                                                              endY );
 
                 if ( midY < lowestY ) {
                     lowestX = midX;
@@ -413,8 +470,14 @@ public final class GeometryUtilities {
             else if ( pathElement instanceof CubicCurveTo ) {
                 final CubicCurveTo cct = ( CubicCurveTo ) pathElement;
 
-                final double startX = transformX( currentX, currentY, offsetX, theta );
-                final double startY = transformY( currentX, currentY, offsetY, theta );
+                final double startX = transformX( currentX,
+                                                  currentY,
+                                                  offsetX,
+                                                  theta );
+                final double startY = transformY( currentX,
+                                                  currentY,
+                                                  offsetY,
+                                                  theta );
 
                 if ( startY < lowestY ) {
                     lowestX = startX;
@@ -424,8 +487,14 @@ public final class GeometryUtilities {
                 currentX = cct.getX();
                 currentY = cct.getY();
 
-                final double endX = transformX( currentX, currentY, offsetX, theta );
-                final double endY = transformY( currentX, currentY, offsetY, theta );
+                final double endX = transformX( currentX,
+                                                currentY,
+                                                offsetX,
+                                                theta );
+                final double endY = transformY( currentX,
+                                                currentY,
+                                                offsetY,
+                                                theta );
 
                 if ( endY < lowestY ) {
                     lowestX = endX;
@@ -450,8 +519,16 @@ public final class GeometryUtilities {
                                                      offsetY,
                                                      theta );
 
-                final double midX = getCubicBezierValue( 0.5d, startX, controlX1, controlX2, endX );
-                final double midY = getCubicBezierValue( 0.5d, startY, controlY1, controlY2, endY );
+                final double midX = getCubicBezierValue( 0.5d,
+                                                         startX,
+                                                         controlX1,
+                                                         controlX2,
+                                                         endX );
+                final double midY = getCubicBezierValue( 0.5d,
+                                                         startY,
+                                                         controlY1,
+                                                         controlY2,
+                                                         endY );
 
                 if ( midY < lowestY ) {
                     lowestX = midX;
@@ -463,8 +540,14 @@ public final class GeometryUtilities {
 
                 currentX = hlt.getX();
 
-                final double endX = transformX( currentX, currentY, offsetX, theta );
-                final double endY = transformY( currentX, currentY, offsetY, theta );
+                final double endX = transformX( currentX,
+                                                currentY,
+                                                offsetX,
+                                                theta );
+                final double endY = transformY( currentX,
+                                                currentY,
+                                                offsetY,
+                                                theta );
 
                 if ( endY < lowestY ) {
                     lowestX = endX;
@@ -476,8 +559,14 @@ public final class GeometryUtilities {
 
                 currentY = vlt.getY();
 
-                final double endX = transformX( currentX, currentY, offsetX, theta );
-                final double endY = transformY( currentX, currentY, offsetY, theta );
+                final double endX = transformX( currentX,
+                                                currentY,
+                                                offsetX,
+                                                theta );
+                final double endY = transformY( currentX,
+                                                currentY,
+                                                offsetY,
+                                                theta );
 
                 if ( endY < lowestY ) {
                     lowestX = endX;
@@ -491,23 +580,122 @@ public final class GeometryUtilities {
     }
 
     /**
-     * This method returns a Point2D that represents the (x, y) coordinate
-     * pair for the mid-point of a supplied arc, using the ArcTo representation.
-     * <p>
-     * NOTE: This method does not yet compute the correct point, so needs to
-     * be debugged after switching the JM-1P enclosure back to using an
-     * elliptical arc instead of a quadratic curve (and verifying arc height).
+     * This method returns the value along a Cubic Bezier Curve at a given
+     * position. It must be called separately for each coordinate in a Cartesian
+     * coordinate pair (i.e. once for the x-axis, and once for the y-axis).
      *
-     * @param arcTo
-     *            An ArcTo instance, used to represent the reference arc
-     * @param startX
-     *            The x-coordinate of the start point of the arc
-     * @param startY
-     *            The y-coordinate of the start point of the arc
-     * @param endX
-     *            The x-coordinate of the end point of the arc
-     * @param endY
-     *            The y-coordinate of the end point of the arc
+     * @param position The position along the curve, from t=0 to t=1
+     *                 (inclusive)
+     * @param start    The start point coordinate for the Cubic Bezier Curve
+     * @param control1 The first control point coordinate for the Cubic Bezier
+     *                 Curve
+     * @param control2 The second control point coordinate for the Cubic Bezier
+     *                 Curve
+     * @param end      The end point coordinate for the Cubic Bezier Curve
+     * @return The coordinate for the point on the Cubic Bezier Curve at the
+     *         given position from t=0 to t=1 (inclusive)
+     */
+    public static double getCubicBezierValue( final double position,
+                                              final double start,
+                                              final double control1,
+                                              final double control2,
+                                              final double end ) {
+        final double inversePosition = 1.0d - position;
+
+        final double b1 = FastMath.pow( position, 3.0d );
+        final double b2 = 3.0d * MathUtilities.sqr( position )
+                          * inversePosition;
+        final double b3 = 3.0d * MathUtilities.sqr( inversePosition )
+                          * position;
+        final double b4 = FastMath.pow( inversePosition, 3.0d );
+
+        return ( b1 * start ) + ( b2 * control1 ) + ( b3 * control2 ) + ( b4
+                                                                          * end );
+    }
+
+    /**
+     * This method returns the value along a Quadratic Bezier Curve at a given
+     * position. It must be called separately for each coordinate in a Cartesian
+     * coordinate pair (i.e. once for the x-axis, and once for the y-axis).
+     *
+     * @param position The position along the curve, from t=0 to t=1
+     *                 (inclusive)
+     * @param start    The start point coordinate for the Quadratic Bezier
+     *                 Curve
+     * @param control  The control point coordinate for the Quadratic Bezier
+     *                 Curve
+     * @param end      The end point coordinate for the Quadratic Bezier Curve
+     * @return The coordinate for the point on the Quadratic Bezier Curve at the
+     *         given position from t=0 to t=1 (inclusive)
+     */
+    public static double getQauadraticBezierValue( final double position,
+                                                   final double start,
+                                                   final double control,
+                                                   final double end ) {
+        final double inversePosition = 1.0d - position;
+
+        final double b1 = MathUtilities.sqr( inversePosition );
+        final double b2 = 2.0d * inversePosition * position;
+        final double b3 = MathUtilities.sqr( position );
+
+        return ( b1 * start ) + ( b2 * control ) + ( b3 * end );
+    }
+
+    /**
+     * This method transforms a coordinate to its rotated and translated x-axis
+     * location, as a partial of a full point transform, when a point object
+     * would be an expensive throw-away interim construct.
+     *
+     * @param x       The x-coordinate of the original untransformed point
+     * @param y       The y-coordinate of the original untransformed point
+     * @param offsetX The x-coordinate of the reference point for translation
+     * @param theta   The angle by which to rotate the original point
+     * @return The x-coordinate of the transformed point
+     */
+    public static double transformX( final double x,
+                                     final double y,
+                                     final double offsetX,
+                                     final double theta ) {
+        final double xTransformed = ( ( x * FastMath.cos( theta ) ) - ( y
+                                                                        * FastMath.sin(
+                theta ) ) ) + offsetX;
+        return xTransformed;
+    }
+
+    /**
+     * This method transforms a coordinate to its rotated and translated y-axis
+     * location, as a partial of a full point transform, when a point object
+     * would be an expensive throw-away interim construct.
+     *
+     * @param x       The x-coordinate of the original untransformed point
+     * @param y       The y-coordinate of the original untransformed point
+     * @param offsetY The y-coordinate of the reference point for translation
+     * @param theta   The angle by which to rotate the original point
+     * @return The y-coordinate of the transformed point
+     */
+    public static double transformY( final double x,
+                                     final double y,
+                                     final double offsetY,
+                                     final double theta ) {
+        final double yTransformed = ( ( x * FastMath.sin( theta ) ) + ( y
+                                                                        * FastMath.cos(
+                theta ) ) ) + offsetY;
+        return yTransformed;
+    }
+
+    /**
+     * This method returns a Point2D that represents the (x, y) coordinate pair
+     * for the mid-point of a supplied arc, using the ArcTo representation.
+     * <p>
+     * NOTE: This method does not yet compute the correct point, so needs to be
+     * debugged after switching the JM-1P enclosure back to using an elliptical
+     * arc instead of a quadratic curve (and verifying arc height).
+     *
+     * @param arcTo  An ArcTo instance, used to represent the reference arc
+     * @param startX The x-coordinate of the start point of the arc
+     * @param startY The y-coordinate of the start point of the arc
+     * @param endX   The x-coordinate of the end point of the arc
+     * @param endY   The y-coordinate of the end point of the arc
      * @return A Point2D representing the (x, y) coordinate pair for the
      *         mid-point of the arc
      */
@@ -523,8 +711,8 @@ public final class GeometryUtilities {
         final double dy2 = 0.5d * ( startY - endY );
 
         // Convert ellipse rotation angle from degrees to radians.
-        final double xAxisRotationRadians = FastMath.toRadians(
-                arcTo.getXAxisRotation() );
+        final double xAxisRotationRadians
+                = FastMath.toRadians( arcTo.getXAxisRotation() );
         final double cosAngle = FastMath.cos( xAxisRotationRadians );
         final double sinAngle = FastMath.sin( xAxisRotationRadians );
 
@@ -559,9 +747,11 @@ public final class GeometryUtilities {
         // Step 2: Compute (cx1, cy1).
         final boolean localSweepFlag = arcTo.isSweepFlag();
         final boolean localLargeArcFlag = arcTo.isLargeArcFlag();
-        double sign = ( ( localLargeArcFlag == localSweepFlag ) ? -1d : 1.0d );
-        double sq = ( ( Prx * Pry ) - ( Prx * Py1 ) - ( Pry * Px1 ) )
-                / ( ( Prx * Py1 ) + ( Pry * Px1 ) );
+        double sign = ( ( localLargeArcFlag == localSweepFlag )
+                        ? -1d
+                        : 1.0d );
+        double sq = ( ( Prx * Pry ) - ( Prx * Py1 ) - ( Pry * Px1 ) ) / (
+                ( Prx * Py1 ) + ( Pry * Px1 ) );
         sq = FastMath.max( 0.0d, sq );
         final double coef = ( sign * FastMath.sqrt( sq ) );
         final double cx1 = coef * ( ( rx * y1 ) / ry );
@@ -576,15 +766,22 @@ public final class GeometryUtilities {
         // Compute the angle start.
         double n = FastMath.hypot( ux, uy );
         double p = ux; // (1d * ux) + (0d * uy)
-        sign = ( ( uy < 0.0d ) ? -1d : 1.0d );
-        double angleStartDegrees = FastMath.toDegrees( sign * FastMath.acos( p / n ) );
+        sign = ( ( uy < 0.0d )
+                 ? -1d
+                 : 1.0d );
+        double angleStartDegrees = FastMath.toDegrees(
+                sign * FastMath.acos( p / n ) );
 
         // Compute the angle extent.
-        n = FastMath.sqrt( ( MathUtilities.sqr( ux ) + MathUtilities.sqr( uy ) )
-                * ( MathUtilities.sqr( vx ) + MathUtilities.sqr( vy ) ) );
+        n = FastMath.sqrt(
+                ( MathUtilities.sqr( ux ) + MathUtilities.sqr( uy ) ) * (
+                        MathUtilities.sqr( vx ) + MathUtilities.sqr( vy ) ) );
         p = ( ux * vx ) + ( uy * vy );
-        sign = ( ( ( ux * vy ) - ( uy * vx ) ) < 0.0d ) ? -1d : 1.0d;
-        double angleExtentDegrees = FastMath.toDegrees( sign * FastMath.acos( p / n ) );
+        sign = ( ( ( ux * vy ) - ( uy * vx ) ) < 0.0d )
+               ? -1d
+               : 1.0d;
+        double angleExtentDegrees = FastMath.toDegrees(
+                sign * FastMath.acos( p / n ) );
         if ( !localSweepFlag && ( angleExtentDegrees > 0.0d ) ) {
             angleExtentDegrees -= 360d;
         }
@@ -596,8 +793,10 @@ public final class GeometryUtilities {
 
         // Now all we need is the mid-way angle, and simple trigonometry then
         // gives us the (x, y) coordinate pair for the arc mid-point.
-        final double arcMidAngleDegrees = 0.5d * ( angleStartDegrees + angleExtentDegrees );
-        final double arcMidAngleRadians = FastMath.toRadians( arcMidAngleDegrees );
+        final double arcMidAngleDegrees = 0.5d * ( angleStartDegrees
+                                                   + angleExtentDegrees );
+        final double arcMidAngleRadians
+                = FastMath.toRadians( arcMidAngleDegrees );
         final double arcMidX = FastMath.cos( arcMidAngleRadians );
         final double arcMidY = FastMath.sin( arcMidAngleRadians );
 
@@ -621,50 +820,14 @@ public final class GeometryUtilities {
     }
 
     /**
-     * This method returns the value along a Cubic Bezier Curve at a given
-     * position. It must be called separately for each coordinate in a Cartesian
-     * coordinate pair (i.e. once for the x-axis, and once for the y-axis).
-     *
-     * @param position
-     *            The position along the curve, from t=0 to t=1 (inclusive)
-     * @param start
-     *            The start point coordinate for the Cubic Bezier Curve
-     * @param control1
-     *            The first control point coordinate for the Cubic Bezier Curve
-     * @param control2
-     *            The second control point coordinate for the Cubic Bezier Curve
-     * @param end
-     *            The end point coordinate for the Cubic Bezier Curve
-     * @return
-     *         The coordinate for the point on the Cubic Bezier Curve at the
-     *         given position from t=0 to t=1 (inclusive)
-     */
-    public static double getCubicBezierValue( final double position,
-                                              final double start,
-                                              final double control1,
-                                              final double control2,
-                                              final double end ) {
-        final double inversePosition = 1.0d - position;
-
-        final double b1 = FastMath.pow( position, 3.0d );
-        final double b2 = 3.0d * MathUtilities.sqr( position ) * inversePosition;
-        final double b3 = 3.0d * MathUtilities.sqr( inversePosition ) * position;
-        final double b4 = FastMath.pow( inversePosition, 3.0d );
-
-        return ( b1 * start ) + ( b2 * control1 ) + ( b3 * control2 )
-                + ( b4 * end );
-    }
-
-    /**
      * Creates a BoundingBox covering the intersection of the two given Bounds.
      *
-     * @param rect1
-     *            The first of two rectangles to intersect
-     * @param rect2
-     *            The second of two rectangles to intersect
+     * @param rect1 The first of two rectangles to intersect
+     * @param rect2 The second of two rectangles to intersect
      * @return A combined bounding box, if the two intersect
      */
-    public static BoundingBox getIntersection( final Bounds rect1, final Bounds rect2 ) {
+    public static BoundingBox getIntersection( final Bounds rect1,
+                                               final Bounds rect2 ) {
         final double x1 = FastMath.max( rect1.getMinX(), rect2.getMinX() );
         final double y1 = FastMath.max( rect1.getMinY(), rect2.getMinY() );
         final double z1 = FastMath.max( rect1.getMinZ(), rect2.getMinZ() );
@@ -674,7 +837,8 @@ public final class GeometryUtilities {
         final double width = x2 - x1;
         final double height = y2 - y1;
         final double depth = z2 - z1;
-        final boolean intersects = ( width >= 0 ) && ( height >= 0 ) && ( depth >= 0 );
+        final boolean intersects = ( width >= 0 ) && ( height >= 0 ) && ( depth
+                                                                          >= 0 );
         if ( !intersects ) {
             return null;
         }
@@ -686,13 +850,12 @@ public final class GeometryUtilities {
      * Creates a Rectangle2D covering the intersection of the two given
      * Rectangle2D's.
      *
-     * @param rect1
-     *            The first of two rectangles to intersect
-     * @param rect2
-     *            The second of two rectangles to intersect
+     * @param rect1 The first of two rectangles to intersect
+     * @param rect2 The second of two rectangles to intersect
      * @return A combined rectangle, if the two intersect
      */
-    public static Rectangle2D getIntersection( final Rectangle2D rect1, final Rectangle2D rect2 ) {
+    public static Rectangle2D getIntersection( final Rectangle2D rect1,
+                                               final Rectangle2D rect2 ) {
         final double x1 = FastMath.max( rect1.getMinX(), rect2.getMinX() );
         final double y1 = FastMath.max( rect1.getMinY(), rect2.getMinY() );
         final double x2 = FastMath.min( rect1.getMaxX(), rect2.getMaxX() );
@@ -709,18 +872,16 @@ public final class GeometryUtilities {
 
     /* Get an AWT line, converted from JavaFX. */
     public static java.awt.geom.Line2D getLine( final Line fxLine ) {
-        return new java.awt.geom.Line2D.Double(
-                fxLine.getStartX(),
-                fxLine.getStartY(),
-                fxLine.getEndX(),
-                fxLine.getEndY() );
+        return new java.awt.geom.Line2D.Double( fxLine.getStartX(),
+                                                fxLine.getStartY(),
+                                                fxLine.getEndX(),
+                                                fxLine.getEndY() );
     }
 
     /* Get an AWT point, converted from JavaFX. */
     public static java.awt.geom.Point2D getPoint( final Point2D fxPoint ) {
-        return new java.awt.geom.Point2D.Double(
-                fxPoint.getX(),
-                fxPoint.getY() );
+        return new java.awt.geom.Point2D.Double( fxPoint.getX(),
+                                                 fxPoint.getY() );
     }
 
     /*
@@ -729,10 +890,12 @@ public final class GeometryUtilities {
     public static Point2D getPointInDistanceUnit( final double xMeters,
                                                   final double yMeters,
                                                   final DistanceUnit distanceUnit ) {
-        final double x =
-                       UnitConversion.convertDistance( xMeters, DistanceUnit.METERS, distanceUnit );
-        final double y =
-                       UnitConversion.convertDistance( yMeters, DistanceUnit.METERS, distanceUnit );
+        final double x = UnitConversion.convertDistance( xMeters,
+                                                         DistanceUnit.METERS,
+                                                         distanceUnit );
+        final double y = UnitConversion.convertDistance( yMeters,
+                                                         DistanceUnit.METERS,
+                                                         distanceUnit );
 
         return new Point2D( x, y );
     }
@@ -742,10 +905,12 @@ public final class GeometryUtilities {
      */
     public static Point2D getPointInDistanceUnit( final Point2D pointMeters,
                                                   final DistanceUnit distanceUnit ) {
-        final double x = UnitConversion
-                .convertDistance( pointMeters.getX(), DistanceUnit.METERS, distanceUnit );
-        final double y = UnitConversion
-                .convertDistance( pointMeters.getY(), DistanceUnit.METERS, distanceUnit );
+        final double x = UnitConversion.convertDistance( pointMeters.getX(),
+                                                         DistanceUnit.METERS,
+                                                         distanceUnit );
+        final double y = UnitConversion.convertDistance( pointMeters.getY(),
+                                                         DistanceUnit.METERS,
+                                                         distanceUnit );
 
         return new Point2D( x, y );
     }
@@ -756,10 +921,12 @@ public final class GeometryUtilities {
     public static Point2D getPointInMeters( final double x,
                                             final double y,
                                             final DistanceUnit distanceUnit ) {
-        final double xMeters = UnitConversion.convertDistance(
-                x, distanceUnit, DistanceUnit.METERS );
-        final double yMeters = UnitConversion.convertDistance(
-                y, distanceUnit, DistanceUnit.METERS );
+        final double xMeters = UnitConversion.convertDistance( x,
+                                                               distanceUnit,
+                                                               DistanceUnit.METERS );
+        final double yMeters = UnitConversion.convertDistance( y,
+                                                               distanceUnit,
+                                                               DistanceUnit.METERS );
 
         return new Point2D( xMeters, yMeters );
     }
@@ -767,53 +934,28 @@ public final class GeometryUtilities {
     /*
      * Get a Point2D converted from current Distance Unit to Meters.
      */
-    public static Point2D getPointInMeters( final Point2D point, final DistanceUnit distanceUnit ) {
-        final double xMeters = UnitConversion
-                .convertDistance( point.getX(), distanceUnit, DistanceUnit.METERS );
-        final double yMeters = UnitConversion
-                .convertDistance( point.getY(), distanceUnit, DistanceUnit.METERS );
+    public static Point2D getPointInMeters( final Point2D point,
+                                            final DistanceUnit distanceUnit ) {
+        final double xMeters = UnitConversion.convertDistance( point.getX(),
+                                                               distanceUnit,
+                                                               DistanceUnit.METERS );
+        final double yMeters = UnitConversion.convertDistance( point.getY(),
+                                                               distanceUnit,
+                                                               DistanceUnit.METERS );
 
         return new Point2D( xMeters, yMeters );
-    }
-
-    /**
-     * This method returns the value along a Quadratic Bezier Curve at a given
-     * position. It must be called separately for each coordinate in a Cartesian
-     * coordinate pair (i.e. once for the x-axis, and once for the y-axis).
-     *
-     * @param position
-     *            The position along the curve, from t=0 to t=1 (inclusive)
-     * @param start
-     *            The start point coordinate for the Quadratic Bezier Curve
-     * @param control
-     *            The control point coordinate for the Quadratic Bezier Curve
-     * @param end
-     *            The end point coordinate for the Quadratic Bezier Curve
-     * @return
-     *         The coordinate for the point on the Quadratic Bezier Curve at the
-     *         given position from t=0 to t=1 (inclusive)
-     */
-    public static double getQauadraticBezierValue( final double position,
-                                                   final double start,
-                                                   final double control,
-                                                   final double end ) {
-        final double inversePosition = 1.0d - position;
-
-        final double b1 = MathUtilities.sqr( inversePosition );
-        final double b2 = 2.0d * inversePosition * position;
-        final double b3 = MathUtilities.sqr( position );
-
-        return ( b1 * start ) + ( b2 * control ) + ( b3 * end );
     }
 
     /*
      * Returns a new transform from a supplied reference point.
      */
-    public static Affine getReferencePointTransform( final Pair< Double, Double > referencePoint ) {
+    public static Affine getReferencePointTransform( final Pair< Double,
+            Double > referencePoint ) {
         final Affine affineTransform = new Affine();
 
         // Effectively move to the reference point as the origin.
-        affineTransform.appendTranslation( referencePoint.getKey(), referencePoint.getValue() );
+        affineTransform.appendTranslation( referencePoint.getKey(),
+                                           referencePoint.getValue() );
 
         return affineTransform;
     }
@@ -825,7 +967,8 @@ public final class GeometryUtilities {
         final Affine affineTransform = new Affine();
 
         // Effectively move to the reference point as the origin.
-        affineTransform.appendTranslation( referencePoint.getX(), referencePoint.getY() );
+        affineTransform.appendTranslation( referencePoint.getX(),
+                                           referencePoint.getY() );
 
         return affineTransform;
     }
@@ -833,14 +976,13 @@ public final class GeometryUtilities {
     /**
      * Ignores Z/depth.
      *
-     * @param area
-     *            treated like a 2D rectangle
-     * @param line
-     *            the line to intersect with the area
-     * @see #intersects(Rectangle2D, Line)
+     * @param area treated like a 2D rectangle
+     * @param line the line to intersect with the area
      * @return true if intersects, false otherwise
+     * @see #intersects(Rectangle2D, Line)
      */
-    public static boolean intersects( final Bounds area, final Line line ) {
+    public static boolean intersects( final Bounds area,
+                                      final Line line ) {
         final Rectangle2D rect = new Rectangle2D( area.getMinX(),
                                                   area.getMinY(),
                                                   area.getWidth(),
@@ -853,28 +995,55 @@ public final class GeometryUtilities {
      * @see #intersectsLine(Rectangle2D, Line)
      * @see #contains(Rectangle2D, Line)
      */
-    public static boolean intersects( final Rectangle2D area, final Line line ) {
+    public static boolean intersects( final Rectangle2D area,
+                                      final Line line ) {
         return intersectsLine( area, line ) || contains( area, line );
+    }
+
+    public static boolean contains( final Rectangle2D area,
+                                    final Line line ) {
+        final Point2D p1 = new Point2D( line.getStartX(), line.getStartY() );
+        final Point2D p2 = new Point2D( line.getEndX(), line.getEndY() );
+
+        return area.contains( p1 ) || area.contains( p2 );
     }
 
     /**
      * Tests if the specified line segment intersects the interior of this
      * <code>Rectangle2D</code>.
      *
-     * @param rect
-     *            the rectangle to intersect with the implied line
-     * @param initialX1
-     *            the X coordinate of the start point of the specified line
-     *            segment
-     * @param initialY1
-     *            the Y coordinate of the start point of the specified line
-     *            segment
-     * @param initialX2
-     *            the X coordinate of the end point of the specified line
-     *            segment
-     * @param initialY2
-     *            the Y coordinate of the end point of the specified line
-     *            segment
+     * @param rect the rectangle to intersect with the implied line
+     * @param line the specified {@link Line} to test for intersection with the
+     *             interior of this <code>Rectangle2D</code>
+     * @return <code>true</code> if the specified <code>Line2D</code>
+     *         intersects
+     *         the interior of this <code>Rectangle2D</code>; <code>false</code>
+     *         otherwise.
+     * @see #intersectsLine(Rectangle2D, double, double, double, double)
+     * @since 1.2
+     */
+    public static boolean intersectsLine( final Rectangle2D rect,
+                                          final Line line ) {
+        return intersectsLine( rect,
+                               line.getStartX(),
+                               line.getStartY(),
+                               line.getEndX(),
+                               line.getEndY() );
+    }
+
+    /**
+     * Tests if the specified line segment intersects the interior of this
+     * <code>Rectangle2D</code>.
+     *
+     * @param rect      the rectangle to intersect with the implied line
+     * @param initialX1 the X coordinate of the start point of the specified
+     *                  line segment
+     * @param initialY1 the Y coordinate of the start point of the specified
+     *                  line segment
+     * @param initialX2 the X coordinate of the end point of the specified line
+     *                  segment
+     * @param initialY2 the Y coordinate of the end point of the specified line
+     *                  segment
      * @return <code>true</code> if the specified line segment intersects the
      *         interior of this <code>Rectangle2D</code>; <code>false</code>
      *         otherwise.
@@ -921,33 +1090,12 @@ public final class GeometryUtilities {
         return true;
     }
 
-    /**
-     * Tests if the specified line segment intersects the interior of this
-     * <code>Rectangle2D</code>.
-     *
-     * @param rect
-     *            the rectangle to intersect with the implied line
-     * @param line
-     *            the specified {@link Line} to test for intersection with the
-     *            interior of this <code>Rectangle2D</code>
-     * @return <code>true</code> if the specified <code>Line2D</code> intersects
-     *         the interior of this <code>Rectangle2D</code>; <code>false</code>
-     *         otherwise.
-     * @since 1.2
-     * @see #intersectsLine(Rectangle2D, double, double, double, double)
-     */
-    public static boolean intersectsLine( final Rectangle2D rect, final Line line ) {
-        return intersectsLine( rect,
-                               line.getStartX(),
-                               line.getStartY(),
-                               line.getEndX(),
-                               line.getEndY() );
-    }
-
     /*
      * @since 1.2
      */
-    public static int outcode( final Rectangle2D rect, final double x, final double y ) {
+    public static int outcode( final Rectangle2D rect,
+                               final double x,
+                               final double y ) {
         int out = 0;
         if ( rect.getWidth() <= 0 ) {
             out |= OUT_LEFT | OUT_RIGHT;
@@ -971,25 +1119,46 @@ public final class GeometryUtilities {
     }
 
     /**
+     * Returns the distance from a point to this line. The distance measured is
+     * the distance between the specified point and the closest point on the
+     * infinitely-extended line defined by this <code>Line2D</code>. If the
+     * specified point intersects the line, this method returns 0.0.
+     *
+     * @param line the line to use to measure point distance
+     * @param px   the X coordinate of the specified point being measured
+     *             against this line
+     * @param py   the Y coordinate of the specified point being measured
+     *             against this line
+     * @return a double value that is the distance from a specified point to the
+     *         current line.
+     * @see #ptSegDist(Line, double, double)
+     * @since 1.2
+     */
+    public static double ptLineDist( final Line line,
+                                     final double px,
+                                     final double py ) {
+        return ptLineDist( line.getStartX(),
+                           line.getStartY(),
+                           line.getEndX(),
+                           line.getEndY(),
+                           px,
+                           py );
+    }
+
+    /**
      * Returns the distance from a point to a line. The distance measured is the
      * distance between the specified point and the closest point on the
      * infinitely-extended line defined by the specified coordinates. If the
      * specified point intersects the line, this method returns 0.0.
      *
-     * @param x1
-     *            the X coordinate of the start point of the specified line
-     * @param y1
-     *            the Y coordinate of the start point of the specified line
-     * @param x2
-     *            the X coordinate of the end point of the specified line
-     * @param y2
-     *            the Y coordinate of the end point of the specified line
-     * @param px
-     *            the X coordinate of the specified point being measured against
-     *            the specified line
-     * @param py
-     *            the Y coordinate of the specified point being measured against
-     *            the specified line
+     * @param x1 the X coordinate of the start point of the specified line
+     * @param y1 the Y coordinate of the start point of the specified line
+     * @param x2 the X coordinate of the end point of the specified line
+     * @param y2 the Y coordinate of the end point of the specified line
+     * @param px the X coordinate of the specified point being measured against
+     *           the specified line
+     * @param py the Y coordinate of the specified point being measured against
+     *           the specified line
      * @return a double value that is the distance from the specified point to
      *         the specified line.
      * @see #ptSegDist(double, double, double, double, double, double)
@@ -1005,74 +1174,20 @@ public final class GeometryUtilities {
     }
 
     /**
-     * Returns the distance from a point to this line. The distance measured is
-     * the distance between the specified point and the closest point on the
-     * infinitely-extended line defined by this <code>Line2D</code>. If the
-     * specified point intersects the line, this method returns 0.0.
-     *
-     * @param line
-     *            the line to use to measure point distance
-     * @param px
-     *            the X coordinate of the specified point being measured against
-     *            this line
-     * @param py
-     *            the Y coordinate of the specified point being measured against
-     *            this line
-     * @return a double value that is the distance from a specified point to the
-     *         current line.
-     * @see #ptSegDist(Line, double, double)
-     * @since 1.2
-     */
-    public static double ptLineDist( final Line line, final double px, final double py ) {
-        return ptLineDist( line
-                .getStartX(), line.getStartY(), line.getEndX(), line.getEndY(), px, py );
-    }
-
-    /**
-     * Returns the distance from a <code>Point2D</code> to this line. The
-     * distance measured is the distance between the specified point and the
-     * closest point on the infinitely-extended line defined by this
-     * <code>Line2D</code>. If the specified point intersects the line, this
-     * method returns 0.0.
-     *
-     * @param line
-     *            the line to use to measure line distance
-     * @param pt
-     *            the specified <code>Point2D</code> being measured
-     * @return a double value that is the distance from a specified
-     *         <code>Point2D</code> to the current line.
-     * @since 1.2
-     */
-    public static double ptLineDist( final Line line, final Point2D pt ) {
-        return ptLineDist( line.getStartX(),
-                           line.getStartY(),
-                           line.getEndX(),
-                           line.getEndY(),
-                           pt.getX(),
-                           pt.getY() );
-    }
-
-    /**
      * Returns the square of the distance from a point to a line. The distance
      * measured is the distance between the specified point and the closest
      * point on the infinitely-extended line defined by the specified
      * coordinates. If the specified point intersects the line, this method
      * returns 0.0.
      *
-     * @param x1
-     *            the X coordinate of the start point of the specified line
-     * @param y1
-     *            the Y coordinate of the start point of the specified line
-     * @param x2
-     *            the X coordinate of the end point of the specified line
-     * @param y2
-     *            the Y coordinate of the end point of the specified line
-     * @param px
-     *            the X coordinate of the specified point being measured against
-     *            the specified line
-     * @param py
-     *            the Y coordinate of the specified point being measured against
-     *            the specified line
+     * @param x1 the X coordinate of the start point of the specified line
+     * @param y1 the Y coordinate of the start point of the specified line
+     * @param x2 the X coordinate of the end point of the specified line
+     * @param y2 the Y coordinate of the end point of the specified line
+     * @param px the X coordinate of the specified point being measured against
+     *           the specified line
+     * @param py the Y coordinate of the specified point being measured against
+     *           the specified line
      * @return a double value that is the square of the distance from the
      *         specified point to the specified line.
      * @see #ptSegDistSq(double, double, double, double, double, double)
@@ -1091,19 +1206,45 @@ public final class GeometryUtilities {
         // px,py becomes relative vector from x1,y1 to test point
         final double pxAdjusted = px - x1;
         final double pyAdjusted = py - y1;
-        final double dotprod = ( pxAdjusted * x2Adjusted ) + ( pyAdjusted * y2Adjusted );
+        final double dotprod = ( pxAdjusted * x2Adjusted ) + ( pyAdjusted
+                                                               * y2Adjusted );
         // dotprod is the length of the px,py vector
         // projected on the x1,y1=>x2,y2 vector times the
         // length of the x1,y1=>x2,y2 vector
-        final double projlenSq = ( dotprod * dotprod )
-                / ( ( x2Adjusted * x2Adjusted ) + ( y2Adjusted * y2Adjusted ) );
+        final double projlenSq = ( dotprod * dotprod ) / (
+                ( x2Adjusted * x2Adjusted ) + ( y2Adjusted * y2Adjusted ) );
         // Distance to line is now the length of the relative point
         // vector minus the length of its projection onto the line
-        double lenSq = ( ( pxAdjusted * pxAdjusted ) + ( pyAdjusted * pyAdjusted ) ) - projlenSq;
+        double lenSq =
+                ( ( pxAdjusted * pxAdjusted ) + ( pyAdjusted * pyAdjusted ) )
+                - projlenSq;
         if ( lenSq < 0 ) {
             lenSq = 0;
         }
         return lenSq;
+    }
+
+    /**
+     * Returns the distance from a <code>Point2D</code> to this line. The
+     * distance measured is the distance between the specified point and the
+     * closest point on the infinitely-extended line defined by this
+     * <code>Line2D</code>. If the specified point intersects the line, this
+     * method returns 0.0.
+     *
+     * @param line the line to use to measure line distance
+     * @param pt   the specified <code>Point2D</code> being measured
+     * @return a double value that is the distance from a specified
+     *         <code>Point2D</code> to the current line.
+     * @since 1.2
+     */
+    public static double ptLineDist( final Line line,
+                                     final Point2D pt ) {
+        return ptLineDist( line.getStartX(),
+                           line.getStartY(),
+                           line.getEndX(),
+                           line.getEndY(),
+                           pt.getX(),
+                           pt.getY() );
     }
 
     /**
@@ -1113,21 +1254,24 @@ public final class GeometryUtilities {
      * <code>Line2D</code>. If the specified point intersects the line, this
      * method returns 0.0.
      *
-     * @param line
-     *            the line to use to measure line distance
-     * @param px
-     *            the X coordinate of the specified point being measured against
-     *            this line
-     * @param py
-     *            the Y coordinate of the specified point being measured against
-     *            this line
+     * @param line the line to use to measure line distance
+     * @param px   the X coordinate of the specified point being measured
+     *             against this line
+     * @param py   the Y coordinate of the specified point being measured
+     *             against this line
      * @return a double value that is the square of the distance from a
      *         specified point to the current line.
      * @since 1.2
      */
-    public static double ptLineDistSq( final Line line, final double px, final double py ) {
-        return ptLineDistSq( line
-                .getStartX(), line.getStartY(), line.getEndX(), line.getEndY(), px, py );
+    public static double ptLineDistSq( final Line line,
+                                       final double px,
+                                       final double py ) {
+        return ptLineDistSq( line.getStartX(),
+                             line.getStartY(),
+                             line.getEndX(),
+                             line.getEndY(),
+                             px,
+                             py );
     }
 
     /**
@@ -1137,16 +1281,15 @@ public final class GeometryUtilities {
      * this <code>Line2D</code>. If the specified point intersects the line,
      * this method returns 0.0.
      *
-     * @param line
-     *            the line to use to measure line distance
-     * @param pt
-     *            the specified <code>Point2D</code> being measured against this
-     *            line
+     * @param line the line to use to measure line distance
+     * @param pt   the specified <code>Point2D</code> being measured against
+     *             this line
      * @return a double value that is the square of the distance from a
      *         specified <code>Point2D</code> to the current line.
      * @since 1.2
      */
-    public static double ptLineDistSq( final Line line, final Point2D pt ) {
+    public static double ptLineDistSq( final Line line,
+                                       final Point2D pt ) {
         return ptLineDistSq( line.getStartX(),
                              line.getStartY(),
                              line.getEndX(),
@@ -1156,29 +1299,50 @@ public final class GeometryUtilities {
     }
 
     /**
+     * Returns the distance from a point to this line segment. The distance
+     * measured is the distance between the specified point and the closest
+     * point between the current line's end points. If the specified point
+     * intersects the line segment in between the end points, this method
+     * returns 0.0.
+     *
+     * @param line the line to use to measure line distance
+     * @param px   the X coordinate of the specified point being measured
+     *             against this line segment
+     * @param py   the Y coordinate of the specified point being measured
+     *             against this line segment
+     * @return a double value that is the distance from the specified point to
+     *         the current line segment.
+     * @since 1.2
+     */
+    public static double ptSegDist( final Line line,
+                                    final double px,
+                                    final double py ) {
+        return ptSegDist( line.getStartX(),
+                          line.getStartY(),
+                          line.getEndX(),
+                          line.getEndY(),
+                          px,
+                          py );
+    }
+
+    /**
      * Returns the distance from a point to a line segment. The distance
      * measured is the distance between the specified point and the closest
      * point between the specified end points. If the specified point intersects
      * the line segment in between the end points, this method returns 0.0.
      *
-     * @param x1
-     *            the X coordinate of the start point of the specified line
-     *            segment
-     * @param y1
-     *            the Y coordinate of the start point of the specified line
-     *            segment
-     * @param x2
-     *            the X coordinate of the end point of the specified line
-     *            segment
-     * @param y2
-     *            the Y coordinate of the end point of the specified line
-     *            segment
-     * @param px
-     *            the X coordinate of the specified point being measured against
-     *            the specified line segment
-     * @param py
-     *            the Y coordinate of the specified point being measured against
-     *            the specified line segment
+     * @param x1 the X coordinate of the start point of the specified line
+     *           segment
+     * @param y1 the Y coordinate of the start point of the specified line
+     *           segment
+     * @param x2 the X coordinate of the end point of the specified line
+     *           segment
+     * @param y2 the Y coordinate of the end point of the specified line
+     *           segment
+     * @param px the X coordinate of the specified point being measured against
+     *           the specified line segment
+     * @param py the Y coordinate of the specified point being measured against
+     *           the specified line segment
      * @return a double value that is the distance from the specified point to
      *         the specified line segment.
      * @see #ptLineDist(double, double, double, double, double, double)
@@ -1194,79 +1358,24 @@ public final class GeometryUtilities {
     }
 
     /**
-     * Returns the distance from a point to this line segment. The distance
-     * measured is the distance between the specified point and the closest
-     * point between the current line's end points. If the specified point
-     * intersects the line segment in between the end points, this method
-     * returns 0.0.
-     *
-     * @param line
-     *            the line to use to measure line distance
-     * @param px
-     *            the X coordinate of the specified point being measured against
-     *            this line segment
-     * @param py
-     *            the Y coordinate of the specified point being measured against
-     *            this line segment
-     * @return a double value that is the distance from the specified point to
-     *         the current line segment.
-     * @since 1.2
-     */
-    public static double ptSegDist( final Line line, final double px, final double py ) {
-        return ptSegDist( line
-                .getStartX(), line.getStartY(), line.getEndX(), line.getEndY(), px, py );
-    }
-
-    /**
-     * Returns the distance from a <code>Point2D</code> to this line segment.
-     * The distance measured is the distance between the specified point and the
-     * closest point between the current line's end points. If the specified
-     * point intersects the line segment in between the end points, this method
-     * returns 0.0.
-     *
-     * @param line
-     *            the line to use to measure line distance
-     * @param pt
-     *            the specified <code>Point2D</code> being measured against this
-     *            line segment
-     * @return a double value that is the distance from the specified
-     *         <code>Point2D</code> to the current line segment.
-     * @since 1.2
-     */
-    public static double ptSegDist( final Line line, final Point2D pt ) {
-        return ptSegDist( line.getStartX(),
-                          line.getStartY(),
-                          line.getEndX(),
-                          line.getEndY(),
-                          pt.getX(),
-                          pt.getY() );
-    }
-
-    /**
      * Returns the square of the distance from a point to a line segment. The
      * distance measured is the distance between the specified point and the
      * closest point between the specified end points. If the specified point
      * intersects the line segment in between the end points, this method
      * returns 0.0.
      *
-     * @param x1
-     *            the X coordinate of the start point of the specified line
-     *            segment
-     * @param y1
-     *            the Y coordinate of the start point of the specified line
-     *            segment
-     * @param x2
-     *            the X coordinate of the end point of the specified line
-     *            segment
-     * @param y2
-     *            the Y coordinate of the end point of the specified line
-     *            segment
-     * @param px
-     *            the X coordinate of the specified point being measured against
-     *            the specified line segment
-     * @param py
-     *            the Y coordinate of the specified point being measured against
-     *            the specified line segment
+     * @param x1 the X coordinate of the start point of the specified line
+     *           segment
+     * @param y1 the Y coordinate of the start point of the specified line
+     *           segment
+     * @param x2 the X coordinate of the end point of the specified line
+     *           segment
+     * @param y2 the Y coordinate of the end point of the specified line
+     *           segment
+     * @param px the X coordinate of the specified point being measured against
+     *           the specified line segment
+     * @param py the Y coordinate of the specified point being measured against
+     *           the specified line segment
      * @return a double value that is the square of the distance from the
      *         specified point to the specified line segment.
      * @see #ptLineDistSq(double, double, double, double, double, double)
@@ -1287,7 +1396,8 @@ public final class GeometryUtilities {
         double pxAdjusted = px - x1;
         double pyAdjusted = py - y1;
 
-        double dotprod = ( pxAdjusted * x2Adjusted ) + ( pyAdjusted * y2Adjusted );
+        double dotprod = ( pxAdjusted * x2Adjusted ) + ( pyAdjusted
+                                                         * y2Adjusted );
 
         double projlenSq;
         if ( dotprod <= 0.0d ) {
@@ -1316,8 +1426,9 @@ public final class GeometryUtilities {
                 // dotprod is the length of the px,py vector
                 // projected on the x2,y2=>x1,y1 vector times the
                 // length of the x2,y2=>x1,y1 vector
-                projlenSq = MathUtilities.sqr( dotprod )
-                        / ( MathUtilities.sqr( x2Adjusted ) + MathUtilities.sqr( y2Adjusted ) );
+                projlenSq = MathUtilities.sqr( dotprod ) / (
+                        MathUtilities.sqr( x2Adjusted ) + MathUtilities.sqr(
+                                y2Adjusted ) );
             }
         }
 
@@ -1325,13 +1436,37 @@ public final class GeometryUtilities {
         // vector minus the length of its projection onto the line
         // (which is zero if the projection falls outside the range
         // of the line segment).
-        double lenSq = ( MathUtilities.sqr( pxAdjusted ) + MathUtilities.sqr( pyAdjusted ) )
-                - projlenSq;
+        double lenSq = ( MathUtilities.sqr( pxAdjusted ) + MathUtilities.sqr(
+                pyAdjusted ) ) - projlenSq;
         if ( lenSq < 0.0d ) {
             lenSq = 0.0d;
         }
 
         return lenSq;
+    }
+
+    /**
+     * Returns the distance from a <code>Point2D</code> to this line segment.
+     * The distance measured is the distance between the specified point and the
+     * closest point between the current line's end points. If the specified
+     * point intersects the line segment in between the end points, this method
+     * returns 0.0.
+     *
+     * @param line the line to use to measure line distance
+     * @param pt   the specified <code>Point2D</code> being measured against
+     *             this line segment
+     * @return a double value that is the distance from the specified
+     *         <code>Point2D</code> to the current line segment.
+     * @since 1.2
+     */
+    public static double ptSegDist( final Line line,
+                                    final Point2D pt ) {
+        return ptSegDist( line.getStartX(),
+                          line.getStartY(),
+                          line.getEndX(),
+                          line.getEndY(),
+                          pt.getX(),
+                          pt.getY() );
     }
 
     /**
@@ -1341,21 +1476,24 @@ public final class GeometryUtilities {
      * point intersects the line segment in between the end points, this method
      * returns 0.0.
      *
-     * @param line
-     *            the line to use to measure line distance
-     * @param px
-     *            the X coordinate of the specified point being measured against
-     *            this line segment
-     * @param py
-     *            the Y coordinate of the specified point being measured against
-     *            this line segment
+     * @param line the line to use to measure line distance
+     * @param px   the X coordinate of the specified point being measured
+     *             against this line segment
+     * @param py   the Y coordinate of the specified point being measured
+     *             against this line segment
      * @return a double value that is the square of the distance from the
      *         specified point to the current line segment.
      * @since 1.2
      */
-    public static double ptSegDistSq( final Line line, final double px, final double py ) {
-        return ptSegDistSq( line
-                .getStartX(), line.getStartY(), line.getEndX(), line.getEndY(), px, py );
+    public static double ptSegDistSq( final Line line,
+                                      final double px,
+                                      final double py ) {
+        return ptSegDistSq( line.getStartX(),
+                            line.getStartY(),
+                            line.getEndX(),
+                            line.getEndY(),
+                            px,
+                            py );
     }
 
     /**
@@ -1365,72 +1503,21 @@ public final class GeometryUtilities {
      * specified point intersects the line segment in between the end points,
      * this method returns 0.0.
      *
-     * @param line
-     *            the line to use to measure line distance
-     * @param pt
-     *            the specified <code>Point2D</code> being measured against this
-     *            line segment.
+     * @param line the line to use to measure line distance
+     * @param pt   the specified <code>Point2D</code> being measured against
+     *             this line segment.
      * @return a double value that is the square of the distance from the
      *         specified <code>Point2D</code> to the current line segment.
      * @since 1.2
      */
-    public static double ptSegDistSq( final Line line, final Point2D pt ) {
+    public static double ptSegDistSq( final Line line,
+                                      final Point2D pt ) {
         return ptSegDistSq( line.getStartX(),
                             line.getStartY(),
                             line.getEndX(),
                             line.getEndY(),
                             pt.getX(),
                             pt.getY() );
-    }
-
-    /**
-     * This method transforms a coordinate to its rotated and translated
-     * x-axis location, as a partial of a full point transform, when a point
-     * object would be an expensive throw-away interim construct.
-     *
-     * @param x
-     *            The x-coordinate of the original untransformed point
-     * @param y
-     *            The y-coordinate of the original untransformed point
-     * @param offsetX
-     *            The x-coordinate of the reference point for translation
-     * @param theta
-     *            The angle by which to rotate the original point
-     * @return The x-coordinate of the transformed point
-     */
-    public static double transformX( final double x,
-                                     final double y,
-                                     final double offsetX,
-                                     final double theta ) {
-        final double xTransformed =
-                                  ( ( x * FastMath.cos( theta ) ) - ( y * FastMath.sin( theta ) ) )
-                                          + offsetX;
-        return xTransformed;
-    }
-
-    /**
-     * This method transforms a coordinate to its rotated and translated
-     * y-axis location, as a partial of a full point transform, when a point
-     * object would be an expensive throw-away interim construct.
-     *
-     * @param x
-     *            The x-coordinate of the original untransformed point
-     * @param y
-     *            The y-coordinate of the original untransformed point
-     * @param offsetY
-     *            The y-coordinate of the reference point for translation
-     * @param theta
-     *            The angle by which to rotate the original point
-     * @return The y-coordinate of the transformed point
-     */
-    public static double transformY( final double x,
-                                     final double y,
-                                     final double offsetY,
-                                     final double theta ) {
-        final double yTransformed =
-                                  ( ( x * FastMath.sin( theta ) ) + ( y * FastMath.cos( theta ) ) )
-                                          + offsetY;
-        return yTransformed;
     }
 
     /**
@@ -1447,18 +1534,17 @@ public final class GeometryUtilities {
      * If the resulting {@code Rectangle} would have a dimension too large to be
      * expressed as an {@code int}, the result will have a dimension of
      * {@code Integer.MAX_VALUE} along that dimension.
+     * <p>
+     * NOTE: This method is modified from AWT Rectangle, as the functionality is
+     * missing (as far as we can tell) from JavaFX.
      *
-     * NOTE: This method is modified from AWT Rectangle, as the functionality
-     * is missing (as far as we can tell) from JavaFX.
-     *
-     * @param r1
-     *            the first <code>Rectangle</code>
-     * @param r2
-     *            the second <code>Rectangle</code>
+     * @param r1 the first <code>Rectangle</code>
+     * @param r2 the second <code>Rectangle</code>
      * @return the smallest <code>Rectangle</code> containing both the first
      *         <code>Rectangle</code> and the second <code>Rectangle</code>.
      */
-    public static Bounds union( final Bounds r1, final Bounds r2 ) {
+    public static Bounds union( final Bounds r1,
+                                final Bounds r2 ) {
         double tx2 = r1.getWidth();
         double ty2 = r1.getHeight();
         if ( ( tx2 < 0.0d ) || ( ty2 < 0.0d ) ) {
@@ -1468,7 +1554,10 @@ public final class GeometryUtilities {
             // are non-existent and we can return any non-existent rectangle
             // as an answer. Thus, returning r2 meets that criterion.
             // Either way, r2 is our answer.
-            return new BoundingBox( r2.getMinX(), r2.getMinY(), r2.getWidth(), r2.getHeight() );
+            return new BoundingBox( r2.getMinX(),
+                                    r2.getMinY(),
+                                    r2.getWidth(),
+                                    r2.getHeight() );
         }
 
         double rx2 = r2.getWidth();
@@ -1480,7 +1569,10 @@ public final class GeometryUtilities {
             // are non-existent and we can return any non-existent rectangle
             // as an answer. Thus, returning r1 meets that criterion.
             // Either way, r1 is our answer.
-            return new BoundingBox( r1.getMinX(), r1.getMinY(), r1.getWidth(), r1.getHeight() );
+            return new BoundingBox( r1.getMinX(),
+                                    r1.getMinY(),
+                                    r1.getWidth(),
+                                    r1.getHeight() );
         }
 
         double tx1 = r1.getMinX();
@@ -1536,14 +1628,12 @@ public final class GeometryUtilities {
      * If the resulting {@code Rectangle} would have a dimension too large to be
      * expressed as an {@code int}, the result will have a dimension of
      * {@code Integer.MAX_VALUE} along that dimension.
+     * <p>
+     * NOTE: This method is modified from AWT Rectangle, as the functionality is
+     * missing (as far as we can tell) from JavaFX.
      *
-     * NOTE: This method is modified from AWT Rectangle, as the functionality
-     * is missing (as far as we can tell) from JavaFX.
-     *
-     * @param r1
-     *            the first <code>Rectangle</code>
-     * @param r2
-     *            the second <code>Rectangle</code>
+     * @param r1 the first <code>Rectangle</code>
+     * @param r2 the second <code>Rectangle</code>
      * @return the smallest <code>Rectangle</code> containing both the first
      *         <code>Rectangle</code> and the second <code>Rectangle</code>.
      */
@@ -1635,18 +1725,17 @@ public final class GeometryUtilities {
      * If the resulting {@code Rectangle} would have a dimension too large to be
      * expressed as an {@code int}, the result will have a dimension of
      * {@code Integer.MAX_VALUE} along that dimension.
+     * <p>
+     * NOTE: This method is modified from AWT Rectangle, as the functionality is
+     * missing (as far as we can tell) from JavaFX.
      *
-     * NOTE: This method is modified from AWT Rectangle, as the functionality
-     * is missing (as far as we can tell) from JavaFX.
-     *
-     * @param r1
-     *            the first <code>Rectangle</code>
-     * @param r2
-     *            the second <code>Rectangle</code>
+     * @param r1 the first <code>Rectangle</code>
+     * @param r2 the second <code>Rectangle</code>
      * @return the smallest <code>Rectangle</code> containing both the first
      *         <code>Rectangle</code> and the second <code>Rectangle</code>.
      */
-    public static Rectangle2D union( final Rectangle2D r1, final Rectangle2D r2 ) {
+    public static Rectangle2D union( final Rectangle2D r1,
+                                     final Rectangle2D r2 ) {
         double tx2 = r1.getWidth();
         double ty2 = r1.getHeight();
         if ( ( tx2 < 0.0 ) || ( ty2 < 0.0 ) ) {
@@ -1656,7 +1745,10 @@ public final class GeometryUtilities {
             // are non-existent and we can return any non-existent rectangle
             // as an answer. Thus, returning r2 meets that criterion.
             // Either way, r2 is our answer.
-            return new Rectangle2D( r2.getMinX(), r2.getMinY(), r2.getWidth(), r2.getHeight() );
+            return new Rectangle2D( r2.getMinX(),
+                                    r2.getMinY(),
+                                    r2.getWidth(),
+                                    r2.getHeight() );
         }
 
         double rx2 = r2.getWidth();
@@ -1668,7 +1760,10 @@ public final class GeometryUtilities {
             // are non-existent and we can return any non-existent rectangle
             // as an answer. Thus, returning r1 meets that criterion.
             // Either way, r1 is our answer.
-            return new Rectangle2D( r1.getMinX(), r1.getMinY(), r1.getWidth(), r1.getHeight() );
+            return new Rectangle2D( r1.getMinX(),
+                                    r1.getMinY(),
+                                    r1.getWidth(),
+                                    r1.getHeight() );
         }
 
         double tx1 = r1.getMinX();
@@ -1720,14 +1815,13 @@ public final class GeometryUtilities {
      * expressed as an {@code int}, the result will have a dimension of
      * {@code Integer.MAX_VALUE} along that dimension.
      *
-     * @param bbox
-     *            The current Bounding Box, unmodified
-     * @param point
-     *            The point to use for expanding the Bounding Box
+     * @param bbox  The current Bounding Box, unmodified
+     * @param point The point to use for expanding the Bounding Box
      * @return The smallest Bounding Box containing both the original Bounding
      *         Box and the supplied Point.
      */
-    public static Bounds updateBounds( final Bounds bbox, final Point2D point ) {
+    public static Bounds updateBounds( final Bounds bbox,
+                                       final Point2D point ) {
         double width = bbox.getWidth();
         double height = bbox.getHeight();
         if ( ( width < 0.0d ) || ( height < 0.0d ) ) {
@@ -1777,112 +1871,96 @@ public final class GeometryUtilities {
     }
 
     public static BoundingBox boundsFromRectangle( final Rectangle rectangle ) {
-        return new BoundingBox(
-                rectangle.getX(),
-                rectangle.getY(),
-                rectangle.getWidth(),
-                rectangle.getHeight() );
+        return new BoundingBox( rectangle.getX(),
+                                rectangle.getY(),
+                                rectangle.getWidth(),
+                                rectangle.getHeight() );
     }
 
-    public static BoundingBox boundsFromRectangle2D(
-            final Rectangle2D rectangle ) {
-        return new BoundingBox(
-                rectangle.getMinX(),
-                rectangle.getMinY(),
-                rectangle.getWidth(),
-                rectangle.getHeight() );
+    public static BoundingBox boundsFromRectangle2D( final Rectangle2D rectangle ) {
+        return new BoundingBox( rectangle.getMinX(),
+                                rectangle.getMinY(),
+                                rectangle.getWidth(),
+                                rectangle.getHeight() );
     }
 
     // Get an AWT rectangle, converted from JavaFX.
-    public static java.awt.geom.Rectangle2D rectangleAwtFromRectangle2D(
-            final Bounds fxBounds ) {
+    public static java.awt.geom.Rectangle2D rectangleAwtFromRectangle2D( final Bounds fxBounds ) {
         final double x = fxBounds.getMinX();
         final double y = fxBounds.getMinY();
         final double width = fxBounds.getWidth();
         final double height = fxBounds.getHeight();
-        return new java.awt.geom.Rectangle2D.Double(
-                x,
-                y,
-                width,
-                height );
+        return new java.awt.geom.Rectangle2D.Double( x, y, width, height );
     }
 
     // Get an AWT rectangle, converted from JavaFX.
-    public static java.awt.geom.Rectangle2D rectangleAwtFromRectangle2D(
-            final Rectangle2D fxRectangle ) {
+    public static java.awt.geom.Rectangle2D rectangleAwtFromRectangle2D( final Rectangle2D fxRectangle ) {
         final double x = fxRectangle.getMinX();
         final double y = fxRectangle.getMinY();
         final double width = fxRectangle.getWidth();
         final double height = fxRectangle.getHeight();
-        return new java.awt.geom.Rectangle2D.Double(
-                x,
-                y,
-                width,
-                height );
+        return new java.awt.geom.Rectangle2D.Double( x, y, width, height );
     }
 
     public static Rectangle2D rectangle2DFromBounds( final Bounds bounds ) {
         return new Rectangle2D( bounds.getMinX(),
-                bounds.getMinY(),
-                bounds.getWidth(),
-                bounds.getHeight() );
+                                bounds.getMinY(),
+                                bounds.getWidth(),
+                                bounds.getHeight() );
     }
 
     public static Rectangle rectangleFromBounds( final Bounds bounds ) {
         return new Rectangle( bounds.getMinX(),
-                bounds.getMinY(),
-                bounds.getWidth(),
-                bounds.getHeight() );
+                              bounds.getMinY(),
+                              bounds.getWidth(),
+                              bounds.getHeight() );
     }
 
     public static Rectangle rectangleFromRectangle2D( final Rectangle2D rectangle ) {
         return new Rectangle( rectangle.getMinX(),
-                rectangle.getMinY(),
-                rectangle.getWidth(),
-                rectangle.getHeight() );
+                              rectangle.getMinY(),
+                              rectangle.getWidth(),
+                              rectangle.getHeight() );
     }
 
     // Get an AWT rectangle, converted from JavaFX.
-    public static java.awt.geom.Rectangle2D rectangleAwtFromRectangle(
-            final Rectangle fxRectangle ) {
+    public static java.awt.geom.Rectangle2D rectangleAwtFromRectangle( final Rectangle fxRectangle ) {
         final double x = fxRectangle.getX();
         final double y = fxRectangle.getY();
         final double width = fxRectangle.getWidth();
         final double height = fxRectangle.getHeight();
-        return new java.awt.geom.Rectangle2D.Double(
-                x,
-                y,
-                width,
-                height );
+        return new java.awt.geom.Rectangle2D.Double( x, y, width, height );
     }
 
     /*
      * Get a BoundingBox converted from Meters to current Distance Unit.
      */
-    public static BoundingBox getBoundingBoxInDistanceUnit(
-            final Bounds bounds,
-            final DistanceUnit distanceUnit ) {
-        return getBoundingBoxInDistanceUnit(
-                bounds,
-                DistanceUnit.METERS,
-                distanceUnit );
+    public static BoundingBox getBoundingBoxInDistanceUnit( final Bounds bounds,
+                                                            final DistanceUnit distanceUnit ) {
+        return getBoundingBoxInDistanceUnit( bounds,
+                                             DistanceUnit.METERS,
+                                             distanceUnit );
     }
 
     /*
      * Get a BoundingBox converted from current to specified Distance Unit.
      */
-    public static BoundingBox getBoundingBoxInDistanceUnit(
-            final Bounds bounds,
-            final DistanceUnit oldDistanceUnit,
-            final DistanceUnit newDistanceUnit ) {
-        final double x = UnitConversion
-                .convertDistance( bounds.getMinX(), oldDistanceUnit, newDistanceUnit );
-        final double y = UnitConversion
-                .convertDistance( bounds.getMinY(), oldDistanceUnit, newDistanceUnit );
-        final double width = UnitConversion
-                .convertDistance( bounds.getWidth(), oldDistanceUnit, newDistanceUnit );
-        final double height = UnitConversion
-                .convertDistance( bounds.getHeight(), oldDistanceUnit, newDistanceUnit );
+    public static BoundingBox getBoundingBoxInDistanceUnit( final Bounds bounds,
+                                                            final DistanceUnit oldDistanceUnit,
+                                                            final DistanceUnit newDistanceUnit ) {
+        final double x = UnitConversion.convertDistance( bounds.getMinX(),
+                                                         oldDistanceUnit,
+                                                         newDistanceUnit );
+        final double y = UnitConversion.convertDistance( bounds.getMinY(),
+                                                         oldDistanceUnit,
+                                                         newDistanceUnit );
+        final double width = UnitConversion.convertDistance( bounds.getWidth(),
+                                                             oldDistanceUnit,
+                                                             newDistanceUnit );
+        final double height
+                = UnitConversion.convertDistance( bounds.getHeight(),
+                                                  oldDistanceUnit,
+                                                  newDistanceUnit );
 
         return new BoundingBox( x, y, width, height );
     }
@@ -1890,106 +1968,59 @@ public final class GeometryUtilities {
     /*
      * Get a BoundingBox converted from current Distance Unit to Meters.
      */
-    public static BoundingBox getBoundingBoxInMeters(
-            final Bounds bounds,
-            final DistanceUnit distanceUnit ) {
-        return getBoundingBoxInDistanceUnit(
-                bounds,
-                distanceUnit,
-                DistanceUnit.METERS );
+    public static BoundingBox getBoundingBoxInMeters( final Bounds bounds,
+                                                      final DistanceUnit distanceUnit ) {
+        return getBoundingBoxInDistanceUnit( bounds,
+                                             distanceUnit,
+                                             DistanceUnit.METERS );
     }
 
     /*
      * Get a Rectangle shape, converted from Meters to specified Distance Unit.
      */
-    public static Rectangle getRectangleInDistanceUnit(
-            final Bounds boundsMeters,
-            final DistanceUnit distanceUnit ) {
-        final double x = UnitConversion.convertDistance(
-                boundsMeters.getMinX(), DistanceUnit.METERS, distanceUnit );
-        final double y = UnitConversion.convertDistance(
-                boundsMeters.getMinY(), DistanceUnit.METERS, distanceUnit );
-        final double width = UnitConversion.convertDistance(
-                boundsMeters.getWidth(), DistanceUnit.METERS, distanceUnit );
-        final double height = UnitConversion.convertDistance(
-                boundsMeters.getHeight(), DistanceUnit.METERS, distanceUnit );
+    public static Rectangle getRectangleInDistanceUnit( final Bounds boundsMeters,
+                                                        final DistanceUnit distanceUnit ) {
+        final double x = UnitConversion.convertDistance( boundsMeters.getMinX(),
+                                                         DistanceUnit.METERS,
+                                                         distanceUnit );
+        final double y = UnitConversion.convertDistance( boundsMeters.getMinY(),
+                                                         DistanceUnit.METERS,
+                                                         distanceUnit );
+        final double width
+                = UnitConversion.convertDistance( boundsMeters.getWidth(),
+                                                  DistanceUnit.METERS,
+                                                  distanceUnit );
+        final double height
+                = UnitConversion.convertDistance( boundsMeters.getHeight(),
+                                                  DistanceUnit.METERS,
+                                                  distanceUnit );
 
         return new Rectangle( x, y, width, height );
-    }
-
-    /*
-     * Get a Rectangle2D converted from current to specified Distance Unit.
-     */
-    public static Rectangle2D getRectangleInDistanceUnit(
-            final Bounds bounds,
-            final DistanceUnit oldDistanceUnit,
-            final DistanceUnit newDistanceUnit ) {
-        final double x = UnitConversion.convertDistance(
-                bounds.getMinX(), oldDistanceUnit, newDistanceUnit );
-        final double y = UnitConversion.convertDistance(
-                bounds.getMinY(), oldDistanceUnit, newDistanceUnit );
-        final double width = UnitConversion.convertDistance(
-                bounds.getWidth(), oldDistanceUnit, newDistanceUnit );
-        final double height = UnitConversion.convertDistance(
-                bounds.getHeight(), oldDistanceUnit, newDistanceUnit );
-
-        return new Rectangle2D( x, y, width, height );
-    }
-
-    /*
-     * Get a Rectangle2D converted from current to specified Distance Unit.
-     */
-    public static Rectangle2D getRectangleInDistanceUnit(
-            final Rectangle rectangle,
-            final DistanceUnit oldDistanceUnit,
-            final DistanceUnit newDistanceUnit ) {
-        final double x = UnitConversion.convertDistance(
-                rectangle.getX(), oldDistanceUnit, newDistanceUnit );
-        final double y = UnitConversion.convertDistance(
-                rectangle.getY(), oldDistanceUnit, newDistanceUnit );
-        final double width = UnitConversion.convertDistance(
-                rectangle.getWidth(), oldDistanceUnit, newDistanceUnit );
-        final double height = UnitConversion.convertDistance(
-                rectangle.getHeight(), oldDistanceUnit, newDistanceUnit );
-
-        return new Rectangle2D( x, y, width, height );
     }
 
     /*
      * Get a Rectangle shape, converted from Meters to specified Distance Unit.
      */
-    public static Rectangle getRectangleInDistanceUnit(
-            final Rectangle2D rectangleMeters,
-            final DistanceUnit distanceUnit ) {
-        final double x = UnitConversion.convertDistance(
-                rectangleMeters.getMinX(), DistanceUnit.METERS, distanceUnit );
-        final double y = UnitConversion.convertDistance(
-                rectangleMeters.getMinY(), DistanceUnit.METERS, distanceUnit );
-        final double width = UnitConversion.convertDistance(
-                rectangleMeters.getWidth(), DistanceUnit.METERS, distanceUnit );
-        final double height = UnitConversion.convertDistance(
-                rectangleMeters.getHeight(), DistanceUnit.METERS, distanceUnit );
+    public static Rectangle getRectangleInDistanceUnit( final Rectangle2D rectangleMeters,
+                                                        final DistanceUnit distanceUnit ) {
+        final double x
+                = UnitConversion.convertDistance( rectangleMeters.getMinX(),
+                                                  DistanceUnit.METERS,
+                                                  distanceUnit );
+        final double y
+                = UnitConversion.convertDistance( rectangleMeters.getMinY(),
+                                                  DistanceUnit.METERS,
+                                                  distanceUnit );
+        final double width
+                = UnitConversion.convertDistance( rectangleMeters.getWidth(),
+                                                  DistanceUnit.METERS,
+                                                  distanceUnit );
+        final double height
+                = UnitConversion.convertDistance( rectangleMeters.getHeight(),
+                                                  DistanceUnit.METERS,
+                                                  distanceUnit );
 
         return new Rectangle( x, y, width, height );
-    }
-
-    /*
-     * Get a Rectangle2D converted from current to specified Distance Unit.
-     */
-    public static Rectangle2D getRectangleInDistanceUnit(
-            final Rectangle2D rectangle,
-            final DistanceUnit oldDistanceUnit,
-            final DistanceUnit newDistanceUnit ) {
-        final double x = UnitConversion.convertDistance(
-                rectangle.getMinX(), oldDistanceUnit, newDistanceUnit );
-        final double y = UnitConversion.convertDistance(
-                rectangle.getMinY(), oldDistanceUnit, newDistanceUnit );
-        final double width = UnitConversion.convertDistance(
-                rectangle.getWidth(), oldDistanceUnit, newDistanceUnit );
-        final double height = UnitConversion.convertDistance(
-                rectangle.getHeight(), oldDistanceUnit, newDistanceUnit );
-
-        return new Rectangle2D( x, y, width, height );
     }
 
     /*
@@ -1997,53 +2028,120 @@ public final class GeometryUtilities {
      */
     public static Rectangle2D getRectangleInMeters( final Bounds bounds,
                                                     final DistanceUnit distanceUnit ) {
-        return getRectangleInDistanceUnit(
-                bounds,
-                distanceUnit,
-                DistanceUnit.METERS );
+        return getRectangleInDistanceUnit( bounds,
+                                           distanceUnit,
+                                           DistanceUnit.METERS );
+    }
+
+    /*
+     * Get a Rectangle2D converted from current to specified Distance Unit.
+     */
+    public static Rectangle2D getRectangleInDistanceUnit( final Bounds bounds,
+                                                          final DistanceUnit oldDistanceUnit,
+                                                          final DistanceUnit newDistanceUnit ) {
+        final double x = UnitConversion.convertDistance( bounds.getMinX(),
+                                                         oldDistanceUnit,
+                                                         newDistanceUnit );
+        final double y = UnitConversion.convertDistance( bounds.getMinY(),
+                                                         oldDistanceUnit,
+                                                         newDistanceUnit );
+        final double width = UnitConversion.convertDistance( bounds.getWidth(),
+                                                             oldDistanceUnit,
+                                                             newDistanceUnit );
+        final double height
+                = UnitConversion.convertDistance( bounds.getHeight(),
+                                                  oldDistanceUnit,
+                                                  newDistanceUnit );
+
+        return new Rectangle2D( x, y, width, height );
     }
 
     /*
      * Get a Rectangle2D converted from current Distance Unit to Meters.
      */
-    public static Rectangle2D getRectangleInMeters(
-            final Rectangle rectangle,
-            final DistanceUnit distanceUnit ) {
-        return getRectangleInDistanceUnit(
-                rectangle,
-                distanceUnit,
-                DistanceUnit.METERS );
+    public static Rectangle2D getRectangleInMeters( final Rectangle rectangle,
+                                                    final DistanceUnit distanceUnit ) {
+        return getRectangleInDistanceUnit( rectangle,
+                                           distanceUnit,
+                                           DistanceUnit.METERS );
+    }
+
+    /*
+     * Get a Rectangle2D converted from current to specified Distance Unit.
+     */
+    public static Rectangle2D getRectangleInDistanceUnit( final Rectangle rectangle,
+                                                          final DistanceUnit oldDistanceUnit,
+                                                          final DistanceUnit newDistanceUnit ) {
+        final double x = UnitConversion.convertDistance( rectangle.getX(),
+                                                         oldDistanceUnit,
+                                                         newDistanceUnit );
+        final double y = UnitConversion.convertDistance( rectangle.getY(),
+                                                         oldDistanceUnit,
+                                                         newDistanceUnit );
+        final double width
+                = UnitConversion.convertDistance( rectangle.getWidth(),
+                                                  oldDistanceUnit,
+                                                  newDistanceUnit );
+        final double height
+                = UnitConversion.convertDistance( rectangle.getHeight(),
+                                                  oldDistanceUnit,
+                                                  newDistanceUnit );
+
+        return new Rectangle2D( x, y, width, height );
     }
 
     /*
      * Get a Rectangle2D converted from current Distance Unit to Meters.
      */
-    public static Rectangle2D getRectangleInMeters(
-            final Rectangle2D rectangle,
-            final DistanceUnit distanceUnit ) {
-        return getRectangleInDistanceUnit(
-                rectangle,
-                distanceUnit,
-                DistanceUnit.METERS );
+    public static Rectangle2D getRectangleInMeters( final Rectangle2D rectangle,
+                                                    final DistanceUnit distanceUnit ) {
+        return getRectangleInDistanceUnit( rectangle,
+                                           distanceUnit,
+                                           DistanceUnit.METERS );
+    }
+
+    /*
+     * Get a Rectangle2D converted from current to specified Distance Unit.
+     */
+    public static Rectangle2D getRectangleInDistanceUnit( final Rectangle2D rectangle,
+                                                          final DistanceUnit oldDistanceUnit,
+                                                          final DistanceUnit newDistanceUnit ) {
+        final double x = UnitConversion.convertDistance( rectangle.getMinX(),
+                                                         oldDistanceUnit,
+                                                         newDistanceUnit );
+        final double y = UnitConversion.convertDistance( rectangle.getMinY(),
+                                                         oldDistanceUnit,
+                                                         newDistanceUnit );
+        final double width
+                = UnitConversion.convertDistance( rectangle.getWidth(),
+                                                  oldDistanceUnit,
+                                                  newDistanceUnit );
+        final double height
+                = UnitConversion.convertDistance( rectangle.getHeight(),
+                                                  oldDistanceUnit,
+                                                  newDistanceUnit );
+
+        return new Rectangle2D( x, y, width, height );
     }
 
     // Get an AWT rectangle in meters, converted from JavaFX.
-    public static java.awt.geom.Rectangle2D getRectangleMetersAwt(
-            final Rectangle fxRectangle,
-            final DistanceUnit distanceUnit ) {
-        final double x = UnitConversion.convertDistance(
-                fxRectangle.getX(), distanceUnit, DistanceUnit.METERS );
-        final double y = UnitConversion.convertDistance(
-                fxRectangle.getY(), distanceUnit, DistanceUnit.METERS );
-        final double width = UnitConversion.convertDistance(
-                fxRectangle.getWidth(), distanceUnit, DistanceUnit.METERS );
-        final double height = UnitConversion.convertDistance(
-                fxRectangle.getHeight(), distanceUnit, DistanceUnit.METERS );
-        return new java.awt.geom.Rectangle2D.Double(
-                x,
-                y,
-                width,
-                height );
+    public static java.awt.geom.Rectangle2D getRectangleMetersAwt( final Rectangle fxRectangle,
+                                                                   final DistanceUnit distanceUnit ) {
+        final double x = UnitConversion.convertDistance( fxRectangle.getX(),
+                                                         distanceUnit,
+                                                         DistanceUnit.METERS );
+        final double y = UnitConversion.convertDistance( fxRectangle.getY(),
+                                                         distanceUnit,
+                                                         DistanceUnit.METERS );
+        final double width
+                = UnitConversion.convertDistance( fxRectangle.getWidth(),
+                                                  distanceUnit,
+                                                  DistanceUnit.METERS );
+        final double height
+                = UnitConversion.convertDistance( fxRectangle.getHeight(),
+                                                  distanceUnit,
+                                                  DistanceUnit.METERS );
+        return new java.awt.geom.Rectangle2D.Double( x, y, width, height );
     }
 }
 

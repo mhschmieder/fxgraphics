@@ -32,6 +32,7 @@ package com.mhschmieder.fxgraphics.group;
 
 import com.mhschmieder.fxgraphics.shape.ShapeContainer;
 import com.mhschmieder.jphysics.measure.DistanceUnit;
+
 import javafx.scene.Group;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Transform;
@@ -74,26 +75,6 @@ public class ChartContentGroup extends Group {
     }
 
     /**
-     * This method returns the current Clipping Rectangle in use, allowing
-     * other elements to stay in sync with this more complex clipping criteria
-     * in this Group container, which updates frequently when Grid Lines have to
-     * be recalculated.
-     *
-     * @return The current clipping rectangle for this Group
-     */
-    public final Rectangle getClippingRectangle() {
-        return clippingRectangle;
-    }
-
-    /**
-     * @return The transform on this Group, which should be a single transform
-     *         from venue (user Distance Units) to display (pixels) coordinates.
-     */
-    public final Transform getVenueToDisplayTransform() {
-        return getTransforms().get( 0 );
-    }
-
-    /**
      * Set up the configuration of the common Chart Contents parameters.
      */
     private void initialize() {
@@ -104,29 +85,48 @@ public class ChartContentGroup extends Group {
     }
 
     /**
-     * There may be a need to suppress layout requests. if this method calls
-     * super.requestLayout(), then it does not suppress layout requests.
-     * <p>
-     * TODO: Review whether this specific override should be suppressed.
+     * This method returns the current Clipping Rectangle in use, allowing other
+     * elements to stay in sync with this more complex clipping criteria in this
+     * Group container, which updates frequently when Grid Lines have to be
+     * recalculated.
+     *
+     * @return The current clipping rectangle for this Group
      */
-    @Override
-    public void requestLayout() {
-        // Do nothing: suppress layout requests.
-        // super.requestLayout();
+    public final Rectangle getClippingRectangle() {
+        return clippingRectangle;
+    }
+
+    /**
+     * @return The transform on this Group, which should be a single transform
+     *         from venue (user Distance Units) to display (pixels)
+     *         coordinates.
+     */
+    public final Transform getVenueToDisplayTransform() {
+        return getTransforms().get( 0 );
+    }
+
+    /**
+     * Set the venue-to-display scale factor transform on this Group.
+     *
+     * @param venueToDisplayTransform The new venue-to-display scale factor as a
+     *                                {@link Transform}
+     */
+    public final void setVenueToDisplayTransform( final Transform venueToDisplayTransform ) {
+        // Replace the graphics transforms with the new Scale transform.
+        getTransforms().setAll( venueToDisplayTransform );
     }
 
     /**
      * Scale the supplied {@link ShapeContainer}, for Distance Unit and Stroke
      * Width.
      *
-     * @param shapeContainer
-     *            The {@link ShapeContainer} to scale in the Cartesian Chart
-     * @param distanceUnitReference
-     *            The reference Distance Unit to scale from
-     * @param displayToVenueScaleFactor
-     *            The display-to-venue scale factor
-     * @param strokeWidthRatio
-     *            The ratio to apply to the Basic Stroke Width
+     * @param shapeContainer            The {@link ShapeContainer} to scale in
+     *                                  the Cartesian Chart
+     * @param distanceUnitReference     The reference Distance Unit to scale
+     *                                  from
+     * @param displayToVenueScaleFactor The display-to-venue scale factor
+     * @param strokeWidthRatio          The ratio to apply to the Basic Stroke
+     *                                  Width
      */
     public final void scaleGraphicalNode( final ShapeContainer shapeContainer,
                                           final DistanceUnit distanceUnitReference,
@@ -150,27 +150,15 @@ public class ChartContentGroup extends Group {
     }
 
     /**
-     * Set the venue-to-display scale factor transform on this Group.
+     * This method updates the clipping rectangle to match a candidate from some
+     * other source, which in this context is generally the main Chart Overlay
+     * that must recalculate bounds every time the Grid Lines are regenerated
+     * due to changes of Grid Resolution or Distance Unit changes.
      *
-     * @param venueToDisplayTransform
-     *            The new venue-to-display scale factor as a {@link Transform}
+     * @param clippingRectangleCandidate The Clipping Rectangle to use for
+     *                                   updating this one's bounds
      */
-    public final void setVenueToDisplayTransform( final Transform venueToDisplayTransform ) {
-        // Replace the graphics transforms with the new Scale transform.
-        getTransforms().setAll( venueToDisplayTransform );
-    }
-
-    /**
-     * This method updates the clipping rectangle to match a candidate from
-     * some other source, which in this context is generally the main Chart
-     * Overlay that must recalculate bounds every time the Grid Lines are
-     * regenerated due to changes of Grid Resolution or Distance Unit changes.
-     *
-     * @param clippingRectangleCandidate
-     *            The Clipping Rectangle to use for updating this one's bounds
-     */
-    public final void updateClippingRectangle(
-            final Rectangle clippingRectangleCandidate ) {
+    public final void updateClippingRectangle( final Rectangle clippingRectangleCandidate ) {
         clippingRectangle.setX( clippingRectangleCandidate.getX() );
         clippingRectangle.setY( clippingRectangleCandidate.getY() );
         clippingRectangle.setWidth( clippingRectangleCandidate.getWidth() );
@@ -193,16 +181,26 @@ public class ChartContentGroup extends Group {
     }
 
     /**
+     * There may be a need to suppress layout requests. if this method calls
+     * super.requestLayout(), then it does not suppress layout requests.
+     * <p>
+     * TODO: Review whether this specific override should be suppressed.
+     */
+    @Override
+    public void requestLayout() {
+        // Do nothing: suppress layout requests.
+        // super.requestLayout();
+    }
+
+    /**
      * Update the translations on this Group.
      *
-     * @param xLow
-     *            The x-axis offset to use for the clipping rectangle
-     * @param yLow
-     *            The y-axis offset to use for the clipping rectangle
-     * @param translateX
-     *            The x-axis translation to use for the Chart Contents Group
-     * @param translateY
-     *            The y-axis translation to use for the Chart Contents Group
+     * @param xLow       The x-axis offset to use for the clipping rectangle
+     * @param yLow       The y-axis offset to use for the clipping rectangle
+     * @param translateX The x-axis translation to use for the Chart Contents
+     *                   Group
+     * @param translateY The y-axis translation to use for the Chart Contents
+     *                   Group
      */
     public final void updateTranslate( final double xLow,
                                        final double yLow,

@@ -38,13 +38,14 @@ import javafx.scene.shape.Shape;
 public final class ColorUtilities {
 
     // NOTE: The constructor is disabled, since this is a static class.
-    private ColorUtilities() {}
+    private ColorUtilities() {
+    }
 
     /**
      * This method conditionally adjusts the stroke of a given shape, to
      * guarantee contrast. As this may be called from within tight loops, the
-     * new stroke is generated outside the method, but the algorithm is
-     * generic enough to not care whether the new stroke is dark or light.
+     * new stroke is generated outside the method, but the algorithm is generic
+     * enough to not care whether the new stroke is dark or light.
      * <p>
      * NOTE: There is an assumption that the new stroke will be either White or
      * Black. If that assumption proves too restrictive, we will need to modify
@@ -54,15 +55,12 @@ public final class ColorUtilities {
      * current exceptions are for marking special objects and also Layer Locked
      * status, none of which ever need to invert for contrast purposes.
      *
-     * @param shape
-     *            The Shape that is the target for the new Stroke
-     * @param stroke
-     *            The new Stroke to use if conditions are met for change
-     * @param forceOverride
-     *            Flag for whether to override the current foreground stroke
-     *            color even if neither white nor black
-     * @param exclusionColor
-     *            Color to exclude from the forced override
+     * @param shape          The Shape that is the target for the new Stroke
+     * @param stroke         The new Stroke to use if conditions are met for
+     *                       change
+     * @param forceOverride  Flag for whether to override the current foreground
+     *                       stroke color even if neither white nor black
+     * @param exclusionColor Color to exclude from the forced override
      */
     public static void adjustStrokeForContrast( final Shape shape,
                                                 final Paint stroke,
@@ -72,10 +70,10 @@ public final class ColorUtilities {
         // settings that are potentially invisible against the new Foreground
         // Color, which we compare after that initial filtering.
         final Paint currentStroke = shape.getStroke();
-        if ( ( Color.WHITE.equals( currentStroke ) || Color.BLACK.equals( currentStroke )
-                || ( forceOverride && ( exclusionColor != null )
-                        && !exclusionColor.equals( currentStroke ) ) )
-                && !stroke.equals( currentStroke ) ) {
+        if ( ( Color.WHITE.equals( currentStroke ) || Color.BLACK.equals(
+                currentStroke ) || ( forceOverride && ( exclusionColor != null )
+                                     && !exclusionColor.equals( currentStroke ) ) )
+             && !stroke.equals( currentStroke ) ) {
             shape.setStroke( stroke );
         }
     }
@@ -86,10 +84,11 @@ public final class ColorUtilities {
             return null;
         }
 
-        final java.awt.Color awtColor = new java.awt.Color( ( float ) fxColor.getRed(),
-                                                            ( float ) fxColor.getGreen(),
-                                                            ( float ) fxColor.getBlue(),
-                                                            ( float ) fxColor.getOpacity() );
+        final java.awt.Color awtColor
+                = new java.awt.Color( ( float ) fxColor.getRed(),
+                                      ( float ) fxColor.getGreen(),
+                                      ( float ) fxColor.getBlue(),
+                                      ( float ) fxColor.getOpacity() );
 
         return awtColor;
     }
@@ -113,12 +112,13 @@ public final class ColorUtilities {
      * color is considered dark or light. If light, return black. If dark,
      * return white. This improves legibility for all contrast levels.
      *
-     * @param backColor
-     *            The graphics background {@link Color}.
+     * @param backColor The graphics background {@link Color}.
      * @return The appropriate foreground {@link Color} (black or white)
      */
     public static Color getForegroundFromBackground( final Color backColor ) {
-        return isColorDark( backColor ) ? Color.WHITE : Color.BLACK;
+        return isColorDark( backColor )
+               ? Color.WHITE
+               : Color.BLACK;
     }
 
     // TODO: Search for the JavaFX CSS source code that analyzes HSB vs. RGB.
@@ -131,5 +131,4 @@ public final class ColorUtilities {
         // than a black foreground, in such cases.
         return color.getBrightness() <= 0.51d;
     }
-
 }

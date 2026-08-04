@@ -38,9 +38,8 @@ import javafx.scene.paint.Color;
  * the foreground of components such that the background does not mask text,
  * outlines, and other graphics that is drawn on the canvas.
  *
- * @version 1.0
- *
  * @author Mark Schmieder
+ * @version 1.0
  */
 public interface ForegroundManager {
 
@@ -56,9 +55,8 @@ public interface ForegroundManager {
      * method override, before adding support for GUI elements unique to the
      * derived class hierarchy.
      *
-     * @param backColor
-     *            The current background color to apply to this visual element
-     *
+     * @param backColor The current background color to apply to this visual
+     *                  element
      * @since 1.0
      */
     void setForegroundFromBackground( final Color backColor );

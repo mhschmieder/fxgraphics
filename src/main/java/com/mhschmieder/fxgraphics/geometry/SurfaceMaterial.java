@@ -35,7 +35,7 @@ import com.mhschmieder.jcommons.lang.EnumUtilities;
 import com.mhschmieder.jcommons.lang.Labeled;
 
 /**
- * An enumeration of standard surface materials as specified in Harry Ferdinand, 
+ * An enumeration of standard surface materials as specified in Harry Ferdinand,
  * Olson's Acoustical Engineering textbook from 1957, designed to cover the
  * basic  range of acoustic absorption properties and other attributes, and
  * including  named materials that are composites of several layers.
@@ -46,35 +46,23 @@ import com.mhschmieder.jcommons.lang.Labeled;
  * <p>
  * TODO: Switch to more human-readable descriptions for the regular labels.
  */
-public enum SurfaceMaterial implements Labeled< SurfaceMaterial >,
-        Abbreviated< SurfaceMaterial > {
-    ACOUSTIC_TILE_ON_RIGID_SURF_KF(
-            "AcousticTileOnRigidSurfKF",
-            "AcousticTileOnRigidSurfKF" ),
-    BRICK_WALL_PAINTED_LB(
-            "BrickWallPaintedLB",
-            "BrickWallPaintedLB" ),
-    BRICK_WALL_UNPAINTED_LB(
-            "BrickWallUnpaintedLB",
-            "BrickWallUnpaintedLB" ),
-    CARPET_HEAVY_ON_CONCRETE_CH(
-            "CarpetHeavyOnConcreteCH",
-            "CarpetHeavyOnConcreteCH" ),
-    CONCRETE_BLOCK_PAINTED_CH(
-            "ConcreteBlockPaintedCH",
-            "ConcreteBlockPaintedCH" ),
-    CONCRETE_BLOCK_UNPAINTED_CH(
-            "ConcreteBlockUnpaintedCH",
-            "ConcreteBlockUnpaintedCH" ),
-    PLASTER_ON_LATHE_CH(
-            "PlasterOnLathCH",
-            "PlasterOnLathCH" ),
-    POURED_CONCRETE_PAINTED_LB(
-            "PouredConcretePaintedLB",
-            "PouredConcretePaintedLB" ),
-    POURED_CONCRETE_UNPAINTED_LB(
-            "PouredConcreteUnpaintedLB",
-            "PouredConcreteUnpaintedLB" ),
+public enum SurfaceMaterial
+        implements Labeled< SurfaceMaterial >, Abbreviated< SurfaceMaterial > {
+    ACOUSTIC_TILE_ON_RIGID_SURF_KF( "AcousticTileOnRigidSurfKF",
+                                    "AcousticTileOnRigidSurfKF" ),
+    BRICK_WALL_PAINTED_LB( "BrickWallPaintedLB", "BrickWallPaintedLB" ),
+    BRICK_WALL_UNPAINTED_LB( "BrickWallUnpaintedLB", "BrickWallUnpaintedLB" ),
+    CARPET_HEAVY_ON_CONCRETE_CH( "CarpetHeavyOnConcreteCH",
+                                 "CarpetHeavyOnConcreteCH" ),
+    CONCRETE_BLOCK_PAINTED_CH( "ConcreteBlockPaintedCH",
+                               "ConcreteBlockPaintedCH" ),
+    CONCRETE_BLOCK_UNPAINTED_CH( "ConcreteBlockUnpaintedCH",
+                                 "ConcreteBlockUnpaintedCH" ),
+    PLASTER_ON_LATHE_CH( "PlasterOnLathCH", "PlasterOnLathCH" ),
+    POURED_CONCRETE_PAINTED_LB( "PouredConcretePaintedLB",
+                                "PouredConcretePaintedLB" ),
+    POURED_CONCRETE_UNPAINTED_LB( "PouredConcreteUnpaintedLB",
+                                  "PouredConcreteUnpaintedLB" ),
     RIGID( "Rigid", "Rigid" ),
     VELOUR_TEN_OZ_PER_YARD_SQR_TOUCHING_WALL_CH(
             "VelourTenOzPerYardSqrTouchingWallCH",
@@ -89,15 +77,8 @@ public enum SurfaceMaterial implements Labeled< SurfaceMaterial >,
         abbreviation = pAbbreviation;
     }
 
-    @Override
-    public String label() {
-        return label;
-    }
-
-    @Override
-    public SurfaceMaterial valueOfLabel( final String text ) {
-        return ( SurfaceMaterial ) EnumUtilities.getLabeledEnumFromLabel(
-                text, values() );
+    public static SurfaceMaterial defaultValue() {
+        return RIGID;
     }
 
     @Override
@@ -107,9 +88,9 @@ public enum SurfaceMaterial implements Labeled< SurfaceMaterial >,
 
     @Override
     public SurfaceMaterial valueOfAbbreviation( final String abbreviatedText ) {
-        return ( SurfaceMaterial ) EnumUtilities
-                .getAbbreviatedEnumFromAbbreviation(
-                        abbreviatedText, values() );
+        return ( SurfaceMaterial ) EnumUtilities.getAbbreviatedEnumFromAbbreviation(
+                abbreviatedText,
+                values() );
     }
 
     @Override
@@ -120,7 +101,14 @@ public enum SurfaceMaterial implements Labeled< SurfaceMaterial >,
         return label();
     }
 
-    public static SurfaceMaterial defaultValue() {
-        return RIGID;
+    @Override
+    public String label() {
+        return label;
+    }
+
+    @Override
+    public SurfaceMaterial valueOfLabel( final String text ) {
+        return ( SurfaceMaterial ) EnumUtilities.getLabeledEnumFromLabel( text,
+                                                                          values() );
     }
 }

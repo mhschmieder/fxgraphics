@@ -40,12 +40,13 @@ import com.mhschmieder.jmath.geometry.euclidean.OrthogonalAxes;
 import com.mhschmieder.jmath.geometry.euclidean.VectorUtilities;
 import com.mhschmieder.jphysics.classical.MassComputable;
 import com.mhschmieder.jphysics.classical.MassProperties;
-import javafx.geometry.Point2D;
-import javafx.scene.shape.Shape;
 import org.apache.commons.math3.geometry.euclidean.threed.Vector3D;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
 import java.util.List;
+
+import javafx.geometry.Point2D;
+import javafx.scene.shape.Shape;
 
 /**
  * The <code>PhysicsObject</code> class is the abstract base class for all
@@ -56,7 +57,7 @@ import java.util.List;
  * Also, this means member variables should not be accessed directly, in case of
  * overrides on getter methods in subclasses.
  */
-public abstract class PhysicsObject extends SolidObject 
+public abstract class PhysicsObject extends SolidObject
         implements MassComputable, CogMarkable {
 
     // Cache the current Mass Properties associated with this Physics Object.
@@ -84,13 +85,12 @@ public abstract class PhysicsObject extends SolidObject
                              final boolean inverted,
                              final MassProperties massProperties ) {
         // Always call the super-constructor first!
-        super(
-                layer,
-                gcInVenueCoordinates,
-                angleDegrees,
-                orientation,
-                facingDirection,
-                inverted );
+        super( layer,
+               gcInVenueCoordinates,
+               angleDegrees,
+               orientation,
+               facingDirection,
+               inverted );
 
         // Set the initial mass Properties reference for COG and Weight.
         _massProperties = massProperties;
@@ -106,38 +106,26 @@ public abstract class PhysicsObject extends SolidObject
         //  members, so that derived classes produce the correct results when
         //  comparing two objects.
         final PhysicsObject other = ( PhysicsObject ) obj;
-        if ( !super.equals( obj ) || !getMassProperties().equals( other.getMassProperties() ) ) {
+        if ( !super.equals( obj )
+             || !getMassProperties().equals( other.getMassProperties() ) ) {
             return false;
         }
 
         return true;
     }
 
-    // NOTE: This is in non-JavaFX units as it inherits a Physics Library method.
+    public final MassProperties getMassProperties() {
+        return _massProperties;
+    }
+
+    public final void setMassProperties( final MassProperties massProperties ) {
+        _massProperties = massProperties;
+    }
+
     @Override
-    public final Vector3D getCogInObjectCoordinates() {
-        return _massProperties.getCogInObjectCoordinates();
-    }
-
-    // NOTE: This is in non-JavaFX units as it references a Physics Library method.
-    public final Vector2D getCogInPlanarCoordinates() {
-        final Vector3D cogInVenueCoordinates = getCogInVenueCoordinates();
-        final Vector2D cogInPlanarCoordinates = VectorUtilities
-                .projectToPlane( cogInVenueCoordinates, OrthogonalAxes.XY );
-        return cogInPlanarCoordinates;
-    }
-
-    // NOTE: This is in non-JavaFX units as it references a Physics Library method.
-    public final Vector3D getCogInVenueCoordinates() {
-        final Vector3D cogInObjectCoordinates = getCogInObjectCoordinates();
-        final Vector3D fxCogInObjectCoordinates = new Vector3D( cogInObjectCoordinates.getX(), 
-                                                                cogInObjectCoordinates.getY(), 
-                                                                cogInObjectCoordinates.getZ() );
-        final Vector3D cogInVenueCoordinates 
-                = getVectorInVenueCoordinatesFromObjectCoordinates( fxCogInObjectCoordinates );
-        return new Vector3D( cogInVenueCoordinates.getX(), 
-                             cogInVenueCoordinates.getY(), 
-                             cogInVenueCoordinates.getZ() );
+    public int hashCode() {
+        // TODO: Replace auto-generated method stub?
+        return super.hashCode();
     }
 
     @Override
@@ -150,16 +138,46 @@ public abstract class PhysicsObject extends SolidObject
         // have several categories of markers. Use Point2D vs. Vector2D to make
         // JavaFX Geometry API shapes; a trivial switch from Vector2D.
         final Vector2D cogLocation = getCogInPlanarCoordinates();
-        final Point2D fxCogLocation = new Point2D( cogLocation.getX(), 
+        final Point2D fxCogLocation = new Point2D( cogLocation.getX(),
                                                    cogLocation.getY() );
-        final List< Shape > cogMarkerGraphics = ShapeUtilities
-                .getCrosshairGraphics( fxCogLocation, crosshairDimension );
+        final List< Shape > cogMarkerGraphics
+                = ShapeUtilities.getCrosshairGraphics( fxCogLocation,
+                                                       crosshairDimension );
 
         return cogMarkerGraphics;
     }
 
-    public final MassProperties getMassProperties() {
-        return _massProperties;
+    // NOTE: This is in non-JavaFX units as it references a Physics Library
+    // method.
+    public final Vector2D getCogInPlanarCoordinates() {
+        final Vector3D cogInVenueCoordinates = getCogInVenueCoordinates();
+        final Vector2D cogInPlanarCoordinates = VectorUtilities.projectToPlane(
+                cogInVenueCoordinates,
+                OrthogonalAxes.XY );
+        return cogInPlanarCoordinates;
+    }
+
+    // NOTE: This is in non-JavaFX units as it references a Physics Library
+    // method.
+    public final Vector3D getCogInVenueCoordinates() {
+        final Vector3D cogInObjectCoordinates = getCogInObjectCoordinates();
+        final Vector3D fxCogInObjectCoordinates = new Vector3D(
+                cogInObjectCoordinates.getX(),
+                cogInObjectCoordinates.getY(),
+                cogInObjectCoordinates.getZ() );
+        final Vector3D cogInVenueCoordinates
+                = getVectorInVenueCoordinatesFromObjectCoordinates(
+                fxCogInObjectCoordinates );
+        return new Vector3D( cogInVenueCoordinates.getX(),
+                             cogInVenueCoordinates.getY(),
+                             cogInVenueCoordinates.getZ() );
+    }
+
+    // NOTE: This is in non-JavaFX units as it inherits a Physics Library
+    // method.
+    @Override
+    public final Vector3D getCogInObjectCoordinates() {
+        return _massProperties.getCogInObjectCoordinates();
     }
 
     @Override
@@ -169,18 +187,8 @@ public abstract class PhysicsObject extends SolidObject
     }
 
     @Override
-    public int hashCode() {
-        // TODO: Replace auto-generated method stub?
-        return super.hashCode();
-    }
-
-    @Override
     public final boolean isCogValid() {
         final boolean cogValid = _massProperties.isCogValid();
         return cogValid;
-    }
-
-    public final void setMassProperties( final MassProperties massProperties ) {
-        _massProperties = massProperties;
     }
 }

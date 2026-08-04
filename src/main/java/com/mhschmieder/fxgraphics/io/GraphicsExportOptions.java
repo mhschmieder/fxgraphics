@@ -38,9 +38,9 @@ import javafx.beans.property.SimpleBooleanProperty;
  */
 public class GraphicsExportOptions {
 
-    protected static final boolean  EXPORT_ALL_DEFAULT       = true;
-    protected static final boolean  EXPORT_CHART_DEFAULT     = false;
-    protected static final boolean  EXPORT_AUXILIARY_DEFAULT = false;
+    protected static final boolean EXPORT_ALL_DEFAULT = true;
+    protected static final boolean EXPORT_CHART_DEFAULT = false;
+    protected static final boolean EXPORT_AUXILIARY_DEFAULT = false;
 
     // Cached observable copy of most recent export options.
     protected final BooleanProperty exportAllData;
@@ -49,7 +49,9 @@ public class GraphicsExportOptions {
 
     // Default constructor when nothing is known.
     public GraphicsExportOptions() {
-        this( EXPORT_ALL_DEFAULT, EXPORT_CHART_DEFAULT, EXPORT_AUXILIARY_DEFAULT );
+        this( EXPORT_ALL_DEFAULT,
+              EXPORT_CHART_DEFAULT,
+              EXPORT_AUXILIARY_DEFAULT );
     }
 
     // Fully specified constructor when everything is known.
@@ -68,8 +70,32 @@ public class GraphicsExportOptions {
               pGraphicsExportOptions.isExportAuxiliary() );
     }
 
+    public final boolean isExportAll() {
+        return exportAllProperty().get();
+    }
+
     public final BooleanProperty exportAllProperty() {
         return exportAllData;
+    }
+
+    public final void setExportAll( final boolean pExportAll ) {
+        exportAllData.set( pExportAll );
+    }
+
+    public final boolean isExportAuxiliary() {
+        return exportAuxiliary.get();
+    }
+
+    public final void setExportAuxiliary( final boolean pExportAuxiliary ) {
+        exportAuxiliary.set( pExportAuxiliary );
+    }
+
+    public final boolean isExportChart() {
+        return exportChart.get();
+    }
+
+    public final void setExportChart( final boolean pExportChart ) {
+        exportChart.set( pExportChart );
     }
 
     public final BooleanProperty exportAuxiliaryProperty() {
@@ -80,18 +106,6 @@ public class GraphicsExportOptions {
         return exportChart;
     }
 
-    public final boolean isExportAll() {
-        return exportAllProperty().get();
-    }
-
-    public final boolean isExportAuxiliary() {
-        return exportAuxiliary.get();
-    }
-
-    public final boolean isExportChart() {
-        return exportChart.get();
-    }
-
     // Default pseudo-constructor.
     public void reset() {
         setExportAll( EXPORT_ALL_DEFAULT );
@@ -99,16 +113,11 @@ public class GraphicsExportOptions {
         setExportAuxiliary( EXPORT_AUXILIARY_DEFAULT );
     }
 
-    public final void setExportAll( final boolean pExportAll ) {
-        exportAllData.set( pExportAll );
-    }
-
-    public final void setExportAuxiliary( final boolean pExportAuxiliary ) {
-        exportAuxiliary.set( pExportAuxiliary );
-    }
-
-    public final void setExportChart( final boolean pExportChart ) {
-        exportChart.set( pExportChart );
+    // Pseudo-copy constructor.
+    public final void setGraphicsExportOptions( final GraphicsExportOptions pGraphicsExportOptions ) {
+        setGraphicsExportOptions( pGraphicsExportOptions.isExportAll(),
+                                  pGraphicsExportOptions.isExportChart(),
+                                  pGraphicsExportOptions.isExportAuxiliary() );
     }
 
     // Fully specified pseudo-constructor.
@@ -119,12 +128,4 @@ public class GraphicsExportOptions {
         setExportChart( pExportChart );
         setExportAuxiliary( pExportAuxiliary );
     }
-
-    // Pseudo-copy constructor.
-    public final void setGraphicsExportOptions( final GraphicsExportOptions pGraphicsExportOptions ) {
-        setGraphicsExportOptions( pGraphicsExportOptions.isExportAll(),
-                                  pGraphicsExportOptions.isExportChart(),
-                                  pGraphicsExportOptions.isExportAuxiliary() );
-    }
-
 }

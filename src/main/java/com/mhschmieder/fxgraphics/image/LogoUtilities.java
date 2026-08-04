@@ -31,6 +31,7 @@
 package com.mhschmieder.fxgraphics.image;
 
 import com.mhschmieder.fxgraphics.paint.ColorUtilities;
+
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
@@ -40,28 +41,32 @@ import javafx.scene.paint.Color;
 public final class LogoUtilities {
 
     /**
-     * The default constructor is disabled, as this is a static utilities class.
+     * The default constructor is disabled, as this is a static utilities
+     * class.
      */
-    private LogoUtilities() {}
+    private LogoUtilities() {
+    }
 
     // Switch black vs. white Logo based on Background Color hue analysis.
     public static ImageView getLogoImageView( final Color backColor,
                                               final String jarRelativeLightLogoUrl,
                                               final String jarRelativeDarkLogoUrl ) {
-        final String jarRelativeLogoFilename = ColorUtilities.isColorDark( backColor )
-            ? jarRelativeLightLogoUrl
-            : jarRelativeDarkLogoUrl;
+        final String jarRelativeLogoFilename = ColorUtilities.isColorDark(
+                backColor )
+                                               ? jarRelativeLightLogoUrl
+                                               : jarRelativeDarkLogoUrl;
 
         // Load the Logo Image as a JAR-resident resource.
-        // NOTE: Don't apply smoothing or caching, as it results in a fuzzy logo.
+        // NOTE: Don't apply smoothing or caching, as it results in a fuzzy
+        // logo.
         return createLogo( jarRelativeLogoFilename );
     }
 
     /**
      * Create a Logo as an Image View, using a JAR-resident resource.
      *
-     * @param jarRelativeLogoFilename
-     *            The file name of the image icon file contained in this JAR
+     * @param jarRelativeLogoFilename The file name of the image icon file
+     *                                contained in this JAR
      * @return The Image View created from the supplied file name
      */
     public static ImageView createLogo( final String jarRelativeLogoFilename ) {

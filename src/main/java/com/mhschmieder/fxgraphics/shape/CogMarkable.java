@@ -30,14 +30,14 @@
  */
 package com.mhschmieder.fxgraphics.shape;
 
-import javafx.scene.shape.Shape;
-
 import java.util.List;
 
+import javafx.scene.shape.Shape;
+
 /**
- * This is an interface that defines a contract on what method(s) is/are
- * needed for an object to support COG Marker Graphics, and also serves as a way
- * of grouping such objects together for common handling.
+ * This is an interface that defines a contract on what method(s) is/are needed
+ * for an object to support COG Marker Graphics, and also serves as a way of
+ * grouping such objects together for common handling.
  */
 public interface CogMarkable {
 

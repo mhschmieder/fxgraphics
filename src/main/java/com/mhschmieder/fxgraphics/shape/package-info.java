@@ -30,9 +30,5 @@
  */
 /**
  * This package contains the fxgraphics Library's shape functionality.
- *
- * @version 1.0
- *
- * @author Mark Schmieder
  */
 package com.mhschmieder.fxgraphics.shape;

@@ -34,6 +34,11 @@ import com.mhschmieder.fxgraphics.layers.Layer;
 import com.mhschmieder.fxgraphics.shape.ShapeGroup;
 import com.mhschmieder.fxgraphics.shape.ShapeUtilities;
 import com.mhschmieder.jcommons.lang.LabeledObject;
+import org.apache.commons.math3.util.FastMath;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.collections.ObservableList;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
@@ -45,10 +50,6 @@ import javafx.scene.shape.Path;
 import javafx.scene.shape.PathElement;
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.shape.StrokeType;
-import org.apache.commons.math3.util.FastMath;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * The <code>LinearObject</code> class is the abstract base class for all linear
@@ -57,27 +58,29 @@ import java.util.List;
  * curvilinear edges may end up falling within the current abstraction as well.
  * <p>
  * At this top level of the Linear Object sub-hierarchy, vector math is not yet
- * involved but simple point containment tests (especially from mouse clicks) are
- * critical, so the coordinates are expressed using immutable JavaFX Point2D and
- * Point3D instances.
+ * involved but simple point containment tests (especially from mouse clicks)
+ * are critical, so the coordinates are expressed using immutable JavaFX Point2D
+ * and Point3D instances.
  */
 public abstract class LinearObject extends GraphicalObject
         implements LabeledObject {
 
-    public static final String  LINEAR_OBJECT_LABEL_DEFAULT        = "Linear Object";
-    public static final boolean USE_AS_PROJECTOR_DEFAULT           = false;
-    public static final int     NUMBER_OF_PROJECTION_ZONES_DEFAULT = 1;
+    public static final String LINEAR_OBJECT_LABEL_DEFAULT = "Linear Object";
+    public static final boolean USE_AS_PROJECTOR_DEFAULT = false;
+    public static final int NUMBER_OF_PROJECTION_ZONES_DEFAULT = 1;
 
-    private String              _label;
-    private boolean             _useAsProjector;
-    private int                 _numberOfProjectionZones;
+    private String _label;
+    private boolean _useAsProjector;
+    private int _numberOfProjectionZones;
 
     public LinearObject() {
         this( LINEAR_OBJECT_LABEL_DEFAULT );
     }
 
     public LinearObject( final String label ) {
-        this( label, USE_AS_PROJECTOR_DEFAULT, NUMBER_OF_PROJECTION_ZONES_DEFAULT );
+        this( label,
+              USE_AS_PROJECTOR_DEFAULT,
+              NUMBER_OF_PROJECTION_ZONES_DEFAULT );
     }
 
     public LinearObject( final String label,
@@ -96,64 +99,30 @@ public abstract class LinearObject extends GraphicalObject
               linearObject.getNumberOfProjectionZones() );
     }
 
-    /**
-     * Constructs the lines representing this graphical object.
-     *
-     * @param lines
-     *            A pre-constructed collection to hold the lines
-     */
-    public final void constructLines( final List< Line > lines ) {
-        // Draw the main graphic for the Linear Object, which is a simple Line.
-        final Line line = getLine();
-        ShapeUtilities.drawLine( lines,
-                                 line.getStartX(),
-                                 line.getStartY(),
-                                 line.getEndX(),
-                                 line.getEndY() );
-
-        // Conditionally add the Projector cues for the Projection Zones.
-        if ( isUseAsProjector() ) {
-            // First, draw the baseline below the Linear Object's minimum y
-            // point.
-            final double baselineY = FastMath.min( line.getStartY(), line.getEndY() );
-            ShapeUtilities
-                    .drawLine( lines, line.getStartX(), baselineY, line.getEndX(), baselineY );
-
-            // Now, draw as many additional drop-lines as there are Projection
-            // Zones.
-            final double xDiff = line.getEndX() - line.getStartX();
-            final double yDiff = line.getEndY() - line.getStartY();
-            final double xDelta = xDiff / _numberOfProjectionZones;
-            final double yDelta = yDiff / _numberOfProjectionZones;
-            for ( int i = 0; i <= _numberOfProjectionZones; i++ ) {
-                final double baselineX = line.getStartX() + ( xDelta * i );
-                final double slopelineY = line.getStartY() + ( yDelta * i );
-                ShapeUtilities.drawLine( lines, baselineX, baselineY, baselineX, slopelineY );
-            }
-        }
+    @Override
+    public final String getLabel() {
+        return _label;
     }
 
-    /**
-     * Constructs the path elements representing this graphical object, by first
-     * constructing the Line Shapes and then converting those to MoveTo/LineTo
-     * PathElement pairs.
-     * <p>
-     * TODO: Make more efficient by avoiding redundant MoveTo's.
-     *
-     * @param pathElements
-     *            A pre-constructed collection to hold the path elements
-     */
-    public final void constructPathElements( final ObservableList< PathElement > pathElements ) {
-        // Construct the lines for the Linear Object.
-        final List< Line > lines = new ArrayList<>();
-        constructLines( lines );
+    @Override
+    public final void setLabel( final String pLabel ) {
+        _label = pLabel;
+    }
 
-        // Convert the Line Shapes to MoveTo/LineTo PathElement pairs.
-        for ( final Line line : lines ) {
-            // Convert the Line as a simple MoveTo/LineTo pair.
-            pathElements.add( new MoveTo( line.getStartX(), line.getStartY() ) );
-            pathElements.add( new LineTo( line.getEndX(), line.getEndY() ) );
-        }
+    public final int getNumberOfProjectionZones() {
+        return _numberOfProjectionZones;
+    }
+
+    public final void setNumberOfProjectionZones( final int pNumberOfProjectionZones ) {
+        _numberOfProjectionZones = pNumberOfProjectionZones;
+    }
+
+    public final boolean isUseAsProjector() {
+        return _useAsProjector;
+    }
+
+    public final void setUseAsProjector( final boolean pUseAsProjector ) {
+        _useAsProjector = pUseAsProjector;
     }
 
     @Override
@@ -168,7 +137,8 @@ public abstract class LinearObject extends GraphicalObject
         //  method as a tolerance.
         final double contextWidth = contextBounds.getWidth();
         final double contextHeight = contextBounds.getHeight();
-        final double contextLengthMinimum = FastMath.min( contextWidth, contextHeight );
+        final double contextLengthMinimum = FastMath.min( contextWidth,
+                                                          contextHeight );
 
         // NOTE: We conditionally use a fudge factor (for small context bounds)
         //  of 0.2 meters (roughly 2% minimum context bounds; whereas we used to
@@ -188,7 +158,8 @@ public abstract class LinearObject extends GraphicalObject
         // Find out if the click point is within tolerance of any of the
         // representational lines.
         for ( final Line line : lines ) {
-            final double pointToLineDistance = GeometryUtilities.ptSegDist( line, clickPoint );
+            final double pointToLineDistance
+                    = GeometryUtilities.ptSegDist( line, clickPoint );
             if ( pointToLineDistance <= clickRadius ) {
                 return true;
             }
@@ -196,6 +167,55 @@ public abstract class LinearObject extends GraphicalObject
 
         return false;
     }
+
+    /**
+     * Constructs the lines representing this graphical object.
+     *
+     * @param lines A pre-constructed collection to hold the lines
+     */
+    public final void constructLines( final List< Line > lines ) {
+        // Draw the main graphic for the Linear Object, which is a simple Line.
+        final Line line = getLine();
+        ShapeUtilities.drawLine( lines,
+                                 line.getStartX(),
+                                 line.getStartY(),
+                                 line.getEndX(),
+                                 line.getEndY() );
+
+        // Conditionally add the Projector cues for the Projection Zones.
+        if ( isUseAsProjector() ) {
+            // First, draw the baseline below the Linear Object's minimum y
+            // point.
+            final double baselineY = FastMath.min( line.getStartY(),
+                                                   line.getEndY() );
+            ShapeUtilities.drawLine( lines,
+                                     line.getStartX(),
+                                     baselineY,
+                                     line.getEndX(),
+                                     baselineY );
+
+            // Now, draw as many additional drop-lines as there are Projection
+            // Zones.
+            final double xDiff = line.getEndX() - line.getStartX();
+            final double yDiff = line.getEndY() - line.getStartY();
+            final double xDelta = xDiff / _numberOfProjectionZones;
+            final double yDelta = yDiff / _numberOfProjectionZones;
+            for ( int i = 0; i <= _numberOfProjectionZones; i++ ) {
+                final double baselineX = line.getStartX() + ( xDelta * i );
+                final double slopelineY = line.getStartY() + ( yDelta * i );
+                ShapeUtilities.drawLine( lines,
+                                         baselineX,
+                                         baselineY,
+                                         baselineX,
+                                         slopelineY );
+            }
+        }
+    }
+
+    /*
+     * Each sub-class must determine what to return as its basic line.
+     */
+    public abstract Line getLine();
 
     @Override
     public boolean equals( final Object obj ) {
@@ -207,12 +227,12 @@ public abstract class LinearObject extends GraphicalObject
         //  members, so that derived classes produce the correct results when
         //  comparing two objects.
         final LinearObject other = ( LinearObject ) obj;
-        if ( !super.equals( obj ) 
-                || !getLabel().equals( other.getLabel() ) 
-                || ( isUseAsProjector() != other.isUseAsProjector() ) ) {
+        if ( !super.equals( obj ) || !getLabel().equals( other.getLabel() ) || (
+                isUseAsProjector() != other.isUseAsProjector() ) ) {
             return false;
         }
-        return ( getNumberOfProjectionZones() == other.getNumberOfProjectionZones() );
+        return ( getNumberOfProjectionZones()
+                 == other.getNumberOfProjectionZones() );
     }
 
     @Override
@@ -222,37 +242,10 @@ public abstract class LinearObject extends GraphicalObject
         return bounds;
     }
 
-    @Override
-    public final String getLabel() {
-        return _label;
-    }
-
-    /*
-     * Each sub-class must determine what to return as its basic line.
-     */
-    public abstract Line getLine();
-
-    public final int getNumberOfProjectionZones() {
-        return _numberOfProjectionZones;
-    }
-
-    public final Point2D getP1() {
-        final Line line = getLine();
-        final Point2D p1 = new Point2D( line.getStartX(), line.getStartY() );
-        return p1;
-    }
-
-    public final Point2D getP2() {
-        final Line line = getLine();
-        final Point2D p2 = new Point2D( line.getEndX(), line.getEndY() );
-        return p2;
-    }
-
     /**
      * Constructs anew, a node representing this graphical object.
      *
-     * @param previewContext
-     *            Flag for whether this is used in a preview context
+     * @param previewContext Flag for whether this is used in a preview context
      * @return a graphical node representing this Linear Object
      */
     @Override
@@ -269,7 +262,9 @@ public abstract class LinearObject extends GraphicalObject
         //  overly large, which results in graphic previews being too small.
         // NOTE: Unlike with Microphones etc., this makes it invisible, so we
         //  have to apply Outside or Centered instead -- due to no closure?
-        path.setStrokeType( previewContext ? StrokeType.OUTSIDE : StrokeType.CENTERED );
+        path.setStrokeType( previewContext
+                            ? StrokeType.OUTSIDE
+                            : StrokeType.CENTERED );
 
         // Butt end caps improve perceived regularity of the highlight dash
         // pattern and also make it less likely that an empty gap will be the
@@ -287,24 +282,28 @@ public abstract class LinearObject extends GraphicalObject
         return vectorGraphics;
     }
 
-    public final double getX1() {
-        final Line line = getLine();
-        return line.getStartX();
-    }
+    /**
+     * Constructs the path elements representing this graphical object, by first
+     * constructing the Line Shapes and then converting those to MoveTo/LineTo
+     * PathElement pairs.
+     * <p>
+     * TODO: Make more efficient by avoiding redundant MoveTo's.
+     *
+     * @param pathElements A pre-constructed collection to hold the path
+     *                     elements
+     */
+    public final void constructPathElements( final ObservableList< PathElement > pathElements ) {
+        // Construct the lines for the Linear Object.
+        final List< Line > lines = new ArrayList<>();
+        constructLines( lines );
 
-    public final double getX2() {
-        final Line line = getLine();
-        return line.getEndX();
-    }
-
-    public final double getY1() {
-        final Line line = getLine();
-        return line.getStartY();
-    }
-
-    public final double getY2() {
-        final Line line = getLine();
-        return line.getEndY();
+        // Convert the Line Shapes to MoveTo/LineTo PathElement pairs.
+        for ( final Line line : lines ) {
+            // Convert the Line as a simple MoveTo/LineTo pair.
+            pathElements.add( new MoveTo( line.getStartX(),
+                                          line.getStartY() ) );
+            pathElements.add( new LineTo( line.getEndX(), line.getEndY() ) );
+        }
     }
 
     @Override
@@ -336,7 +335,8 @@ public abstract class LinearObject extends GraphicalObject
     }
 
     @Override
-    public boolean isCloserThan( final GraphicalObject other, final Point2D clickPoint ) {
+    public boolean isCloserThan( final GraphicalObject other,
+                                 final Point2D clickPoint ) {
         // If the other Graphical Object is null, then this one is closer.
         if ( other == null ) {
             return true;
@@ -348,9 +348,9 @@ public abstract class LinearObject extends GraphicalObject
         final Line thisLine = getLine();
         final Line otherLine = ( ( LinearObject ) other ).getLine();
 
-        final boolean thisObjectIsCloserThanOtherObjectToClickPoint = ( GeometryUtilities
-                .ptSegDist( thisLine,
-                            clickPoint ) < GeometryUtilities.ptSegDist( otherLine, clickPoint ) );
+        final boolean thisObjectIsCloserThanOtherObjectToClickPoint = (
+                GeometryUtilities.ptSegDist( thisLine, clickPoint )
+                < GeometryUtilities.ptSegDist( otherLine, clickPoint ) );
 
         return thisObjectIsCloserThanOtherObjectToClickPoint;
     }
@@ -364,12 +364,9 @@ public abstract class LinearObject extends GraphicalObject
      * "too far right", and "too far down", based on both end points. Some
      * subclasses may need to override this with more specialized criteria.
      *
-     * @param deltaX
-     *            The offset along the x-axis of the proposed new location
-     * @param deltaY
-     *            The offset along the y-axis of the proposed new location
-     * @param bounds
-     *            The bounds that must contain the proposed new location
+     * @param deltaX The offset along the x-axis of the proposed new location
+     * @param deltaY The offset along the y-axis of the proposed new location
+     * @param bounds The bounds that must contain the proposed new location
      * @return Whether or not the proposed new location falls within the
      *         supplied bounds
      */
@@ -385,8 +382,9 @@ public abstract class LinearObject extends GraphicalObject
         final boolean tooFarUp1 = targetY1 < bounds.getMinY();
         final boolean tooFarRight1 = targetX1 > bounds.getMaxX();
         final boolean tooFarDown1 = targetY1 > bounds.getMaxY();
-        final boolean dragTargetWithinBounds1 = !tooFarLeft1 && !tooFarUp1 && !tooFarRight1
-                && !tooFarDown1;
+        final boolean dragTargetWithinBounds1 = !tooFarLeft1 && !tooFarUp1
+                                                && !tooFarRight1
+                                                && !tooFarDown1;
 
         final double currentX2 = getX2();
         final double currentY2 = getY2();
@@ -396,17 +394,63 @@ public abstract class LinearObject extends GraphicalObject
         final boolean tooFarUp2 = targetY2 < bounds.getMinY();
         final boolean tooFarRight2 = targetX2 > bounds.getMaxX();
         final boolean tooFarDown2 = targetY2 > bounds.getMaxY();
-        final boolean dragTargetWithinBounds2 = !tooFarLeft2 && !tooFarUp2 && !tooFarRight2
-                && !tooFarDown2;
+        final boolean dragTargetWithinBounds2 = !tooFarLeft2 && !tooFarUp2
+                                                && !tooFarRight2
+                                                && !tooFarDown2;
 
-        final boolean dragTargetWithinBounds = dragTargetWithinBounds1 && dragTargetWithinBounds2;
+        final boolean dragTargetWithinBounds = dragTargetWithinBounds1
+                                               && dragTargetWithinBounds2;
 
         return dragTargetWithinBounds;
     }
 
-    public final boolean isUseAsProjector() {
-        return _useAsProjector;
+    public final double getX1() {
+        final Line line = getLine();
+        return line.getStartX();
     }
+
+    public final double getX2() {
+        final Line line = getLine();
+        return line.getEndX();
+    }
+
+    public final double getY1() {
+        final Line line = getLine();
+        return line.getStartY();
+    }
+
+    public final double getY2() {
+        final Line line = getLine();
+        return line.getEndY();
+    }
+
+    // NOTE: This was an early attempt to export to DXF. It may get revived.
+    // public final void saveToDxf( final DXFExport dxfExport ) {
+    // final int x1 = ( int ) FastMath.round( getX1() );
+    // final int y1 = ( int ) FastMath.round( getY1() );
+    //
+    // final int x2 = ( int ) FastMath.round( getX2() );
+    // final int y2 = ( int ) FastMath.round( getY2() );
+    //
+    // DXFLayer dxfLayer = new DXFLayer( "Line" );
+    // dxfExport.setCurrentLayer( dxfLayer );
+    // DXFData dxfData = new DXFData();
+    // dxfData.LayerName = dxfLayer.getName();
+    // dxfData.Color = ( Constants.convertColorRGBToDXF( java.awt.Color.BLACK )
+    // );
+    // dxfData.Point = new DXFPoint( x1, -y1, 0 );
+    // dxfData.Point1 = new DXFPoint( x2, -y2, 0 );
+    // dxfExport.addLine( dxfData );
+    //
+    // // NOTE: This is just a text annotation label above the actual line,
+    // //  useful for demo purposes but not in real DXF graphics output.
+    // // dxfData.Point.setTo( x1, -( y2 - 20 ), 0 );
+    // // dxfData.FHeight = 10;
+    // // dxfData.Text = new String( "Line" );
+    // // dxfExport.addText( dxfData );
+    //
+    // dxfData = null;
+    // }
 
     @Override
     public void rotate( final double rotateX,
@@ -443,39 +487,6 @@ public abstract class LinearObject extends GraphicalObject
         rotateNode( rotateX, rotateY, rotateThetaRelativeDegrees );
     }
 
-    // NOTE: This was an early attempt to export to DXF. It may get revived.
-    // public final void saveToDxf( final DXFExport dxfExport ) {
-    // final int x1 = ( int ) FastMath.round( getX1() );
-    // final int y1 = ( int ) FastMath.round( getY1() );
-    //
-    // final int x2 = ( int ) FastMath.round( getX2() );
-    // final int y2 = ( int ) FastMath.round( getY2() );
-    //
-    // DXFLayer dxfLayer = new DXFLayer( "Line" );
-    // dxfExport.setCurrentLayer( dxfLayer );
-    // DXFData dxfData = new DXFData();
-    // dxfData.LayerName = dxfLayer.getName();
-    // dxfData.Color = ( Constants.convertColorRGBToDXF( java.awt.Color.BLACK )
-    // );
-    // dxfData.Point = new DXFPoint( x1, -y1, 0 );
-    // dxfData.Point1 = new DXFPoint( x2, -y2, 0 );
-    // dxfExport.addLine( dxfData );
-    //
-    // // NOTE: This is just a text annotation label above the actual line,
-    // //  useful for demo purposes but not in real DXF graphics output.
-    // // dxfData.Point.setTo( x1, -( y2 - 20 ), 0 );
-    // // dxfData.FHeight = 10;
-    // // dxfData.Text = new String( "Line" );
-    // // dxfExport.addText( dxfData );
-    //
-    // dxfData = null;
-    // }
-
-    @Override
-    public final void setLabel( final String pLabel ) {
-        _label = pLabel;
-    }
-
     /*
      * Each sub-class must determine how to set its basic line.
      */
@@ -484,12 +495,16 @@ public abstract class LinearObject extends GraphicalObject
                                   final double x2,
                                   final double y2 );
 
-    public final void setNumberOfProjectionZones( final int pNumberOfProjectionZones ) {
-        _numberOfProjectionZones = pNumberOfProjectionZones;
+    public final Point2D getP1() {
+        final Line line = getLine();
+        final Point2D p1 = new Point2D( line.getStartX(), line.getStartY() );
+        return p1;
     }
 
-    public final void setUseAsProjector( final boolean pUseAsProjector ) {
-        _useAsProjector = pUseAsProjector;
+    public final Point2D getP2() {
+        final Line line = getLine();
+        final Point2D p2 = new Point2D( line.getEndX(), line.getEndY() );
+        return p2;
     }
 
     protected final void setLineObject( final String pLineObjectLabel,

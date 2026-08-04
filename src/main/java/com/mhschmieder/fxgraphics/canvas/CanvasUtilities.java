@@ -35,15 +35,14 @@ import javafx.scene.canvas.Canvas;
 public final class CanvasUtilities {
 
     /**
-     * The default constructor is disabled, as this is a static constants class.
+     * The default constructor is disabled, as this is a static constants
+     * class.
      */
-    private CanvasUtilities() {}
+    private CanvasUtilities() {
+    }
 
     public static void clearCanvas( final Canvas canvas ) {
-        canvas.getGraphicsContext2D().clearRect(
-                0.0d,
-                0.0d,
-                canvas.getWidth(),
-                canvas.getHeight() );
+        canvas.getGraphicsContext2D()
+              .clearRect( 0.0d, 0.0d, canvas.getWidth(), canvas.getHeight() );
     }
 }

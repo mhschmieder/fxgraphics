@@ -32,10 +32,11 @@ package com.mhschmieder.fxgraphics.input;
 
 import com.mhschmieder.jcommons.util.ClientProperties;
 import com.mhschmieder.jcommons.util.SystemType;
+import org.apache.commons.math3.util.FastMath;
+
 import javafx.scene.Node;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.input.ZoomEvent;
-import org.apache.commons.math3.util.FastMath;
 
 /**
  * Generalized manager for some of the more common gestures; especially ones
@@ -44,75 +45,53 @@ import org.apache.commons.math3.util.FastMath;
 public class GestureManager {
 
     protected static final double DEFAULT_SCROLL_DELTA = 1.3d;
-
-    /** Flag for determining whether to support gestures. */
-    private boolean gesturesEnabled;
-
-    /** Keep track of the current Scrolling Sensitivity for the Mouse */
-    protected com.mhschmieder.jgraphics.input.ScrollingSensitivity scrollingSensitivity;
-
+    /**
+     * The class that will register and handle the gesture events.
+     */
+    public final GestureHandler gestureHandler;
+    /**
+     * Cache the Client Properties (System Type, Locale, etc.).
+     */
+    public ClientProperties clientProperties;
+    /**
+     * Keep track of the current Scrolling Sensitivity for the Mouse
+     */
+    protected com.mhschmieder.jgraphics.input.ScrollingSensitivity
+            scrollingSensitivity;
     protected double scrollDeltaY;
     protected double scrollScale;
+    /**
+     * Flag for determining whether to support gestures.
+     */
+    private boolean gesturesEnabled;
 
-    /** The class that will register and handle the gesture events. */
-    public final GestureHandler gestureHandler;
-
-    /** Cache the Client Properties (System Type, Locale, etc.). */
-    public ClientProperties clientProperties;
-        
     public GestureManager( final GestureHandler pGestureHandler,
                            final ClientProperties pClientProperties ) {
-       gestureHandler = pGestureHandler;
-       clientProperties = pClientProperties;
+        gestureHandler = pGestureHandler;
+        clientProperties = pClientProperties;
 
-       gesturesEnabled = false;
-       scrollingSensitivity = com.mhschmieder.jgraphics.input.ScrollingSensitivity.defaultValue();
+        gesturesEnabled = false;
+        scrollingSensitivity
+                =
+                com.mhschmieder.jgraphics.input.ScrollingSensitivity.defaultValue();
 
-       scrollDeltaY = 0.0d;
-       scrollScale = 1.0d;
-       
-       // Register all relevant mouse event handlers related to gestures.
-       addMouseEventHandlers();
+        scrollDeltaY = 0.0d;
+        scrollScale = 1.0d;
+
+        // Register all relevant mouse event handlers related to gestures.
+        addMouseEventHandlers();
     }
-    
+
     /**
      * Adds mouse event handlers for gestures such as zooming.
      */
     protected void addMouseEventHandlers() {
         // Add scroll-zoom and pinch-zoom handlers.
         final Node clickableNode = gestureHandler.getClickableContentNode();
-        clickableNode.setOnScroll( ( event ) -> scrollZoom( 
-                event, gestureHandler.getMouseMode() ) );
-        clickableNode.setOnZoom( ( event ) -> pinchZoom( 
-                event, gestureHandler.getMouseMode() ) );
-   }
-    
-    public boolean isGesturesEnabled() {
-        return gesturesEnabled;
-    }
-
-    public void setGesturesEnabled( final boolean pGesturesEnabled ) {
-        gesturesEnabled = pGesturesEnabled;
-    }
-
-    /**
-     * This is a standard getter method for the Scrolling Sensitivity setting.
-     *
-     * @return The current Scrolling Sensitivity setting
-     */
-    public com.mhschmieder.jgraphics.input.ScrollingSensitivity getScrollingSensitivity() {
-        return scrollingSensitivity;
-    }
-
-    /**
-     * Set the new Scrolling Sensitivity for the Mouse Tools.
-     *
-     * @param pScrollingSensitivity
-     *            The sensitivity of the mouse scroll wheel
-     */
-    public void setScrollingSensitivity( final com.mhschmieder.jgraphics.input.ScrollingSensitivity pScrollingSensitivity ) {
-        // Cache the new Scrolling Sensitivity preference.
-        scrollingSensitivity = pScrollingSensitivity;
+        clickableNode.setOnScroll( ( event ) -> scrollZoom( event,
+                                                            gestureHandler.getMouseMode() ) );
+        clickableNode.setOnZoom( ( event ) -> pinchZoom( event,
+                                                         gestureHandler.getMouseMode() ) );
     }
 
     // NOTE: This is a more traditional scroll wheel handler, but it can also
@@ -131,14 +110,16 @@ public class GestureManager {
 
         // If Scrolling Sensitivity is off, then we are supposed to ignore
         // traditional mouse scroll wheel events.
-        if ( com.mhschmieder.jgraphics.input.ScrollingSensitivity.OFF.equals( scrollingSensitivity ) ) {
+        if ( com.mhschmieder.jgraphics.input.ScrollingSensitivity.OFF.equals(
+                scrollingSensitivity ) ) {
             return;
         }
 
         // Transitory Cut, Copy, Paste, should ignore Zoom due to side effects.
-        //if ( MouseToolMode.COPY.equals( mouseMode ) 
+        //if ( MouseToolMode.COPY.equals( mouseMode )
         //        || MouseToolMode.PASTE.equals( mouseMode ) ) {
-        if ( com.mhschmieder.jgraphics.input.MouseToolMode.COPY.equals( mouseMode ) ) {
+        if ( com.mhschmieder.jgraphics.input.MouseToolMode.COPY.equals(
+                mouseMode ) ) {
             return;
         }
 
@@ -164,34 +145,45 @@ public class GestureManager {
 
         // TODO: Delete this modified old one-line algorithm after finishing
         //  the new algorithm above.
-        double zoomBasis = SystemType.MACOS.equals( clientProperties.systemType ) 
-                ? 1.0002d 
-                : 1.0003d;
-        final double zoomDifferential = SystemType.MACOS.equals( clientProperties.systemType )
-            ? 0.00015d
-            : 0.0002d;
+        double zoomBasis
+                = SystemType.MACOS.equals( clientProperties.systemType )
+                  ? 1.0002d
+                  : 1.0003d;
+        final double zoomDifferential = SystemType.MACOS.equals(
+                clientProperties.systemType )
+                                        ? 0.00015d
+                                        : 0.0002d;
         switch ( scrollingSensitivity ) {
-        case COARSE:
-            zoomBasis += zoomDifferential;
-            break;
-        case MEDIUM:
-            break;
-        case FINE:
-            zoomBasis -= zoomDifferential;
-            break;
-        case OFF:
-            break;
-        default:
-            break;
+            case COARSE:
+                zoomBasis += zoomDifferential;
+                break;
+            case MEDIUM:
+                break;
+            case FINE:
+                zoomBasis -= zoomDifferential;
+                break;
+            case OFF:
+                break;
+            default:
+                break;
         }
 
         // NOTE: The scroll direction convention on macOS tends to be inverted.
-        final double zoomExponent = SystemType.MACOS.equals( clientProperties.systemType )
-            ? -event.getDeltaY()
-            : event.getDeltaY();
+        final double zoomExponent
+                = SystemType.MACOS.equals( clientProperties.systemType )
+                  ? -event.getDeltaY()
+                  : event.getDeltaY();
         zoomFactor = FastMath.pow( zoomBasis, zoomExponent );
 
         gestureHandler.zoom( zoomFactor, event.getSceneX(), event.getSceneY() );
+    }
+
+    public boolean isGesturesEnabled() {
+        return gesturesEnabled;
+    }
+
+    public void setGesturesEnabled( final boolean pGesturesEnabled ) {
+        gesturesEnabled = pGesturesEnabled;
     }
 
     // NOTE: This is a new gesture, not supported by some devices.
@@ -204,42 +196,63 @@ public class GestureManager {
 
         // If Scrolling Sensitivity is off, then we are supposed to ignore
         // new zoom gestures (whether from a mouse or a trackpad).
-        if ( com.mhschmieder.jgraphics.input.ScrollingSensitivity.OFF.equals( scrollingSensitivity ) ) {
+        if ( com.mhschmieder.jgraphics.input.ScrollingSensitivity.OFF.equals(
+                scrollingSensitivity ) ) {
             return;
         }
 
         // Transitory Cut, Copy, Paste, should ignore Zoom due to side effects.
-        //if ( MouseToolMode.COPY.equals( mouseMode ) 
+        //if ( MouseToolMode.COPY.equals( mouseMode )
         //        || MouseToolMode.PASTE.equals( mouseMode ) ) {
-        if ( com.mhschmieder.jgraphics.input.MouseToolMode.COPY.equals( mouseMode ) ) {
+        if ( com.mhschmieder.jgraphics.input.MouseToolMode.COPY.equals(
+                mouseMode ) ) {
             return;
         }
 
         // Adjust the Zoom Factor based on User Preferences.
         // NOTE: The scroll direction convention on macOS tends to be inverted.
-        double zoomFactor = SystemType.MACOS.equals( clientProperties.systemType )
-            ? event.getZoomFactor()
-            : -event.getZoomFactor();
-        final double zoomMultiplier = SystemType.MACOS.equals( clientProperties.systemType )
-            ? 3.0d
-            : 4.0d;
+        double zoomFactor
+                = SystemType.MACOS.equals( clientProperties.systemType )
+                  ? event.getZoomFactor()
+                  : -event.getZoomFactor();
+        final double zoomMultiplier
+                = SystemType.MACOS.equals( clientProperties.systemType )
+                  ? 3.0d
+                  : 4.0d;
         switch ( scrollingSensitivity ) {
-        case COARSE:
-            zoomFactor /= zoomMultiplier;
-            break;
-        case MEDIUM:
-            break;
-        case FINE:
-            zoomFactor *= zoomMultiplier;
-            break;
-        case OFF:
-            break;
-        default:
-            break;
+            case COARSE:
+                zoomFactor /= zoomMultiplier;
+                break;
+            case MEDIUM:
+                break;
+            case FINE:
+                zoomFactor *= zoomMultiplier;
+                break;
+            case OFF:
+                break;
+            default:
+                break;
         }
 
-        gestureHandler.zoom( zoomFactor,
-                             event.getSceneX(), 
-                             event.getSceneY() );
+        gestureHandler.zoom( zoomFactor, event.getSceneX(), event.getSceneY() );
+    }
+
+    /**
+     * This is a standard getter method for the Scrolling Sensitivity setting.
+     *
+     * @return The current Scrolling Sensitivity setting
+     */
+    public com.mhschmieder.jgraphics.input.ScrollingSensitivity getScrollingSensitivity() {
+        return scrollingSensitivity;
+    }
+
+    /**
+     * Set the new Scrolling Sensitivity for the Mouse Tools.
+     *
+     * @param pScrollingSensitivity The sensitivity of the mouse scroll wheel
+     */
+    public void setScrollingSensitivity( final com.mhschmieder.jgraphics.input.ScrollingSensitivity pScrollingSensitivity ) {
+        // Cache the new Scrolling Sensitivity preference.
+        scrollingSensitivity = pScrollingSensitivity;
     }
 }

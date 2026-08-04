@@ -31,6 +31,7 @@
 package com.mhschmieder.fxgraphics.input;
 
 import com.mhschmieder.fxgraphics.shape.ShapeUtilities;
+
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Path;
@@ -41,11 +42,11 @@ import javafx.scene.shape.StrokeType;
  * A stateful manager for rotation handling via the mouse.
  * <p>
  * As not all applications are in Cartesian Space (e.g., some are in world
- * coordinates, whose distances change with latitude), this class works
- * strictly in pixels, but also stores angles in radians for universality. 
+ * coordinates, whose distances change with latitude), this class works strictly
+ * in pixels, but also stores angles in radians for universality.
  * <p>
- * If I can find a good way to abstract the handling of application-local 
- * units via an interface and/or method overrides, I will do so.
+ * If I can find a good way to abstract the handling of application-local units
+ * via an interface and/or method overrides, I will do so.
  */
 public class RotationManager {
 
@@ -77,13 +78,13 @@ public class RotationManager {
         _rotateTheta = 0.0d;
         _rotateThetaRelative = 0.0d;
     }
-    
+
     /**
      * Initialize the Rotation parameters, using a passed-in calculated angle.
      * <p>
-     * NOTE: As the angle must be pre-calculated using the local units of
-     *  the application, it must be passed in rather than derived here.
-     * 
+     * NOTE: As the angle must be pre-calculated using the local units of the
+     * application, it must be passed in rather than derived here.
+     *
      * @param rotateTheta The calculated angle for rotation, in radians
      */
     public void initRotation( final double rotateTheta ) {
@@ -94,13 +95,13 @@ public class RotationManager {
         _rotateTheta = rotateTheta;
         _rotateReference = _rotateTheta;
     }
-    
+
     /**
      * Update the Rotation parameters, using a new passed-in calculated angle.
      * <p>
-     * NOTE: As the angle must be pre-calculated using the local units of
-     *  the application, it must be passed in rather than derived here.
-     * 
+     * NOTE: As the angle must be pre-calculated using the local units of the
+     * application, it must be passed in rather than derived here.
+     *
      * @param rotateThetaNew The calculated angle for rotation, in radians
      */
     public void updateRotation( final double rotateThetaNew ) {
@@ -114,7 +115,8 @@ public class RotationManager {
 
         // TODO: Determine if this needs to be resolution.sensitive.
         final double crosshairDiameter = 16d;
-        ShapeUtilities.drawCrosshairCircle( _centerOfRotationElement, crosshairDiameter );
+        ShapeUtilities.drawCrosshairCircle( _centerOfRotationElement,
+                                            crosshairDiameter );
 
         // Set all Mouse Tool graphics line strokes to an appropriate hue.
         _centerOfRotationElement.setStroke( mouseToolColor );
@@ -141,7 +143,7 @@ public class RotationManager {
      * the current Distance Unit.
      */
     public void updateCenterOfRotationGraphics( final double centerOfRotationXPx,
-                                                final double centerOfRotationYPx) {
+                                                final double centerOfRotationYPx ) {
         // Position the Center of Rotation at the mouse click.
         _centerOfRotationGroup.setTranslateX( centerOfRotationXPx );
         _centerOfRotationGroup.setTranslateY( centerOfRotationYPx );

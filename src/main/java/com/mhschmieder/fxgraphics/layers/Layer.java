@@ -31,13 +31,15 @@
 package com.mhschmieder.fxgraphics.layers;
 
 import com.mhschmieder.jcommons.lang.LabeledObject;
+
 import javafx.scene.paint.Color;
 
 /**
  * Basic Layer implementation for common settings that cut across most
  * applications that expose some form of layer management. Use this version for
  * most purposes; there is an observable LayerProperties class in the controls
- * library for Layer Management, to be used for binding to related GUI controls.
+ * library for Layer Management, to be used for binding to related GUI
+ * controls.
  */
 public class Layer implements Comparable< Layer >, LabeledObject {
 
