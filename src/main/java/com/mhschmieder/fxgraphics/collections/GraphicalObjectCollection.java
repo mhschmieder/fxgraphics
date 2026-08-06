@@ -68,6 +68,7 @@ public final class GraphicalObjectCollection< T extends com.mhschmieder.fxgraphi
     protected final Collection< T > _deselection;
     // Also declare a collection to serve as a clipboard for Cut/Copy/Paste.
     protected Collection< T > _clipboard;
+
     public GraphicalObjectCollection( final Collection< T > collection,
                                       final Collection< T > selection,
                                       final Collection< T > deselection ) {
@@ -153,8 +154,7 @@ public final class GraphicalObjectCollection< T extends com.mhschmieder.fxgraphi
 
     // Return the Bounds that encloses all of collection's Reference Points.
     // This method ignores decorators and overall geometry and shapes.
-    public static Bounds getTightContainment( final Collection< ?
-            extends com.mhschmieder.fxgraphics.geometry.GraphicalObject > collection ) {
+    public static Bounds getTightContainment( final Collection< ? extends com.mhschmieder.fxgraphics.geometry.GraphicalObject > collection ) {
         Bounds bbox = new BoundingBox( 0.0d, 0.0d, -1d, -1d );
         for ( final com.mhschmieder.fxgraphics.geometry.GraphicalObject graphicalObject : collection ) {
             // Keep enlarging the bounding box until it is a superset.
@@ -439,8 +439,7 @@ public final class GraphicalObjectCollection< T extends com.mhschmieder.fxgraphi
     }
 
     // Return the largest Bounding Box that encloses a collection.
-    public static Bounds getBoundingBox( final Collection< ?
-            extends com.mhschmieder.fxgraphics.geometry.GraphicalObject > collection ) {
+    public static Bounds getBoundingBox( final Collection< ? extends com.mhschmieder.fxgraphics.geometry.GraphicalObject > collection ) {
         Bounds bbox = new BoundingBox( 0.0d, 0.0d, -1d, -1d );
         for ( final com.mhschmieder.fxgraphics.geometry.GraphicalObject graphicalObject : collection ) {
             // Keep enlarging the bounding box until it is a superset.

@@ -50,7 +50,7 @@ public class CartesianLine extends LinearObject {
 
     // Declare the default Cartesian Line label.
     public static final String CARTESIAN_LINE_LABEL_DEFAULT = "Cartesian Line";
-            //$NON-NLS-1$
+    //$NON-NLS-1$
 
     // Declare default constants, where appropriate, for all fields.
     protected static final double X1_DEFAULT = 0.0d;
@@ -179,7 +179,9 @@ public class CartesianLine extends LinearObject {
     public final void setLine( final Point2D p1,
                                final Point2D p2 ) {
         setLine( p1.getX(), p1.getY(), p2.getX(), p2.getY() );
-    }    @Override
+    }
+
+    @Override
     public final void drag( final double deltaX,
                             final double deltaY ) {
         // Compute the new Line End Points for the Cartesian Line by
@@ -208,7 +210,9 @@ public class CartesianLine extends LinearObject {
                           cartesianLine.getLayer(),
                           cartesianLine.isUseAsProjector(),
                           cartesianLine.getNumberOfProjectionZones() );
-    }    @Override
+    }
+
+    @Override
     public final double getAngleDegrees() {
         final double xdiff = _line.getEndX() - _line.getStartX();
         final double ydiff = _line.getEndY() - _line.getStartY();
@@ -225,7 +229,9 @@ public class CartesianLine extends LinearObject {
     @Override
     public final Line getLine() {
         return _line;
-    }    @Override
+    }
+
+    @Override
     public final GraphicalObject getDeepClonedObject() {
         final CartesianLine cartesianLineClone = new CartesianLine( this );
 
@@ -349,7 +355,9 @@ public class CartesianLine extends LinearObject {
 
     public final void setY2( final double y2 ) {
         _line.setEndY( y2 );
-    }    @Override
+    }
+
+    @Override
     public void setReferencePoint2D( final double referencePointX,
                                      final double referencePointY ) {
         final double deltaX = referencePointX - getX1();
@@ -363,12 +371,4 @@ public class CartesianLine extends LinearObject {
         final double referencePointY = referencePoint.getY();
         setReferencePoint2D( referencePointX, referencePointY );
     }
-
-
-
-
-
-
-
-
 }

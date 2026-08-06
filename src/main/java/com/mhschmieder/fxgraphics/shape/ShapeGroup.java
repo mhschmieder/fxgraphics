@@ -124,7 +124,9 @@ public class ShapeGroup extends Group implements ShapeContainer {
 
     public final double getStrokeWidth() {
         return strokeWidth.get();
-    }    @Override
+    }
+
+    @Override
     public final ObservableList< Transform > getShapeTransforms() {
         return getTransforms();
     }
@@ -166,7 +168,9 @@ public class ShapeGroup extends Group implements ShapeContainer {
 
     public final void clearShapes() {
         getChildren().clear();
-    }    /**
+    }
+
+    /**
      * Sets the scale transform on the overall
      * {@link ShapeContainer shape container} to a uniform scale in this Node's
      * frame of reference.
@@ -304,10 +308,6 @@ public class ShapeGroup extends Group implements ShapeContainer {
             }
         } );
     }
-
-
-
-
 
     /**
      * Update the Stroke Width on the overall

@@ -52,17 +52,11 @@ public class ImageSize {
     public static final double PIXEL_DIMENSIONS_MAXIMUM = 10000;
 
     public static final double[] PIXEL_WIDTH_PRESETS = new double[] {
-            800,
-            1024,
-            1280,
-            1440
+            800, 1024, 1280, 1440
     };
 
     public static final double[] PIXEL_HEIGHT_PRESETS = new double[] {
-            600,
-            768,
-            900,
-            1024
+            600, 768, 900, 1024
     };
 
     // Declare an abbreviated string representation of pixel units.

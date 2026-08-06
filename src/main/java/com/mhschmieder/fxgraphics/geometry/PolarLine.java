@@ -65,6 +65,7 @@ public class PolarLine extends LinearObject {
     private double _startDistance = START_DISTANCE_DEFAULT;
     private double _endAngleDegrees = END_ANGLE_DEGREES_DEFAULT;
     private double _endDistance = END_DISTANCE_DEFAULT;
+
     // NOTE: Since this class declares additional fields to the parent class,
     //  we cannot just invoke the super-constructor from each constructor, but
     //  need to invoke incrementally more complex local constructors instead.

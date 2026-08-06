@@ -877,7 +877,7 @@ public final class ShapeUtilities {
 
     // Get generic Crosshair graphics, at a specific reference point location.
     public static List< Shape > getCrosshairGraphics( final Pair< Double,
-                                                              Double > referencePoint,
+                                                                        Double > referencePoint,
                                                       final double crosshairDimension ) {
         // Draw the Crosshair graphics at the origin.
         final List< Shape > crosshairGraphics = getCrosshairGraphics(
@@ -1019,7 +1019,7 @@ public final class ShapeUtilities {
      */
     public static void moveShapeToReferencePoint( final Shape shape,
                                                   final Pair< Double,
-                                                          Double > referencePoint ) {
+                                                                    Double > referencePoint ) {
         final Transform affineTransform
                 =
                 GeometryUtilities.getReferencePointTransform( referencePoint );

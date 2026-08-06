@@ -445,7 +445,9 @@ public abstract class GraphicalObject
 
         return ( FastMath.abs( clickPoint.distance( centerX1, centerY1 ) )
                  < FastMath.abs( clickPoint.distance( centerX2, centerY2 ) ) );
-    }    public final void highlight( final boolean highlightOn ) {
+    }
+
+    public final void highlight( final boolean highlightOn ) {
         // Switch the Graphical Node highlighting on or off.
         if ( _cachedGraphicalNode != null ) {
             _cachedGraphicalNode.highlight( highlightOn );
@@ -622,7 +624,9 @@ public abstract class GraphicalObject
     public boolean intersects( final Rectangle2D area2D ) {
         final Bounds area = GeometryUtilities.boundsFromRectangle2D( area2D );
         return intersects( area );
-    }    public final boolean isSelected() {
+    }
+
+    public final boolean isSelected() {
         return _selected;
     }
 
@@ -817,7 +821,9 @@ public abstract class GraphicalObject
         final Layer layer = getLayer();
         final boolean locked = layer.isLayerLocked();
         return locked;
-    }    public final void setSelected( final boolean selected ) {
+    }
+
+    public final void setSelected( final boolean selected ) {
         // Avoid wasteful work if nothing changed.
         if ( selected == _selected ) {
             return;
@@ -843,18 +849,11 @@ public abstract class GraphicalObject
         final boolean visible = isVisible();
         setVisible( visible );
     }    // Highlight the associated Graphical Node and Marker if the Graphical
+
     // Object is Selected.
     public final void updateHighlighting() {
         // Switch the Graphical Node highlighting on or off.
         final boolean highlightOn = isSelected();
         highlight( highlightOn );
     }
-
-
-
-
-
-
-
-
 }

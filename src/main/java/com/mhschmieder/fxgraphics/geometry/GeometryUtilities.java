@@ -950,7 +950,7 @@ public final class GeometryUtilities {
      * Returns a new transform from a supplied reference point.
      */
     public static Affine getReferencePointTransform( final Pair< Double,
-            Double > referencePoint ) {
+                                                                       Double > referencePoint ) {
         final Affine affineTransform = new Affine();
 
         // Effectively move to the reference point as the origin.
@@ -1016,9 +1016,8 @@ public final class GeometryUtilities {
      * @param line the specified {@link Line} to test for intersection with the
      *             interior of this <code>Rectangle2D</code>
      * @return <code>true</code> if the specified <code>Line2D</code>
-     *         intersects
-     *         the interior of this <code>Rectangle2D</code>; <code>false</code>
-     *         otherwise.
+     *         intersects the interior of this <code>Rectangle2D</code>;
+     *         <code>false</code> otherwise.
      * @see #intersectsLine(Rectangle2D, double, double, double, double)
      * @since 1.2
      */
