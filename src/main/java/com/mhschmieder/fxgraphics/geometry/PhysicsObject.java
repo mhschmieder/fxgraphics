@@ -92,7 +92,7 @@ public abstract class PhysicsObject extends SolidObject
                facingDirection,
                inverted );
 
-        // Set the initial mass Properties reference for COG and Weight.
+        // Set the initial Mass Properties reference for COG and Mass.
         _massProperties = massProperties;
     }
 
@@ -148,7 +148,7 @@ public abstract class PhysicsObject extends SolidObject
     }
 
     // NOTE: This is in non-JavaFX units as it references a Physics Library
-    // method.
+    //  method.
     public final Vector2D getCogInPlanarCoordinates() {
         final Vector3D cogInVenueCoordinates = getCogInVenueCoordinates();
         final Vector2D cogInPlanarCoordinates = VectorUtilities.projectToPlane(
@@ -174,21 +174,19 @@ public abstract class PhysicsObject extends SolidObject
     }
 
     // NOTE: This is in non-JavaFX units as it inherits a Physics Library
-    // method.
+    //  method.
     @Override
     public final Vector3D getCogInObjectCoordinates() {
         return _massProperties.getCogInObjectCoordinates();
     }
 
     @Override
-    public final double getWeightKg() {
-        final double weightKg = _massProperties.getWeightKg();
-        return weightKg;
+    public final double getMassKg() {
+        return _massProperties.getMassKg();
     }
 
     @Override
     public final boolean isCogValid() {
-        final boolean cogValid = _massProperties.isCogValid();
-        return cogValid;
+        return _massProperties.isCogValid();
     }
 }
