@@ -33,8 +33,8 @@ package com.mhschmieder.fxgraphics.shape;
 import com.mhschmieder.fxgraphics.paint.ColorConstants;
 import com.mhschmieder.fxgraphics.paint.ColorUtilities;
 import com.mhschmieder.fxgraphics.render.HighlightUtilities;
+import com.mhschmieder.jphysics.measure.DistanceConversion;
 import com.mhschmieder.jphysics.measure.DistanceUnit;
-import com.mhschmieder.jphysics.measure.UnitConversion;
 
 import java.util.List;
 
@@ -189,9 +189,9 @@ public class ShapeGroup extends Group implements ShapeContainer {
         // TODO: Verify it is safe to remove existing Transforms, but if we
         // don't, then we get no results if converting old to new and get
         // cumulative scaling if using Meters as the Distance Unit basis.
-        final double distanceScaleFactor = UnitConversion.convertDistance( 1.0d,
-                                                                           distanceUnitOld,
-                                                                           distanceUnitNew );
+        final double distanceScaleFactor = DistanceConversion.convertDistance( 1.0d,
+                                                                               distanceUnitOld,
+                                                                               distanceUnitNew );
         final ObservableList< Transform > transforms = getShapeTransforms();
         final Scale scaleTransform = Transform.scale( distanceScaleFactor,
                                                       distanceScaleFactor );
@@ -210,9 +210,9 @@ public class ShapeGroup extends Group implements ShapeContainer {
      */
     public final void scaleShapes( final DistanceUnit distanceUnitOld,
                                    final DistanceUnit distanceUnitNew ) {
-        final double distanceScaleFactor = UnitConversion.convertDistance( 1.0d,
-                                                                           distanceUnitOld,
-                                                                           distanceUnitNew );
+        final double distanceScaleFactor = DistanceConversion.convertDistance( 1.0d,
+                                                                               distanceUnitOld,
+                                                                               distanceUnitNew );
         scaleShapes( distanceScaleFactor );
     }
 
@@ -330,7 +330,7 @@ public class ShapeGroup extends Group implements ShapeContainer {
         // Modify Stroke Width resolution to be appropriate for the new scale.
         // NOTE: If default basis is used, no need to scale to Distance Unit,
         // but the zoom factor can then cause overly thick strokes.
-        final double strokeWidthReference = UnitConversion.convertDistance(
+        final double strokeWidthReference = DistanceConversion.convertDistance(
                 strokeWidthBasis,
                 distanceUnitCurrent,
                 distanceUnitReference );
